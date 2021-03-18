@@ -3,12 +3,12 @@ import React from 'react';
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import { sizing } from '@material-ui/system';
-import { spacing } from '@material-ui/system';
-// import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
+// import Typography from '@material-ui/core/Typography';
+// import { sizing } from '@material-ui/system';
+// import { spacing } from '@material-ui/system';
+// // import Card from '@material-ui/core/Card';
+// import { makeStyles } from '@material-ui/core/styles';
+// import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
