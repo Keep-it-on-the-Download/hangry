@@ -3,15 +3,22 @@ import React from 'react';
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+
+// Temp Profile Pic
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const styles = (theme) => ({
-  heading: {
-    color: '#FF0000',
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
   },
-  card: {
-    height: 100,
+  profileImage: {
+    width: theme.spacing(11),
+    height: theme.spacing(11),
   },
 });
 
@@ -19,11 +26,10 @@ class Profile extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container maxWidth='sm'>
-        <Typography className={classes.heading} variant='h3'>
-          Profile
-        </Typography>
-        <Card className={classes.card}></Card>
+      <Container maxWidth='sm' className={classes.root}>
+        <Avatar alt='Name' className={classes.profileImage}>
+          <AccountCircle />
+        </Avatar>
       </Container>
     );
   }
