@@ -9,6 +9,7 @@ function SignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   };
+
   return <button onClick={loginWithGoogle}>Login With Google</button>;
 }
 
