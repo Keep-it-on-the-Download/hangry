@@ -5,20 +5,41 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
 
 // Temp Profile Pic
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
+// Icons
+import Settings from '@material-ui/icons/Settings';
+import Notifications from '@material-ui/icons/Notifications';
+
 const styles = (theme) => ({
-  root: {
+  profile: {
+    marginBottom: theme.spacing(3),
+  },
+  settings: {
+    padding: theme.spacing(2),
     display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
+    justifyContent: 'flex-start',
+  },
+  notifications: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  imageContainer: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'center',
   },
   profileImage: {
-    width: theme.spacing(11),
-    height: theme.spacing(11),
+    width: theme.spacing(13),
+    height: theme.spacing(13),
   },
 });
 
@@ -26,10 +47,35 @@ class Profile extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Container maxWidth='sm' className={classes.root}>
-        <Avatar alt='Name' className={classes.profileImage}>
-          <AccountCircle />
-        </Avatar>
+      <Container maxWidth='sm'>
+        <Grid container className={classes.profile}>
+          <Grid item xs={6} className={classes.settings}>
+            <Settings />
+          </Grid>
+          <Grid item xs={6} className={classes.notifications}>
+            <Notifications />
+          </Grid>
+          <Grid item xs={12} className={classes.imageContainer}>
+            <Avatar alt='Name' className={classes.profileImage}>
+              <AccountCircle />
+            </Avatar>
+          </Grid>
+          <Grid item xs={12}>
+            First Last
+          </Grid>
+        </Grid>
+        <List>
+          <ListItem>Friends</ListItem>
+          <Divider variant='fullWidth' component='li' />
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <AccountCircle />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='First Last' secondary='Some info' />
+          </ListItem>
+        </List>
       </Container>
     );
   }
