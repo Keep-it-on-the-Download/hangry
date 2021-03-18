@@ -10,6 +10,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
 
 // Temp Profile Pic
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -50,10 +51,14 @@ class Profile extends React.Component {
       <Container maxWidth='sm'>
         <Grid container className={classes.profile}>
           <Grid item xs={6} className={classes.settings}>
-            <Settings />
+            <IconButton>
+              <Settings />
+            </IconButton>
           </Grid>
           <Grid item xs={6} className={classes.notifications}>
-            <Notifications />
+            <IconButton>
+              <Notifications />
+            </IconButton>
           </Grid>
           <Grid item xs={12} className={classes.imageContainer}>
             <Avatar alt='Name' className={classes.profileImage}>
