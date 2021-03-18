@@ -8,7 +8,7 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 script:
-  - npm run test # test the code
+  - npm run test --passWithNoTests # test the code
   - npm run build # make the bundle
 deploy:
   provider: firebase
