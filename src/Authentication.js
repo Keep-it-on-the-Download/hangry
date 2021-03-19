@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from './Firebase';
 import 'firebase/auth';
+import GoogleButton from 'react-google-button';
 
 const auth = firebase.auth();
 
@@ -10,7 +11,9 @@ function SignIn() {
     auth.signInWithPopup(provider);
   };
 
-  return <button onClick={loginWithGoogle}>Login With Google</button>;
+  return (
+    <GoogleButton onClick={loginWithGoogle}>Login With Google</GoogleButton>
+  );
 }
 
 function SignOut() {

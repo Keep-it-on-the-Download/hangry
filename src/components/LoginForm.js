@@ -5,8 +5,12 @@ class LoginForm extends React.Component {
   render() {
     return (
       <form noValidate autoComplete='off'>
-        <TextField label='email' variant='filled' />
-        <TextField type='password' label='password' variant='filled' />
+        <div>
+          <TextField label='email' variant='filled' />
+          <TextField type='password' label='password' variant='filled' />
+        </div>
+
+        <button>Submit</button>
       </form>
     );
   }
