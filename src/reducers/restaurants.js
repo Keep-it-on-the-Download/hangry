@@ -1,5 +1,8 @@
 import axios from 'axios';
-import '../secrets';
+
+// if (process.env.NODE_ENV !== 'production') {
+//   import '../secrets';
+// }
 
 const GOT_RESTAURANTS = 'GOT_RESTAURANTS';
 
