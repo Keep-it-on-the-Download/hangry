@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getUser } from '../reducers/user';
 
 import firebase from '../Firebase';
 import 'firebase/auth';
@@ -50,44 +52,15 @@ const styles = (theme) => ({
 });
 
 class Profile extends React.Component {
+  componentDidMount = () => {
+    this.props.getUser('abielik');
+    console.log('Store User:', this.props.user);
+  };
+
   render() {
     const { classes } = this.props;
     const user = firebase.auth().currentUser;
 
-    const db = firebase.firestore();
-    const alanFriendsRef = db
-      .collection('users')
-      .doc('abielik')
-      .collection('friends');
-
-    console.log(('ALANSFRIENDSREF', alanFriendsRef));
-
-    alanFriendsRef.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data());
-
-        const friendRef = db.doc(doc.data().ref.path);
-        console.log('FriendRef', friendRef);
-
-        friendRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              console.log('Document data:', doc.data());
-            } else {
-              // doc.data() will be undefined in this case
-              console.log('No such document!');
-            }
-          })
-          .catch((error) => {
-            console.log('Error getting document:', error);
-          });
-      });
-    });
-
-    // console.log('USER: ', user.displayName);
-    // console.log('IMG: ', user.photoURL);
     return (
       <Container maxWidth='sm'>
         {user ? (
@@ -135,4 +108,13 @@ class Profile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Profile);
+const mapState = (state) => ({
+  user: state.user.data,
+  userIsLoading: state.user.isLoading,
+});
+
+const mapDispatch = (dispatch) => ({
+  getUser: (id) => dispatch(getUser(id)),
+});
+
+export default connect(mapState, mapDispatch)(withStyles(styles)(Profile));
