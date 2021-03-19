@@ -1,9 +1,10 @@
 import './App.css';
 
-import Profile from './components/Profile';
 import { BrowserRouter, Route } from 'react-router-dom';
+
 import RestaurantDetails from './components/RestaurantDetails';
 import MainScreen from './components/MainScreen';
+import Profile from './components/Profile';
 
 function App() {
   return (
