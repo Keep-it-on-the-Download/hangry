@@ -3,7 +3,13 @@
   "name": "Create React App Sample",
   "icons": [
     {
-      "src": "/images/Hangry_Icon_512.png",
+      "src": "/images/icon_512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/maskable_icon.png",
+      "purpose": "any maskable",
       "type": "image/png",
       "sizes": "512x512"
     }
