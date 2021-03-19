@@ -18,7 +18,9 @@ import {
   Favorite,
   AddCircle,
 } from '@material-ui/icons';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+import { getRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
   container: {
@@ -31,6 +33,10 @@ const styles = (theme) => ({
 });
 
 class MainScreen extends React.Component {
+  componentDidMount() {
+    this.props.getRestaurants();
+    console.log('RESTAURANTS -->', this.props.restaurants);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -82,4 +88,12 @@ class MainScreen extends React.Component {
   }
 }
 
-export default withStyles(styles)(MainScreen);
+const mapState = (state) => ({
+  restaurants: state.restaurants.data,
+});
+
+const mapDispatch = (dispatch) => ({
+  getRestaurants: () => dispatch(getRestaurants()),
+});
+
+export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));
