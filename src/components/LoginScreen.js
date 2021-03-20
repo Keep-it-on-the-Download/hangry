@@ -2,9 +2,11 @@ import React from 'react';
 
 import { SignIn } from '../Authentication';
 import LoginForm from './LoginForm';
+import SignUp from './SignUp';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   login: {
@@ -14,11 +16,16 @@ const styles = (theme) => ({
 
 class LoginScreen extends React.Component {
   render() {
-    const { classes } = this.props;
-    console.log(classes);
+    //const { classes } = this.props;
+
     return (
       <Container maxWidth='sm'>
-        <p>Login or sign up below</p>
+        <p>
+          Login below or{' '}
+          <Link href='/signup' onClick={SignUp}>
+            Create An Account
+          </Link>
+        </p>
 
         <LoginForm />
 
