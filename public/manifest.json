@@ -14,6 +14,14 @@
       "sizes": "512x512"
     }
   ],
+  "shortcuts": [
+    {
+      "name": "New Session",
+      "short_name": "New Session",
+      "description": "Start a new swipe session with a friend",
+      "url": "/"
+    }
+  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
