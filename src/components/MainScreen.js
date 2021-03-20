@@ -14,12 +14,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
-  container: {
+  buttonContainer: {
     display: 'flex',
-    justifyContent: 'between',
-  },
-  icon: {
-    flexGrow: 1,
+    justifyContent: 'center',
   },
 });
 
@@ -44,7 +41,7 @@ class MainScreen extends React.Component {
             </CardContent>
           </Card>
         </Container>
-        <Container maxWidth='md'>
+        <Container maxWidth='md' className={classes.buttonContainer}>
           <Fab>
             <Close />
           </Fab>
@@ -53,7 +50,7 @@ class MainScreen extends React.Component {
           </Fab>
         </Container>
 
-        <Container maxWidth='sm'>
+        <Container maxWidth='sm' className={classes.buttonContainer}>
           <IconButton>
             <AddCircle />
             Decide with a friend
