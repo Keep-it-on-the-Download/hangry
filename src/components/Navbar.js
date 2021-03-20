@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { HomeRounded, AccountCircle, LocationOn } from '@material-ui/icons';
@@ -18,9 +20,9 @@ const Navbar = (props) => {
   const classes = useStyles();
 
   return (
-    <AppBar position='absolute' className={classes.root}>
+    <AppBar className={classes.root}>
       <Toolbar>
-        <IconButton className={classes.icon}>
+        <IconButton className={classes.icon} href='/'>
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
@@ -28,7 +30,7 @@ const Navbar = (props) => {
           <LocationOn />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton className={classes.icon}>
+        <IconButton className={classes.icon} href='/profile'>
           <AccountCircle />
         </IconButton>
       </Toolbar>
