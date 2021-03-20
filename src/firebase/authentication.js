@@ -6,7 +6,7 @@ import 'firebase/auth';
 import GoogleButton from 'react-google-button';
 
 import Button from '@material-ui/core/Button';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const auth = firebase.auth();
 
