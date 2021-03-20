@@ -6,7 +6,9 @@ import SignUp from './SignUp';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = (theme) => ({
   login: {
@@ -22,7 +24,7 @@ class LoginScreen extends React.Component {
       <Container maxWidth='sm'>
         <p>
           Login below or{' '}
-          <Link href='/signup' onClick={SignUp}>
+          <Link onClick={SignUp} component={RouterLink} to='/signup'>
             Create An Account
           </Link>
         </p>
