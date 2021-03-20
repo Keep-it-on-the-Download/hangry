@@ -1,23 +1,14 @@
 import React from 'react';
 import {
   Container,
-  AppBar,
   IconButton,
   Typography,
-  Toolbar,
   Card,
   CardMedia,
   CardContent,
   Fab,
 } from '@material-ui/core';
-import {
-  HomeRounded,
-  AccountCircle,
-  LocationOn,
-  Close,
-  Favorite,
-  AddCircle,
-} from '@material-ui/icons';
+import { Close, Favorite, AddCircle } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
