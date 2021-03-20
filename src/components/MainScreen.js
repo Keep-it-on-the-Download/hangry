@@ -1,34 +1,22 @@
 import React from 'react';
 import {
   Container,
-  AppBar,
   IconButton,
   Typography,
-  Toolbar,
   Card,
   CardMedia,
   CardContent,
   Fab,
 } from '@material-ui/core';
-import {
-  HomeRounded,
-  AccountCircle,
-  LocationOn,
-  Close,
-  Favorite,
-  AddCircle,
-} from '@material-ui/icons';
+import { Close, Favorite, AddCircle } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
-  container: {
+  buttonContainer: {
     display: 'flex',
-    justifyContent: 'between',
-  },
-  icon: {
-    flexGrow: 1,
+    justifyContent: 'center',
   },
 });
 
@@ -40,22 +28,7 @@ class MainScreen extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <>
-        <Container maxWidth='md'>
-          <AppBar position='absolute'>
-            <Toolbar className={classes.container}>
-              <IconButton className={classes.icon}>
-                <HomeRounded />
-              </IconButton>
-              <IconButton className={classes.icon}>
-                <LocationOn />
-              </IconButton>
-              <IconButton className={classes.icon}>
-                <AccountCircle />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-        </Container>
+      <React.Fragment>
         <Container maxWidth='md'>
           <Card>
             <CardMedia
@@ -68,7 +41,7 @@ class MainScreen extends React.Component {
             </CardContent>
           </Card>
         </Container>
-        <Container maxWidth='md'>
+        <Container maxWidth='md' className={classes.buttonContainer}>
           <Fab>
             <Close />
           </Fab>
@@ -77,13 +50,13 @@ class MainScreen extends React.Component {
           </Fab>
         </Container>
 
-        <Container maxWidth='sm'>
+        <Container maxWidth='sm' className={classes.buttonContainer}>
           <IconButton>
             <AddCircle />
             Decide with a friend
           </IconButton>
         </Container>
-      </>
+      </React.Fragment>
     );
   }
 }

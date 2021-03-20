@@ -1,6 +1,8 @@
 import React from 'react';
-import firebase from './Firebase';
+
+import firebase from './index';
 import 'firebase/auth';
+
 import GoogleButton from 'react-google-button';
 
 const auth = firebase.auth();
