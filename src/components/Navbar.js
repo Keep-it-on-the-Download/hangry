@@ -6,44 +6,34 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  title: {
-    textDecoration: 'none',
-    alignItems: 'center',
-    display: 'flex',
-
-    color: theme.palette.primary.contrastText,
-  },
-  logo: {
-    marginRight: theme.spacing(1),
-    height: 25,
-    width: 25,
-  },
-  button: {
-    color: theme.palette.primary.contrastText,
+  icon: {
+    color: theme.palette.secondary.main,
   },
   filler: {
     flexGrow: 1,
   },
 }));
 
-export default function Navbar() {
+const Navbar = (props) => {
   const classes = useStyles();
 
   return (
     <AppBar position='absolute' className={classes.root}>
       <Toolbar>
-        <IconButton>
+        <IconButton className={classes.icon}>
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton>
+        <IconButton className={classes.icon}>
           <LocationOn />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton>
+        <IconButton className={classes.icon}>
           <AccountCircle />
         </IconButton>
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default Navbar;
