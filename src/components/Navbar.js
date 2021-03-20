@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
@@ -22,7 +23,7 @@ const Navbar = (props) => {
   return (
     <AppBar className={classes.root}>
       <Toolbar>
-        <IconButton className={classes.icon} href='/'>
+        <IconButton className={classes.icon} component={Link} to='/'>
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
@@ -30,7 +31,7 @@ const Navbar = (props) => {
           <LocationOn />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton className={classes.icon} href='/profile'>
+        <IconButton className={classes.icon} component={Link} to='/profile'>
           <AccountCircle />
         </IconButton>
       </Toolbar>
