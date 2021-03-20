@@ -23,15 +23,25 @@ const Navbar = (props) => {
   return (
     <AppBar className={classes.root}>
       <Toolbar>
-        <IconButton className={classes.icon} component={Link} to='/'>
+        <IconButton
+          aria-label='Home'
+          className={classes.icon}
+          component={Link}
+          to='/'
+        >
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton className={classes.icon}>
+        <IconButton aria-label='Location' className={classes.icon}>
           <LocationOn />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton className={classes.icon} component={Link} to='/profile'>
+        <IconButton
+          aria-label='Profile'
+          className={classes.icon}
+          component={Link}
+          to='/profile'
+        >
           <AccountCircle />
         </IconButton>
       </Toolbar>
