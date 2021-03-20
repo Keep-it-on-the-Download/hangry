@@ -34,6 +34,7 @@ class MainScreen extends React.Component {
             <CardMedia
               component='img'
               src='https://s3-media2.fl.yelpcdn.com/bphoto/CPc91bGzKBe95aM5edjhhQ/o.jpg'
+              alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
             />
             <CardContent>
               <Typography>Name</Typography>
@@ -43,10 +44,10 @@ class MainScreen extends React.Component {
         </Container>
         <Container maxWidth='md' className={classes.buttonContainer}>
           <Fab>
-            <Close />
+            <Close aria-label='Dislike' />
           </Fab>
           <Fab>
-            <Favorite />
+            <Favorite aria-label='Like' />
           </Fab>
         </Container>
 
