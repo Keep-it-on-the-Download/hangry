@@ -5,12 +5,17 @@ import 'firebase/auth';
 
 import GoogleButton from 'react-google-button';
 
+import Button from '@material-ui/core/Button';
+import { Link, Redirect } from 'react-router-dom';
+
 const auth = firebase.auth();
 
 function SignIn() {
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    auth.signInWithPopup(provider).then(() => {
+      window.location.href = '/';
+    });
   };
 
   return (
@@ -20,7 +25,17 @@ function SignIn() {
 
 function SignOut() {
   return (
-    auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
+    auth.currentUser && (
+      <Button
+        onClick={() => auth.signOut()}
+        component={Link}
+        to='/login'
+        variant='contained'
+        color='primary'
+      >
+        Sign Out
+      </Button>
+    )
   );
 }
 

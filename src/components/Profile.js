@@ -5,6 +5,8 @@ import { getUser } from '../reducers/user';
 import firebase from '../firebase';
 import 'firebase/auth';
 
+import { SignOut } from '../firebase/authentication';
+
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -102,6 +104,7 @@ class Profile extends React.Component {
         ) : (
           <Typography variant='h1'>No User Found</Typography>
         )}
+        <SignOut />
       </Container>
     );
   }
