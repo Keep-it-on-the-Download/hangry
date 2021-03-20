@@ -40,22 +40,7 @@ class MainScreen extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <>
-        <Container maxWidth='md'>
-          <AppBar position='absolute'>
-            <Toolbar className={classes.container}>
-              <IconButton className={classes.icon}>
-                <HomeRounded />
-              </IconButton>
-              <IconButton className={classes.icon}>
-                <LocationOn />
-              </IconButton>
-              <IconButton className={classes.icon}>
-                <AccountCircle />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-        </Container>
+      <React.Fragment>
         <Container maxWidth='md'>
           <Card>
             <CardMedia
@@ -83,7 +68,7 @@ class MainScreen extends React.Component {
             Decide with a friend
           </IconButton>
         </Container>
-      </>
+      </React.Fragment>
     );
   }
 }

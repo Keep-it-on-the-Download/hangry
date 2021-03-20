@@ -1,6 +1,6 @@
 import React from 'react';
 //import firebase from '../Firebase';
-import { SignIn } from '../Authentication';
+import { SignIn } from '../firebase/authentication';
 
 // const auth = firebase.auth();
 //const db = firebase.firestore();

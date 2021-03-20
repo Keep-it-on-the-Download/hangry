@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
 
-import firebase from '../Firebase';
+import firebase from '../firebase';
 import 'firebase/auth';
-import 'firebase/firestore';
 
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';

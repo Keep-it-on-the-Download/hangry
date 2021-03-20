@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SignIn } from '../Authentication';
+import { SignIn } from '../firebase/authentication';
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 
