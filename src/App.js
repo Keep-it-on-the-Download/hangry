@@ -1,5 +1,3 @@
-import './App.css';
-
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import RestaurantDetails from './components/RestaurantDetails';
