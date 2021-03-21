@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-globals */
+/* eslint-disable no-undef */
 importScripts(
   'https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js'
 );

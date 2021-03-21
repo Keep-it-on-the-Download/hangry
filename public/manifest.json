@@ -1,6 +1,6 @@
 {
+  "name": "HAngry, the restaurant matching web app",
   "short_name": "HAngry",
-  "name": "Food decision PWA",
   "icons": [
     {
       "src": "/images/icon_512.png",
