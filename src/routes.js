@@ -5,7 +5,7 @@ import RestaurantDetails from './components/RestaurantDetails';
 import MainScreen from './components/MainScreen';
 import Profile from './components/Profile';
 import LoginScreen from './components/LoginScreen';
-import SignUp from './components/SignUp';
+import SignUpScreen from './components/SignUpScreen';
 
 import firebase from './firebase';
 import 'firebase/auth';
@@ -32,7 +32,7 @@ const Routes = () => {
       <Route
         exact
         path='/signup'
-        render={(routeProps) => <SignUp {...routeProps} />}
+        render={(routeProps) => <SignUpScreen {...routeProps} />}
       />
       <Route exact path='/profile'>
         {user ? <Profile /> : <Redirect to='/login' />}

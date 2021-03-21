@@ -33,9 +33,7 @@ function SignIn() {
     });
   };
 
-  return (
-    <GoogleButton onClick={loginWithGoogle}>Login With Google</GoogleButton>
-  );
+  return <GoogleButton onClick={loginWithGoogle}></GoogleButton>;
 }
 
 function SignOut() {

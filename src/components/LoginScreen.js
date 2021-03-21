@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SignIn } from '../firebase/authentication';
 import LoginForm from './LoginForm';
-import SignUp from './SignUp';
+import SignUpScreen from './SignUpScreen';
 
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -24,7 +24,7 @@ class LoginScreen extends React.Component {
       <Container maxWidth='sm'>
         <p>
           Login below or{' '}
-          <Link onClick={SignUp} component={RouterLink} to='/signup'>
+          <Link onClick={SignUpScreen} component={RouterLink} to='/signup'>
             Create An Account
           </Link>
         </p>
