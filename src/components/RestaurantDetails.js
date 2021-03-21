@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,16 +14,18 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+//icons
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import Grid from '@material-ui/core/Grid';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
-import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({
   body: {
-    background: '#7984C3',
-    height: '750px',
+    background: '#FFFFFF',
   },
   root: {
     maxWidth: 345,
@@ -36,7 +38,7 @@ const styles = (theme) => ({
     height: '100',
   },
   title: {
-    font: 'Proxima',
+    fontFamily: 'avenir',
   },
   address: {
     color: '#888888',
@@ -47,8 +49,12 @@ const styles = (theme) => ({
     width: '100%',
     height: '100%',
   },
-  content: {
+  category: {
     color: '#888888',
+    fontFamily: 'avenir',
+  },
+  content: {
+    fontFamily: 'avenir',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -82,23 +88,22 @@ class RestaurantDetails extends React.Component {
             <CardContent>
               <Grid container>
                 <Grid align='justify' item xs={4}>
-                  <p className={classes.content}>Price:</p>
-                  <p className={classes.content}>Address:</p>
-                  <p className={classes.content}>Cuisine:</p>
-                  <p className={classes.content}>Distance:</p>
-                  <p className={classes.content}>Distance:</p>
+                  <p className={classes.category}>Price:</p>
+                  <p className={classes.category}>Address:</p>
+                  <p className={classes.category}>Cuisine:</p>
+                  <p className={classes.category}>Distance:</p>
                 </Grid>
                 <Grid align='justify' item xs={8}>
-                  <p>
+                  <p className={classes.content}>
                     <strong>$</strong>
                   </p>
-                  <p>
+                  <p className={classes.content}>
                     <strong>2485 Telegraph Ave</strong>
                   </p>
-                  <p>
+                  <p className={classes.content}>
                     <strong>Hawaiian</strong>
                   </p>
-                  <p>
+                  <p className={classes.content}>
                     <strong>0.15 miles</strong>
                   </p>
                 </Grid>
@@ -109,11 +114,18 @@ class RestaurantDetails extends React.Component {
             </CardContent>
           </Card>
           <CardActions disableSpacing>
+            <IconButton
+              aria-label='back to main screen'
+              component={Link}
+              to='/'
+            >
+              <ArrowBackRoundedIcon />
+            </IconButton>
             <IconButton aria-label='add to favorites'>
-              <FavoriteIcon />
+              <FavoriteIcon style={{ fill: '#FF85A6' }} />
             </IconButton>
             <IconButton aria-label='Go to yelp'>
-              <FastfoodIcon />
+              <FastfoodIcon style={{ fill: '#FF9E30' }} />
             </IconButton>
             <Button
               className={classes.directions}
