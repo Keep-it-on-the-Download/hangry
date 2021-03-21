@@ -49,7 +49,7 @@ class SignUpForm extends React.Component {
           />
         </div>
 
-        <button type='submit'>Submit</button>
+        <button type='submit'>Sign Up</button>
       </form>
     );
   }
