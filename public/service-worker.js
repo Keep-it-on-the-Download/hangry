@@ -1,42 +1,27 @@
-const CACHE_NAME = 'version-1';
-const urlsToCache = ['index.html', 'offline.html'];
+/* eslint-disable no-restricted-globals */
+importScripts(
+  'https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js'
+);
 
-const self = this;
+/*
+ * Use this to toggle workbox logs on and off
+ * in localhost evironment as they can be quite
+ * obnoxious.
+ */
+workbox.setConfig({ debug: false });
 
-// Install SW
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('Opened cache');
+// Include offline.html in the manifest
+workbox.precaching.precacheAndRoute([
+  { url: '/index.html', revision: null },
+  { url: '/offline.html', revision: null },
+]);
 
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+workbox.recipes.pageCache();
 
-// Listen for requests
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then(() => {
-      return fetch(event.request).catch(() => caches.match('offline.html'));
-    })
-  );
-});
+workbox.recipes.googleFontsCache();
 
-// Activate the SW
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [];
-  cacheWhitelist.push(CACHE_NAME);
+workbox.recipes.staticResourceCache();
 
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
-        })
-      )
-    )
-  );
-});
+workbox.recipes.imageCache();
+
+workbox.recipes.offlineFallback();

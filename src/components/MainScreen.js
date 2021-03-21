@@ -22,9 +22,10 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    this.props.getRestaurants();
-    console.log('RESTAURANTS -->', this.props.restaurants);
+    // commented out for failing uncomment when working
+    // this.props.getRestaurants();
   }
+
   render() {
     const { classes } = this.props;
     return (
