@@ -1,25 +1,13 @@
 import React from 'react';
-//import firebase from '../Firebase';
-import { SignIn } from '../firebase/authentication';
 
-// const auth = firebase.auth();
-//const db = firebase.firestore();
-//const usersRef = db.collection('users');
-
-// const addUserToFirestore = (name, email) => {
-//   usersRef.doc(email).set({
-//     firstName: name.firstName,
-//     lastName: name.lastName,
-//     email,
-//   });
-// };
+import SignUpForm from './SignUpForm';
 
 function SignUp() {
   // google auth
   return (
     <div>
       <h3>Create an Account</h3>
-      <SignIn />
+      <SignUpForm />
     </div>
   );
   // add details to firestore

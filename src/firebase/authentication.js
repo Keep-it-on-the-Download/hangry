@@ -10,6 +10,12 @@ import { Link } from 'react-router-dom';
 
 const auth = firebase.auth();
 
+function CreateUser(email, password) {
+  auth.createUserWithEmailAndPassword(email, password).then(() => {
+    window.location.href = '/';
+  });
+}
+
 function SignIn() {
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -39,4 +45,4 @@ function SignOut() {
   );
 }
 
-export { SignIn, SignOut };
+export { SignIn, SignOut, CreateUser };
