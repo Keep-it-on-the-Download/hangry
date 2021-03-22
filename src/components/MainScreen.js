@@ -23,25 +23,29 @@ const styles = (theme) => ({
 class MainScreen extends React.Component {
   componentDidMount() {
     // commented out for failing uncomment when working
-    // this.props.getRestaurants();
+    this.props.getRestaurants();
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, restaurants } = this.props;
+    const businesses = restaurants.businesses || [];
+
     return (
       <React.Fragment>
-        <Container maxWidth='md'>
-          <Card>
-            <CardMedia
-              component='img'
-              src='https://s3-media2.fl.yelpcdn.com/bphoto/CPc91bGzKBe95aM5edjhhQ/o.jpg'
-              alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
-            />
-            <CardContent>
-              <Typography>Name</Typography>
-              <Typography>Price</Typography>
-            </CardContent>
-          </Card>
+        <Container maxWidth='sm'>
+          {businesses.map((business) => (
+            <Card key={business.id}>
+              <CardMedia
+                component='img'
+                src={business.image_url}
+                alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
+              />
+              <CardContent>
+                <Typography>{business.name}</Typography>
+                <Typography>{business.price}</Typography>
+              </CardContent>
+            </Card>
+          ))}
         </Container>
         <Container maxWidth='md' className={classes.buttonContainer}>
           <Fab>
