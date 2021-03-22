@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
   const classes = useStyles();
 
+  const getPosition = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { longitude, latitude, heading, speed, accuracy } = position.coords;
+      console.log(
+        `lon: ${longitude}, lat: ${latitude}, hdg: ${heading}, spd: ${speed}, acc: ${accuracy}`
+      );
+    });
+  };
+
   return (
     <AppBar className={classes.root}>
       <Toolbar>
@@ -32,7 +41,11 @@ const Navbar = (props) => {
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
-        <IconButton aria-label='Location' className={classes.icon}>
+        <IconButton
+          aria-label='Location'
+          className={classes.icon}
+          onClick={() => getPosition()}
+        >
           <LocationOn />
         </IconButton>
         <div className={classes.filler} />

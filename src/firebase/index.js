@@ -1,7 +1,5 @@
 import firebase from 'firebase/app';
 
-console.log('Loaded firebase.js !');
-
 const firebaseConfig = {
   apiKey: 'AIzaSyBsaibDLi7twQitBYvq9AHp5oPyZFHB0eE',
   authDomain: 'hangry-b39ac.firebaseapp.com',
@@ -14,5 +12,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+console.log('%cFirebase initialized', 'color: blue');
 
 export default firebase;

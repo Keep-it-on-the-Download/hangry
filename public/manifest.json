@@ -1,6 +1,6 @@
 {
+  "name": "HAngry, the restaurant matching web app",
   "short_name": "HAngry",
-  "name": "Food decision PWA",
   "icons": [
     {
       "src": "/images/icon_512.png",
@@ -11,7 +11,15 @@
       "src": "/images/maskable_icon.png",
       "purpose": "any maskable",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Session",
+      "short_name": "New Session",
+      "description": "Start a new swipe session with a friend",
+      "url": "/"
     }
   ],
   "start_url": ".",

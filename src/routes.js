@@ -15,8 +15,6 @@ const auth = firebase.auth();
 
 const Routes = () => {
   const [user] = useAuthState(auth);
-  console.log('user: ', user);
-
   return (
     <Switch>
       <Route
