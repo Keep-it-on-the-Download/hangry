@@ -14,10 +14,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
-  buttonContainer: {
+  container: {
     display: 'flex',
     justifyContent: 'center',
   },
+  cardContainer: {},
 });
 
 class MainScreen extends React.Component {
@@ -34,7 +35,7 @@ class MainScreen extends React.Component {
       <React.Fragment>
         <Container maxWidth='sm'>
           {businesses.map((business) => (
-            <Card key={business.id}>
+            <Card key={business.id} className={classes.cardContainer}>
               <CardMedia
                 component='img'
                 src={business.image_url}
@@ -47,7 +48,7 @@ class MainScreen extends React.Component {
             </Card>
           ))}
         </Container>
-        <Container maxWidth='md' className={classes.buttonContainer}>
+        <Container maxWidth='md' className={classes.container}>
           <Fab>
             <Close aria-label='Dislike' />
           </Fab>
@@ -56,7 +57,7 @@ class MainScreen extends React.Component {
           </Fab>
         </Container>
 
-        <Container maxWidth='sm' className={classes.buttonContainer}>
+        <Container maxWidth='sm' className={classes.container}>
           <IconButton>
             <AddCircle />
             Decide with a friend
