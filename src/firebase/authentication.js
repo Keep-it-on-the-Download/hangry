@@ -7,14 +7,15 @@ import GoogleButton from 'react-google-button';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { addGoogleUserToFirestore } from './firestore';
+import { addGoogleUserToFirestore, addUserToFirestore } from './firestore';
 
 const auth = firebase.auth();
 
 // create a user with email
-function CreateUser(email, password) {
+function CreateUser(email, password, firstName, lastName) {
   auth.createUserWithEmailAndPassword(email, password).then(() => {
     window.location.href = '/';
+    addUserToFirestore({ email, firstName, lastName });
   });
 }
 
