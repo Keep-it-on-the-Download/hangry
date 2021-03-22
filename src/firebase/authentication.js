@@ -7,6 +7,7 @@ import GoogleButton from 'react-google-button';
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { addGoogleUserToFirestore } from './firestore';
 
 const auth = firebase.auth();
 
@@ -30,6 +31,8 @@ function SignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then(() => {
       window.location.href = '/';
+
+      addGoogleUserToFirestore();
     });
   };
 
