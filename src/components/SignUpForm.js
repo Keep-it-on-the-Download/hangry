@@ -1,14 +1,14 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
-import { LoginWithEmailAndPassword } from '../firebase/authentication';
+import { CreateUser } from '../firebase/authentication';
 
 const defaultState = {
   email: '',
   password: '',
 };
 
-class LoginForm extends React.Component {
+class SignUpForm extends React.Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
@@ -23,7 +23,7 @@ class LoginForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    LoginWithEmailAndPassword(this.state.email, this.state.password);
+    CreateUser(this.state.email, this.state.password);
     this.setState(defaultState);
   }
 
@@ -31,6 +31,8 @@ class LoginForm extends React.Component {
     return (
       <form noValidate autoComplete='off' onSubmit={this.handleSubmit}>
         <div>
+          <TextField label='first name' variant='filled' />
+          <TextField label='last name' variant='filled' />
           <TextField
             type='email'
             label='email'
@@ -47,10 +49,10 @@ class LoginForm extends React.Component {
           />
         </div>
 
-        <button type='submit'>Login</button>
+        <button type='submit'>Sign Up</button>
       </form>
     );
   }
 }
 
-export default LoginForm;
+export default SignUpForm;

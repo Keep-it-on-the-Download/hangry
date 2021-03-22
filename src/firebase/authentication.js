@@ -10,6 +10,21 @@ import { Link } from 'react-router-dom';
 
 const auth = firebase.auth();
 
+// create a user with email
+function CreateUser(email, password) {
+  auth.createUserWithEmailAndPassword(email, password).then(() => {
+    window.location.href = '/';
+  });
+}
+
+// Login with email/password
+function LoginWithEmailAndPassword(email, password) {
+  auth.signInWithEmailAndPassword(email, password).then(() => {
+    window.location.href = '/';
+  });
+}
+
+//Sign in using Google OAuth
 function SignIn() {
   const loginWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -18,9 +33,7 @@ function SignIn() {
     });
   };
 
-  return (
-    <GoogleButton onClick={loginWithGoogle}>Login With Google</GoogleButton>
-  );
+  return <GoogleButton onClick={loginWithGoogle}></GoogleButton>;
 }
 
 function SignOut() {
@@ -39,4 +52,4 @@ function SignOut() {
   );
 }
 
-export { SignIn, SignOut };
+export { SignIn, SignOut, CreateUser, LoginWithEmailAndPassword };
