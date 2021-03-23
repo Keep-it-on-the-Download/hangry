@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
+import { getFriends } from '../reducers/friends';
 
 import firebase from '../firebase';
 import 'firebase/auth';
@@ -128,14 +129,7 @@ class Profile extends React.Component {
                 </Button>
               </ListItem>
               <Divider variant='fullWidth' component='li' />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <AccountCircle />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary='First Last' secondary='Some info' />
-              </ListItem>
+              {/* {user} */}
             </List>
           </React.Fragment>
         ) : (
@@ -151,10 +145,13 @@ class Profile extends React.Component {
 const mapState = (state) => ({
   user: state.user.data,
   userIsLoading: state.user.isLoading,
+  friends: state.friends.data,
+  friendsAreLoading: state.friends.isLoading,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
+  getFriends: (id) => dispatch(getFriends(id)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Profile));
