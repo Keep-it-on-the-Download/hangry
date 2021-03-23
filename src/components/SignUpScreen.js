@@ -12,7 +12,6 @@ function SignUp() {
       <SignIn />
     </div>
   );
-  // add details to firestore
 }
 
 export default SignUp;
