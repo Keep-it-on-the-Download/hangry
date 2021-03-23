@@ -18,7 +18,21 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  cardContainer: {},
+  buttonContainer: {
+    marginTop: '75vh',
+  },
+  cardContainer: {
+    position: 'absolute',
+    marginTop: '10vh',
+    maxHeight: '450px',
+    maxWidth: '350px',
+  },
+  dislike: {
+    marginRight: '3vh',
+  },
+  like: {
+    marginLeft: '3vh',
+  },
 });
 
 class MainScreen extends React.Component {
@@ -33,13 +47,14 @@ class MainScreen extends React.Component {
 
     return (
       <React.Fragment>
-        <Container maxWidth='sm'>
+        <Container maxWidth='sm' className={classes.container}>
           {businesses.map((business) => (
             <Card key={business.id} className={classes.cardContainer}>
               <CardMedia
                 component='img'
                 src={business.image_url}
                 alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
+                style={{ width: '300px', height: '350px' }}
               />
               <CardContent>
                 <Typography>{business.name}</Typography>
@@ -48,21 +63,21 @@ class MainScreen extends React.Component {
             </Card>
           ))}
         </Container>
-        <Container maxWidth='md' className={classes.container}>
-          <Fab>
-            <Close aria-label='Dislike' />
+        <Container maxWidth='md' className={classes.buttonContainer}>
+          <Fab className={classes.dislike} style={{ fill: 'white' }}>
+            <Close aria-label='Dislike' style={{ fill: '#A2BFE4' }} />
           </Fab>
-          <Fab>
-            <Favorite aria-label='Like' />
+          <Fab className={classes.like}>
+            <Favorite aria-label='Like' style={{ fill: '#FF919B' }} />
           </Fab>
         </Container>
-
-        <Container maxWidth='sm' className={classes.container}>
-          <IconButton>
-            <AddCircle />
-            Decide with a friend
-          </IconButton>
-        </Container>
+        {/* assuming we will keep track of friendAdded variable */}
+        {/* {friendAdded && <Container maxWidth='md' className={props.classes.addFriend}>
+        <IconButton>
+          <AddCircle />
+          Decide with a friend
+        </IconButton>
+      </Container>} */}
       </React.Fragment>
     );
   }
