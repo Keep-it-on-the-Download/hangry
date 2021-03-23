@@ -19,6 +19,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 // Temp Profile Pic
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -26,6 +27,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 // Icons
 import Settings from '@material-ui/icons/Settings';
 import Notifications from '@material-ui/icons/Notifications';
+
+import InviteFriends from './InviteFriends';
 
 const styles = (theme) => ({
   profile: {
@@ -50,21 +53,45 @@ const styles = (theme) => ({
     width: theme.spacing(13),
     height: theme.spacing(13),
   },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 });
 
 class Profile extends React.Component {
-  componentDidMount = () => {
-    this.props.getUser('abielik');
-    console.log('Store User:', this.props.user);
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+    };
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleOpen = () => {
+    this.setState({ open: true });
   };
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  componentDidMount() {
+    const email = firebase.auth().currentUser.email;
+    this.props.getUser(email);
+  }
+
   render() {
-    const { classes } = this.props;
-    const user = firebase.auth().currentUser;
+    const { classes, user, userIsLoading } = this.props;
+
+    console.log('USER -->', user);
+    console.log('USER IS LOADING -->', userIsLoading);
 
     return (
       <Container maxWidth='sm'>
-        {user ? (
+        {!userIsLoading ? (
           <React.Fragment>
             <Grid container className={classes.profile}>
               <Grid item xs={6} className={classes.settings}>
@@ -85,11 +112,21 @@ class Profile extends React.Component {
                 />
               </Grid>
               <Grid item xs={12}>
-                {user.displayName}
+                <Typography>{user.displayName}</Typography>
               </Grid>
             </Grid>
             <List>
-              <ListItem>Friends</ListItem>
+              <ListItem className={classes.header}>
+                <Typography>Friends</Typography>
+                <Button
+                  variant='contained'
+                  size='small'
+                  color='primary'
+                  onClick={this.handleOpen}
+                >
+                  Add Friends
+                </Button>
+              </ListItem>
               <Divider variant='fullWidth' component='li' />
               <ListItem>
                 <ListItemAvatar>
@@ -105,6 +142,7 @@ class Profile extends React.Component {
           <Typography variant='h1'>No User Found</Typography>
         )}
         <SignOut />
+        <InviteFriends open={this.state.open} onClose={this.handleClose} />
       </Container>
     );
   }

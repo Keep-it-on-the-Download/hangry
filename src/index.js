@@ -14,7 +14,7 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       light: '#cb475a',
-      main: '#be1931',
+      main: '#ff6961',
       dark: '#851122',
       contrastText: '#fff',
     },
@@ -24,6 +24,9 @@ const theme = createMuiTheme({
       dark: '#b28e35',
       contrastText: '#000',
     },
+  },
+  typography: {
+    fontFamily: ['Avenir'].join(','),
   },
 });
 

@@ -11,6 +11,7 @@ importScripts(
  */
 workbox.setConfig({ debug: false });
 
+// Custom precaching
 // Include offline.html in the manifest
 workbox.precaching.precacheAndRoute([
   { url: '/index.html', revision: null },

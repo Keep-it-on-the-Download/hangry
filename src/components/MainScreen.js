@@ -8,12 +8,17 @@ import {
   CardContent,
   Fab,
 } from '@material-ui/core';
-import { Close, Favorite, AddCircle } from '@material-ui/icons';
+import { Close, Favorite, AddCircle, Star } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -22,7 +27,7 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    // commented out for failing uncomment when working
+    // commented out for failing. uncomment when working
     // this.props.getRestaurants();
   }
 
@@ -43,15 +48,17 @@ class MainScreen extends React.Component {
             </CardContent>
           </Card>
         </Container>
-        <Container maxWidth='md' className={classes.buttonContainer}>
-          <Fab>
+        <Container maxWidth='md' className={classes.root}>
+          <Fab color='primary'>
             <Close aria-label='Dislike' />
           </Fab>
-          <Fab>
+          <Fab color='primary' size='medium'>
+            <Star aria-label='Star' />
+          </Fab>
+          <Fab color='primary'>
             <Favorite aria-label='Like' />
           </Fab>
         </Container>
-
         <Container maxWidth='sm' className={classes.buttonContainer}>
           <IconButton>
             <AddCircle />

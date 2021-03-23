@@ -13,6 +13,7 @@ const gotUser = (user) => ({
 export const getUser = (id) => {
   return async (dispatch) => {
     try {
+      console.log('EMAIL: ', id);
       const userRef = db.collection('users').doc(id);
       const doc = await userRef.get();
       dispatch(gotUser(doc.data()));

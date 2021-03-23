@@ -18,11 +18,12 @@ export const getRestaurants = () => {
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+            Authorization: `Bearer ${'X4WiSe_RRFmQewagsdvv74hIJ_10rCbnsXzgreokPG3WIYEJ2sNmgtYAFVI44lKI1MEhAHv6CcljzhsHh5mEZB8gSrHm1mBCuyJ0okP_iq08TQCx8c60BOVgTwFVYHYx'}`,
           },
           params: {
-            location: 'NYC',
-            categories: 'breakfast_brunch',
+            latitude: 40.73108511040957,
+            longitude: -73.98939547296847,
+            categories: 'food',
           },
         }
       );
