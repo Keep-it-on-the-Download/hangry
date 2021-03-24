@@ -37,6 +37,7 @@ export async function createSession() {
       .doc(currentUser.displayName)
       .set({
         user1: firestore.doc(`users/${currentUser.email}`),
-      });
+      })
+      .then(console.log('session started'));
   }
 }
