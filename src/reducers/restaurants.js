@@ -11,6 +11,7 @@ const gotRestaurants = (restaurants) => ({
   restaurants,
 });
 
+// ******** TODO: Move Yelp API key to secure location **********
 export const getRestaurants = () => {
   return async (dispatch) => {
     try {

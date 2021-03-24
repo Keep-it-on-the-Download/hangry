@@ -22,6 +22,7 @@ export async function addGoogleUserToFirestore() {
   const userRef = firestore.collection('users').doc(currentUser.email);
   // check if user exists as a doc in FIRESTORE
   const existingUser = await checkUserExists(userRef);
+
   if (!existingUser) {
     const { email, displayName, photoURL } = currentUser;
     // since user doc doesn't exist, set them up in FIRESTORE
@@ -37,7 +38,7 @@ export async function addGoogleUserToFirestore() {
 export async function addUserToFirestore(user) {
   const currentUser = auth.currentUser;
   // COLLECTION/DOCUMENT
-  // USERS     /USER.EMAIL
+  // USERS    /USER.EMAIL
   const userRef = firestore.collection('users').doc(currentUser.email);
   const existingUser = await checkUserExists(userRef);
 

@@ -28,7 +28,10 @@ export async function createSession() {
     // since session doc doesn't exist, set up the fields in the collection
     sessionRef.set({
       sentBatches: [],
-      preferences: '',
+      preferences: {
+        cuisine: ['italian', 'sushi'],
+        distance: '5 miles',
+      },
       liked: [],
     });
     // add members collection to session doc. The first user doc will be added to the subcollection with user's displayName

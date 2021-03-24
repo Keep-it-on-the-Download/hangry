@@ -15,13 +15,13 @@ const auth = firebase.auth();
 function CreateUser(email, password, firstName, lastName) {
   // authenticates with firebase then redirects to home screen
   auth.createUserWithEmailAndPassword(email, password).then(() => {
-    window.location.href = '/';
     addUserToFirestore({
       email,
       firstName,
       lastName,
     });
   });
+  window.location.href = '/';
 }
 
 // Login with email/password
@@ -37,11 +37,14 @@ function SignIn() {
   const loginWithGoogle = () => {
     // authenticates with firebase then redirects to home screen
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(() => {
-      window.location.href = '/';
-
-      addGoogleUserToFirestore();
-    });
+    auth
+      .signInWithPopup(provider)
+      .then(() => {
+        addGoogleUserToFirestore();
+      })
+      .then(() => {
+        window.location.href = '/';
+      });
   };
 
   return <GoogleButton onClick={loginWithGoogle}></GoogleButton>;
