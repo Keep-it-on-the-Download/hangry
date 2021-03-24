@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import { HomeRounded, AccountCircle, LocationOn } from '@material-ui/icons';
+import { HomeRounded, AccountCircle } from '@material-ui/icons';
+// import LocationOn from '@material-ui/icons';
+// import ButtonGroup from '@material-ui/core/ButtonGroup';
+// import Button from '@material-ui/core/Button';
 
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Button from '@material-ui/core/Button';
-
-import ContactsIcon from '@material-ui/icons/Contacts';
+// import ContactsIcon from '@material-ui/icons/Contacts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,30 +35,30 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
   const classes = useStyles();
 
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { longitude, latitude } = position.coords;
-      console.log(
-        `%cLongitude: ${longitude} --- Latitude: ${latitude}`,
-        'color: blue'
-      );
-    });
-    // Link to redirect to google maps
-    // https://www.google.com/maps/dir/?api=1&origin={orgn.lon,orgn.lat}&destination={dest.lon, dest.lat}
-  };
+  // const getLocation = () => {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     const { longitude, latitude } = position.coords;
+  //     console.log(
+  //       `%cLongitude: ${longitude} --- Latitude: ${latitude}`,
+  //       'color: blue'
+  //     );
+  //   });
+  //   // Link to redirect to google maps
+  //   // https://www.google.com/maps/dir/?api=1&origin={orgn.lon,orgn.lat}&destination={dest.lon, dest.lat}
+  // };
 
-  const getContacts = async () => {
-    const props = ['name', 'email', 'tel', 'address', 'icon'];
-    const opts = { multiple: true };
-    const supported = 'contacts' in navigator && 'ContactsManager' in window;
+  // const getContacts = async () => {
+  //   const props = ['name', 'email', 'tel', 'address', 'icon'];
+  //   const opts = { multiple: true };
+  //   const supported = 'contacts' in navigator && 'ContactsManager' in window;
 
-    if (supported) {
-      const contacts = await navigator.contacts.select(props, opts);
-      console.table(contacts);
-    } else {
-      console.log('%cContacts Unsupported', 'color: #FF8C00');
-    }
-  };
+  //   if (supported) {
+  //     const contacts = await navigator.contacts.select(props, opts);
+  //     console.table(contacts);
+  //   } else {
+  //     console.log('%cContacts Unsupported', 'color: #FF8C00');
+  //   }
+  // };
 
   return (
     <AppBar className={classes.root}>
@@ -72,7 +72,7 @@ const Navbar = (props) => {
           <HomeRounded />
         </IconButton>
         <div className={classes.filler} />
-        <ButtonGroup
+        {/* <ButtonGroup
           color='secondary'
           aria-label='outlined secondary button group'
         >
@@ -94,7 +94,7 @@ const Navbar = (props) => {
           >
             Get Contacts
           </Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
         <div className={classes.filler} />
         <IconButton
           aria-label='Profile'

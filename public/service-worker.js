@@ -22,7 +22,7 @@ workbox.recipes.pageCache();
 
 workbox.recipes.googleFontsCache();
 
-workbox.recipes.staticResourceCache();
+// workbox.recipes.staticResourceCache();
 
 workbox.recipes.imageCache();
 
