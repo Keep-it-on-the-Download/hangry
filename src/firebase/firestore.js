@@ -26,11 +26,15 @@ export async function addGoogleUserToFirestore() {
   if (!existingUser) {
     const { email, displayName, photoURL } = currentUser;
     // since user doc doesn't exist, set them up in FIRESTORE
-    userRef.set({
-      email,
-      displayName,
-      photoURL,
-    });
+    userRef
+      .set({
+        email,
+        displayName,
+        photoURL,
+      })
+      .then(() => {
+        window.location.href = '/';
+      });
   }
 }
 
@@ -44,9 +48,13 @@ export async function addUserToFirestore(user) {
 
   if (!existingUser) {
     const { email, firstName, lastName } = user;
-    userRef.set({
-      email,
-      displayName: `${firstName} ${lastName}`,
-    });
+    userRef
+      .set({
+        email,
+        displayName: `${firstName} ${lastName}`,
+      })
+      .then(() => {
+        window.location.href = '/';
+      });
   }
 }
