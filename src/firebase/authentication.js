@@ -14,14 +14,18 @@ const auth = firebase.auth();
 // create a user with email
 function CreateUser(email, password, firstName, lastName) {
   // authenticates with firebase then redirects to home screen
-  auth.createUserWithEmailAndPassword(email, password).then(() => {
-    addUserToFirestore({
-      email,
-      firstName,
-      lastName,
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      addUserToFirestore({
+        email,
+        firstName,
+        lastName,
+      });
+    })
+    .finally(() => {
+      window.location.href = '/';
     });
-  });
-  window.location.href = '/';
 }
 
 // Login with email/password
@@ -42,7 +46,7 @@ function SignIn() {
       .then(() => {
         addGoogleUserToFirestore();
       })
-      .then(() => {
+      .finally(() => {
         window.location.href = '/';
       });
   };
