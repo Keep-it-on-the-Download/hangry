@@ -20,7 +20,7 @@ export async function createSession() {
   // using FIRESTORE, grab currentUser's email address to use as reference
   const sessionRef = firestore
     .collection('sessions')
-    .doc(`${currentUser.displayName}'s Party`);
+    .doc(`${currentUser.email}'s Party`);
 
   //check if session exists as a doc in "sessions" collection
   const existingDoc = await checkSessionExists(sessionRef);
