@@ -23,8 +23,8 @@ function CreateUser(email, password, firstName, lastName) {
         lastName,
       });
     })
-    .finally(() => {
-      window.location.href = '/';
+    .catch((error) => {
+      console.log('error, ', error);
     });
 }
 
@@ -46,8 +46,8 @@ function SignIn() {
       .then(() => {
         addGoogleUserToFirestore();
       })
-      .finally(() => {
-        window.location.href = '/';
+      .catch((error) => {
+        console.log('Google error, ', error);
       });
   };
 
