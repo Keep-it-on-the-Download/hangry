@@ -31,5 +31,12 @@ export async function createSession() {
       preferences: '',
       liked: [],
     });
+    // add members collection to session doc. The first user doc will be added to the subcollection with user's displayName
+    sessionRef
+      .collection('members')
+      .doc(currentUser.displayName)
+      .set({
+        user1: firestore.doc(`users/${currentUser.email}`),
+      });
   }
 }

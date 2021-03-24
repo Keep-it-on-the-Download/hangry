@@ -36,6 +36,8 @@ export async function addGoogleUserToFirestore() {
 // same function as above but for users who create account with email/password
 export async function addUserToFirestore(user) {
   const currentUser = auth.currentUser;
+  // COLLECTION/DOCUMENT
+  // USERS     /USER.EMAIL
   const userRef = firestore.collection('users').doc(currentUser.email);
   const existingUser = await checkUserExists(userRef);
 
