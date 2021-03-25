@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
-import { listenForRequests } from '../reducers/friendRequests';
+import { listenForRequests, getRequests } from '../reducers/friendRequests';
 
 import { Link } from 'react-router-dom';
 
@@ -57,6 +57,7 @@ class Profile extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
     this.props.getUser(email);
+    this.props.getRequests(email);
     this.props.listenForRequests(email);
   }
 
@@ -114,6 +115,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
+  getRequests: (id) => dispatch(getRequests(id)),
   listenForRequests: (id) => dispatch(listenForRequests(id)),
 });
 
