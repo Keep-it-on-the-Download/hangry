@@ -18,6 +18,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 
 import SearchIcon from '@material-ui/icons/Search';
+import CheckIcon from '@material-ui/icons/Check';
 
 import { findUsers, clearResults } from '../reducers/searchResult';
 import { sendRequest } from '../reducers/friendRequests';
@@ -65,6 +66,12 @@ const styles = (theme) => ({
     margin: theme.spacing(2),
     textAlign: 'center',
   },
+  selected: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    opacity: 0.75,
+  },
 });
 
 const initialState = { query: '', selection: [] };
@@ -100,8 +107,13 @@ class InviteFriends extends React.Component {
   }
 
   handleSelect(user) {
-    if (this.state.selection.includes(user)) return;
-    this.setState({ selection: [...this.state.selection, user] });
+    this.state.selection.indexOf(user) >= 0
+      ? this.setState({
+          selection: this.state.selection.filter(
+            (selected) => selected !== user
+          ),
+        })
+      : this.setState({ selection: [...this.state.selection, user] });
   }
 
   handleSubmit() {
@@ -148,18 +160,26 @@ class InviteFriends extends React.Component {
         <DialogContent>
           <List>
             {!resultsLoading && searchResult.length ? (
-              searchResult.map((result) => {
+              searchResult.map((user) => {
+                const selected = this.state.selection.includes(user);
                 return (
                   <ListItem
                     button
-                    onClick={() => this.handleSelect(result)}
-                    key={result.id}
+                    onClick={() => this.handleSelect(user)}
+                    key={user.id}
                   >
                     <ListItemAvatar>
-                      <Avatar alt={result.displayName} src={result.photoURL} />
+                      <Avatar alt={user.displayName} src={user.photoURL} />
+                      {selected ? (
+                        <Avatar className={classes.selected}>
+                          <CheckIcon />
+                        </Avatar>
+                      ) : (
+                        ''
+                      )}
                     </ListItemAvatar>
                     <ListItemText
-                      primary={`${result.displayName}`}
+                      primary={`${user.displayName}`}
                       secondary='Some info'
                     />
                   </ListItem>
