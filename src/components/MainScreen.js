@@ -12,6 +12,7 @@ import { Close, Favorite, AddCircle, Star } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
+import { createSession } from '../firebase/firestoreSession';
 
 const styles = (theme) => ({
   root: {
@@ -63,8 +64,14 @@ class MainScreen extends React.Component {
             <Favorite aria-label='Like' />
           </Fab>
         </Container>
+<<<<<<< HEAD
         <Container maxWidth='sm' className={classes.buttonContainer}>
           <IconButton>
+=======
+
+        <Container maxWidth='sm' className={classes.container}>
+          <IconButton onClick={createSession}>
+>>>>>>> master
             <AddCircle />
             Decide with a friend
           </IconButton>

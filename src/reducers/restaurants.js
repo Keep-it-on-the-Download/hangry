@@ -11,11 +11,12 @@ const gotRestaurants = (restaurants) => ({
   restaurants,
 });
 
+// ******** TODO: Move Yelp API key to secure location **********
 export const getRestaurants = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search`,
+        `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
         {
           headers: {
             Authorization: `Bearer ${'X4WiSe_RRFmQewagsdvv74hIJ_10rCbnsXzgreokPG3WIYEJ2sNmgtYAFVI44lKI1MEhAHv6CcljzhsHh5mEZB8gSrHm1mBCuyJ0okP_iq08TQCx8c60BOVgTwFVYHYx'}`,

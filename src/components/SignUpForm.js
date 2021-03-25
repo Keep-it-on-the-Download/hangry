@@ -23,7 +23,8 @@ class SignUpForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    CreateUser(this.state.email, this.state.password);
+    const { email, password, firstName, lastName } = this.state;
+    CreateUser(email, password, firstName, lastName);
     this.setState(defaultState);
   }
 
@@ -31,8 +32,18 @@ class SignUpForm extends React.Component {
     return (
       <form noValidate autoComplete='off' onSubmit={this.handleSubmit}>
         <div>
-          <TextField label='first name' variant='filled' />
-          <TextField label='last name' variant='filled' />
+          <TextField
+            label='first name'
+            variant='filled'
+            name='firstName'
+            onChange={this.handleChange}
+          />
+          <TextField
+            label='last name'
+            variant='filled'
+            name='lastName'
+            onChange={this.handleChange}
+          />
           <TextField
             type='email'
             label='email'
