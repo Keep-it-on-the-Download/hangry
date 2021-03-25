@@ -23,7 +23,6 @@ export const listenForRequests = (id) => {
         .doc(id)
         .collection('friendRequests')
         .onSnapshot((collection) => {
-          console.log('CHANGE: ', collection);
           dispatch(gotRequests(collection.docs));
         });
     } catch (err) {
@@ -35,7 +34,6 @@ export const listenForRequests = (id) => {
 export const acceptRequest = (myId, friendId) => {
   return async (dispatch) => {
     try {
-      console.log('MY ID: ', myId, ' FRIEND ID: ', friendId);
       const requestReference = firestore
         .collection('users')
         .doc(myId)

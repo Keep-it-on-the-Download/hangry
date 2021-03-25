@@ -125,10 +125,8 @@ class InviteFriends extends React.Component {
   }
 
   render() {
-    const { query, selection } = this.state;
+    const { query } = this.state;
     const { classes, open, searchResult, resultsLoading } = this.props;
-
-    console.log('SELECTION: ', selection);
 
     return (
       <Dialog

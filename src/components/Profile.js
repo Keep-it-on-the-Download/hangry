@@ -63,8 +63,6 @@ class Profile extends React.Component {
   render() {
     const { classes, user, userIsLoading, friendRequestCount } = this.props;
 
-    console.log('USER: ', user);
-
     return (
       <Container maxWidth='sm'>
         {!userIsLoading ? (
