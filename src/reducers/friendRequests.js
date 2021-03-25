@@ -15,7 +15,6 @@ const gotRequests = (requests) => ({
 });
 
 // Redux Thunks
-// TODO: Find out if this thunk is nessesarry. The idea is to use this as an inital state setter, but it seems like the listener also grabs the state on load
 /**
  * Redux Thunk for getting data from friendRequest collection.
  * @param {string} id - email used to identify logged in user
@@ -89,16 +88,18 @@ export const acceptRequest = (myId, friendId) => {
  * @param {string} friendId - email used to identify user who sent the request
  */
 export const sendRequest = (myId, friendId) => {
-  try {
-    const requestReference = firestore
-      .collection('users')
-      .doc(friendId)
-      .collection('friendRequests')
-      .doc(myId);
-    requestReference.set({ sender: myId }, { merge: true });
-  } catch (err) {
-    console.error('Origin: friendRequests.sendRequest(): ', err);
-  }
+  return async (dispatch) => {
+    try {
+      const requestReference = firestore
+        .collection('users')
+        .doc(friendId)
+        .collection('friendRequests')
+        .doc(myId);
+      requestReference.set({ sender: myId }, { merge: true });
+    } catch (err) {
+      console.error('Origin: friendRequests.sendRequest(): ', err);
+    }
+  };
 };
 
 // Initial State and Reducer
