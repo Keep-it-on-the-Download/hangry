@@ -1,5 +1,6 @@
 import firebase from '../firebase';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 const firestore = firebase.firestore();
 
@@ -70,10 +71,10 @@ export const addFriend = (myId, friendId) => {
       });
 
       const newFriend = await friendUsersReference.get();
-
-      console.log('NEW FRIEND: ', newFriend);
-
-      dispatch(addedFriend(newFriend));
+      const currentUserId = firebase.auth().currentUser.email;
+      if (currentUserId !== friendId) {
+        dispatch(addedFriend(newFriend));
+      }
     } catch (err) {
       console.error('Origin: friends.addFriend(): ', err);
     }
