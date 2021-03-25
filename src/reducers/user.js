@@ -23,6 +23,7 @@ export const getUser = (id) => {
     try {
       const userReference = firestore.collection('users').doc(id);
       const doc = await userReference.get();
+      console.log(doc);
       dispatch(gotUser(doc.data()));
     } catch (err) {
       console.log('Error getting document:', err);

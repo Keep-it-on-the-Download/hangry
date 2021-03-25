@@ -55,7 +55,7 @@ class FriendsList extends React.Component {
   }
 
   render() {
-    const { classes, friends, friendsAreLoading } = this.props;
+    const { classes, friends, friendsAreLoading, id } = this.props;
 
     return (
       <React.Fragment>
@@ -93,7 +93,11 @@ class FriendsList extends React.Component {
             </Typography>
           )}
         </List>
-        <InviteFriends open={this.state.open} onClose={this.handleClose} />
+        <InviteFriends
+          id={id}
+          open={this.state.open}
+          onClose={this.handleClose}
+        />
       </React.Fragment>
     );
   }

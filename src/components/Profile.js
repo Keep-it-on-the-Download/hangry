@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
+import { listenForRequests } from '../reducers/friendRequests';
+
+import { Link } from 'react-router-dom';
 
 // Firebase imports
 import { SignOut } from '../firebase/authentication';
@@ -17,6 +20,8 @@ import {
   IconButton,
   CircularProgress,
 } from '@material-ui/core';
+
+import Badge from '@material-ui/core/Badge';
 
 // Material-UI Icons
 import { Settings, Notifications } from '@material-ui/icons';
@@ -52,10 +57,13 @@ class Profile extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
     this.props.getUser(email);
+    this.props.listenForRequests(email);
   }
 
   render() {
-    const { classes, user, userIsLoading } = this.props;
+    const { classes, user, userIsLoading, friendRequestCount } = this.props;
+
+    console.log('USER: ', user);
 
     return (
       <Container maxWidth='sm'>
@@ -68,8 +76,10 @@ class Profile extends React.Component {
                 </IconButton>
               </Grid>
               <Grid item xs={6} className={classes.notifications}>
-                <IconButton>
-                  <Notifications />
+                <IconButton component={Link} to='/profile/notifications'>
+                  <Badge badgeContent={friendRequestCount} color='primary'>
+                    <Notifications />
+                  </Badge>
                 </IconButton>
               </Grid>
               <Grid item xs={12} className={classes.imageContainer}>
@@ -83,7 +93,7 @@ class Profile extends React.Component {
                 <Typography>{user.displayName}</Typography>
               </Grid>
               <Grid item xs={12}>
-                <FriendsList />
+                <FriendsList id={user.email} />
               </Grid>
             </Grid>
             <SignOut />
@@ -101,10 +111,12 @@ const mapState = (state) => ({
   userIsLoading: state.user.isLoading,
   friends: state.friends.data,
   friendsAreLoading: state.friends.isLoading,
+  friendRequestCount: state.friendRequests.count,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
+  listenForRequests: (id) => dispatch(listenForRequests(id)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Profile));

@@ -20,6 +20,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { findUsers, clearResults } from '../reducers/searchResult';
+import { sendRequest } from '../reducers/friendRequests';
 
 const styles = (theme) => ({
   search: {
@@ -76,6 +77,7 @@ class InviteFriends extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleClose() {
@@ -102,7 +104,13 @@ class InviteFriends extends React.Component {
     this.setState({ selection: [...this.state.selection, user] });
   }
 
-  handleSubmit(event) {}
+  handleSubmit() {
+    // if selection is empty send error message
+    this.state.selection.forEach((user) => {
+      this.props.sendRequest(this.props.id, user.email);
+    });
+    this.handleClose();
+  }
 
   render() {
     const { query, selection } = this.state;
@@ -165,7 +173,11 @@ class InviteFriends extends React.Component {
           </List>
         </DialogContent>
         <DialogActions>
-          <Button variant='contained' color='primary'>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={this.handleSubmit}
+          >
             Send Request
           </Button>
         </DialogActions>
@@ -185,6 +197,7 @@ const mapDispatch = (dispatch) => {
   return {
     findUsers: (query) => dispatch(findUsers(query)),
     clearResults: () => dispatch(clearResults()),
+    sendRequest: (id, user) => dispatch(sendRequest(id, user)),
   };
 };
 
