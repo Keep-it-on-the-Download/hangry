@@ -9,13 +9,17 @@ import friends from '../reducers/friends';
 import restaurants from '../reducers/restaurants';
 import searchResult from '../reducers/searchResult';
 import friendRequests from '../reducers/friendRequests';
+import memberConnections from '../reducers/memberConnections';
+import members from '../reducers/sessionMembers';
 
 const reducer = combineReducers({
   user,
-  friends,
   restaurants,
   searchResult,
+  friends,
   friendRequests,
+  members,
+  memberConnections,
 });
 
 const middleware = composeWithDevTools(
