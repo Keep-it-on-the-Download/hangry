@@ -36,36 +36,47 @@ export const getFriends = (id) => {
 
       const friends = await Promise.all(
         collectionSnapshot.docs.map((doc) => {
-          const friendReference = firestore.doc(doc.data().user.path);
+          const friendReference = firestore.doc(doc.data().ref.path);
           return friendReference.get();
         })
       );
 
       dispatch(gotFriends(friends));
     } catch (err) {
-      console.log('Error getting document:', err);
+      console.error('Origin: friends.getFriends(): ', err);
     }
   };
 };
 
 /**
  * Redux Thunk for adding a new friend to users Firestore collection and local store. In practice this should only be done as the result of accepting a freind request made by another user.
- * @param {string} id - The email of the user adding a new friend (accepting the request)
- * @param {object} user - The user object of the new friend to be added to the (sender of the request)
+ * @param {string} myId - The email of the user adding a new friend (accepting the request)
+ * @param {object} friendId - The user object of the new friend to be added to the (sender of the request)
  * @returns An asynchronous dispatch call to the addedFriend action creator. This pushes onto the store's friends data object
  */
-export const addFriend = (id, user) => {
+export const addFriend = (myId, friendId) => {
   return async (dispatch) => {
     try {
-      const friendsCollectionReference = firestore
+      const newFriendReference = firestore
         .collection('users')
-        .doc(id)
-        .collection('friends');
+        .doc(myId)
+        .collection('friends')
+        .doc(friendId);
 
-      const newFriend = {};
+      const friendUsersReference = firestore.collection('users').doc(friendId);
+
+      await newFriendReference.set({
+        ref: friendUsersReference,
+      });
+
+      const newFriend = await friendUsersReference.get();
+
+      console.log('NEW FRIEND: ', newFriend);
 
       dispatch(addedFriend(newFriend));
-    } catch (err) {}
+    } catch (err) {
+      console.error('Origin: friends.addFriend(): ', err);
+    }
   };
 };
 

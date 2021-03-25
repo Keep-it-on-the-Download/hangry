@@ -26,7 +26,7 @@ export const getUser = (id) => {
       console.log(doc);
       dispatch(gotUser(doc.data()));
     } catch (err) {
-      console.log('Error getting document:', err);
+      console.error('Origin: user.getUser(): ', err);
     }
   };
 };

@@ -64,14 +64,9 @@ class MainScreen extends React.Component {
             <Favorite aria-label='Like' />
           </Fab>
         </Container>
-<<<<<<< HEAD
-        <Container maxWidth='sm' className={classes.buttonContainer}>
-          <IconButton>
-=======
 
         <Container maxWidth='sm' className={classes.container}>
           <IconButton onClick={createSession}>
->>>>>>> master
             <AddCircle />
             Decide with a friend
           </IconButton>

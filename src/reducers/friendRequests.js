@@ -1,11 +1,12 @@
 import firebase from '../firebase';
 import 'firebase/firestore';
 
+import { addFriend } from './friends';
+
 const firestore = firebase.firestore();
 
 // Action Types
 const GOT_REQUESTS = 'GOT_REQUESTS';
-const ACCEPT_REQUEST = 'ACCEPT_REQUEST';
 
 // Action Creators
 const gotRequests = (requests) => ({
@@ -25,11 +26,30 @@ export const listenForRequests = (id) => {
           console.log('CHANGE: ', collection);
           dispatch(gotRequests(collection.docs));
         });
-    } catch (err) {}
+    } catch (err) {
+      console.error('Origin: friendRequests.listenForRequests(): ', err);
+    }
   };
 };
 
-export const acceptRequest = () => {};
+export const acceptRequest = (myId, friendId) => {
+  return async (dispatch) => {
+    try {
+      console.log('MY ID: ', myId, ' FRIEND ID: ', friendId);
+      const requestReference = firestore
+        .collection('users')
+        .doc(myId)
+        .collection('friendRequests')
+        .doc(friendId);
+      await requestReference.delete();
+
+      dispatch(addFriend(myId, friendId));
+      dispatch(addFriend(friendId, myId));
+    } catch (err) {
+      console.error('Origin: friendRequests.acceptRequest(): ', err);
+    }
+  };
+};
 
 export const sendRequest = (myId, friendId) => {
   return async (dispatch) => {
@@ -39,11 +59,10 @@ export const sendRequest = (myId, friendId) => {
         .doc(friendId)
         .collection('friendRequests')
         .doc(myId);
-
-      console.log('REQ REF: ', requestReference);
-
       requestReference.set({ sender: myId }, { merge: true });
-    } catch (err) {}
+    } catch (err) {
+      console.error('Origin: friendRequests.sendRequest(): ', err);
+    }
   };
 };
 
@@ -59,9 +78,6 @@ const friendRequests = (state = initialState, action) => {
         count: action.requests.length,
         isLoading: false,
       };
-    case ACCEPT_REQUEST:
-      const newData = state.data.filter((request) => true);
-      return { ...state, data: newData, count: state.count-- };
     default:
       return state;
   }

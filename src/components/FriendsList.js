@@ -60,7 +60,7 @@ class FriendsList extends React.Component {
     return (
       <React.Fragment>
         <List>
-          <ListItem id='header' className={classes.listHeader}>
+          <ListItem id='header' className={classes.listHeader} key='header'>
             <Typography>Friends</Typography>
             <Button
               variant='contained'
@@ -71,12 +71,12 @@ class FriendsList extends React.Component {
               Add Friends
             </Button>
           </ListItem>
-          <Divider variant='fullWidth' component='li' />
+          <Divider variant='fullWidth' component='li' key='divider' />
           {!friendsAreLoading && friends.length ? (
             friends.map((friend) => {
-              const { id, photoURL, displayName } = friend.data();
+              const { email, photoURL, displayName } = friend.data();
               return (
-                <ListItem key={id}>
+                <ListItem key={email}>
                   <ListItemAvatar>
                     <Avatar alt={displayName} src={photoURL} />
                   </ListItemAvatar>
@@ -88,7 +88,7 @@ class FriendsList extends React.Component {
               );
             })
           ) : (
-            <Typography className={classes.listText}>
+            <Typography className={classes.listText} key='empty text'>
               Major Oof, you don't have any friends
             </Typography>
           )}

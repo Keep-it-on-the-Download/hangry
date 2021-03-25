@@ -15,8 +15,12 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import { acceptRequest } from '../reducers/friendRequests';
 
 class Notifications extends React.Component {
+  handleFriendRequest = (myId, friendId) => () => {
+    this.props.acceptFriendRequest(myId, friendId);
+  };
+
   render() {
-    const { friendRequests, friendRequestsAreLoading } = this.props;
+    const { userId, friendRequests, friendRequestsAreLoading } = this.props;
 
     console.log('FRIEND REQUESTS: ', friendRequests);
 
@@ -25,17 +29,20 @@ class Notifications extends React.Component {
         {!friendRequestsAreLoading &&
           friendRequests.length &&
           friendRequests.map((friendRequest) => {
+            const friendId = friendRequest.id;
+            console.log('FRIEND ID: ', friendId);
             return (
               <ListItem>
                 <ListItemAvatar>
                   <Avatar />
                 </ListItemAvatar>
-                <ListItemText
-                  primary={friendRequest.id}
-                  secondary='Secondary text'
-                />
+                <ListItemText primary={friendId} secondary='Secondary text' />
                 <ListItemSecondaryAction>
-                  <IconButton edge='end' aria-label='delete'>
+                  <IconButton
+                    edge='end'
+                    aria-label='accept'
+                    onClick={this.handleFriendRequest(userId, friendId)}
+                  >
                     <CheckIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -48,12 +55,14 @@ class Notifications extends React.Component {
 }
 
 const mapState = (state) => ({
+  userId: state.user.data.email,
   friendRequests: state.friendRequests.data,
   friendRequestsAreLoading: state.friendRequests.isLoading,
 });
 
 const mapDispatch = (dispatch) => ({
-  acceptFriendRequest: (id) => dispatch(acceptRequest(id)),
+  acceptFriendRequest: (myId, friendId) =>
+    dispatch(acceptRequest(myId, friendId)),
 });
 
 export default connect(mapState, mapDispatch)(Notifications);
