@@ -8,18 +8,22 @@ import {
   CardContent,
   Fab,
 } from '@material-ui/core';
-import { Close, Favorite, AddCircle } from '@material-ui/icons';
+import { Close, Favorite, AddCircle, Star } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
 import { createSession } from '../firebase/firestoreSession';
 
 const styles = (theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   container: {
     display: 'flex',
     justifyContent: 'center',
   },
-  cardContainer: {},
 });
 
 class MainScreen extends React.Component {
@@ -49,11 +53,14 @@ class MainScreen extends React.Component {
             </Card>
           ))}
         </Container>
-        <Container maxWidth='md' className={classes.container}>
-          <Fab>
+        <Container maxWidth='md' className={classes.root}>
+          <Fab color='primary'>
             <Close aria-label='Dislike' />
           </Fab>
-          <Fab>
+          <Fab color='primary' size='medium'>
+            <Star aria-label='Star' />
+          </Fab>
+          <Fab color='primary'>
             <Favorite aria-label='Like' />
           </Fab>
         </Container>

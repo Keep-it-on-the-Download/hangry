@@ -7,11 +7,15 @@ import thunkMiddleware from 'redux-thunk';
 import user from '../reducers/user';
 import friends from '../reducers/friends';
 import restaurants from '../reducers/restaurants';
+import searchResult from '../reducers/searchResult';
+import friendRequests from '../reducers/friendRequests';
 
 const reducer = combineReducers({
   user,
   friends,
   restaurants,
+  searchResult,
+  friendRequests,
 });
 
 const middleware = composeWithDevTools(

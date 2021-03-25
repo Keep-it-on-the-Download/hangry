@@ -1,27 +1,36 @@
 import firebase from '../firebase';
 import 'firebase/firestore';
 
-const db = firebase.firestore();
+const firestore = firebase.firestore();
 
+// Action Types
 const GOT_USER = 'GOT_USER';
 
+// Action Creators
 const gotUser = (user) => ({
   type: GOT_USER,
   user,
 });
 
+// Redux Thunks
+/**
+ * Redux Thunk for getting a user from the Firestore
+ * @param {string} id - The email of the user you are getting
+ * @returns An asynchronous dispatch call to the gotUser action creator. This sets the store's user object
+ */
 export const getUser = (id) => {
   return async (dispatch) => {
     try {
-      const userRef = db.collection('users').doc(id);
-      const doc = await userRef.get();
+      const userReference = firestore.collection('users').doc(id);
+      const doc = await userReference.get();
       dispatch(gotUser(doc.data()));
     } catch (err) {
-      console.log('Error getting document:', err);
+      console.error('Origin: user.getUser(): ', err);
     }
   };
 };
 
+// Initial State and Reducer
 const initialState = { data: {}, isLoading: true };
 
 const user = (state = initialState, action) => {
@@ -34,39 +43,3 @@ const user = (state = initialState, action) => {
 };
 
 export default user;
-
-/*
-
-const db = firebase.firestore();
-    const alanFriendsRef = db
-      .collection('users')
-      .doc('abielik')
-      .collection('friends');
-
-    console.log(('ALANSFRIENDSREF', alanFriendsRef));
-
-    alanFriendsRef.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, ' => ', doc.data());
-
-        const friendRef = db.doc(doc.data().ref.path);
-        console.log('FriendRef', friendRef);
-
-        friendRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              console.log('Document data:', doc.data());
-            } else {
-              // doc.data() will be undefined in this case
-              console.log('No such document!');
-            }
-          })
-          .catch((error) => {
-            console.log('Error getting document:', error);
-          });
-      });
-    });
-
-*/

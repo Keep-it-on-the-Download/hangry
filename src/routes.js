@@ -6,6 +6,7 @@ import MainScreen from './components/MainScreen';
 import Profile from './components/Profile';
 import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
+import Notifications from './components/Notifications';
 
 import firebase from './firebase';
 import 'firebase/auth';
@@ -32,6 +33,9 @@ const Routes = () => {
         path='/signup'
         render={(routeProps) => <SignUpScreen {...routeProps} />}
       />
+      <Route exact path='/profile/notifications'>
+        {user ? <Notifications /> : <Redirect to='/login' />}
+      </Route>
       <Route exact path='/profile'>
         {user ? <Profile /> : <Redirect to='/login' />}
       </Route>

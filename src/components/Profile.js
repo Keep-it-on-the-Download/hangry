@@ -1,31 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
+import { listenForRequests, getRequests } from '../reducers/friendRequests';
 
+import { Link } from 'react-router-dom';
+
+// Firebase imports
+import { SignOut } from '../firebase/authentication';
 import firebase from '../firebase';
 import 'firebase/auth';
 
-import { SignOut } from '../firebase/authentication';
-
-// import statements Material-UI
+// Material-UI Components
 import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import {
+  Container,
+  Grid,
+  Typography,
+  Avatar,
+  IconButton,
+  CircularProgress,
+} from '@material-ui/core';
 
-// Temp Profile Pic
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import Badge from '@material-ui/core/Badge';
 
-// Icons
-import Settings from '@material-ui/icons/Settings';
-import Notifications from '@material-ui/icons/Notifications';
+// Material-UI Icons
+import { Settings, Notifications } from '@material-ui/icons';
+
+import FriendsList from './FriendsList';
 
 const styles = (theme) => ({
   profile: {
@@ -53,28 +54,31 @@ const styles = (theme) => ({
 });
 
 class Profile extends React.Component {
-  componentDidMount = () => {
-    this.props.getUser('abielik');
-    console.log('Store User:', this.props.user);
-  };
+  componentDidMount() {
+    const email = firebase.auth().currentUser.email;
+    this.props.getUser(email);
+    this.props.getRequests(email);
+    this.props.listenForRequests(email);
+  }
 
   render() {
-    const { classes } = this.props;
-    const user = firebase.auth().currentUser;
+    const { classes, user, userIsLoading, friendRequestCount } = this.props;
 
     return (
       <Container maxWidth='sm'>
-        {user ? (
+        {!userIsLoading ? (
           <React.Fragment>
-            <Grid container className={classes.profile}>
+            <Grid container position='fixed' className={classes.profile}>
               <Grid item xs={6} className={classes.settings}>
                 <IconButton>
                   <Settings />
                 </IconButton>
               </Grid>
               <Grid item xs={6} className={classes.notifications}>
-                <IconButton>
-                  <Notifications />
+                <IconButton component={Link} to='/profile/notifications'>
+                  <Badge badgeContent={friendRequestCount} color='primary'>
+                    <Notifications />
+                  </Badge>
                 </IconButton>
               </Grid>
               <Grid item xs={12} className={classes.imageContainer}>
@@ -85,26 +89,17 @@ class Profile extends React.Component {
                 />
               </Grid>
               <Grid item xs={12}>
-                {user.displayName}
+                <Typography>{user.displayName}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <FriendsList id={user.email} />
               </Grid>
             </Grid>
-            <List>
-              <ListItem>Friends</ListItem>
-              <Divider variant='fullWidth' component='li' />
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    <AccountCircle />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary='First Last' secondary='Some info' />
-              </ListItem>
-            </List>
+            <SignOut />
           </React.Fragment>
         ) : (
-          <Typography variant='h1'>No User Found</Typography>
+          <CircularProgress />
         )}
-        <SignOut />
       </Container>
     );
   }
@@ -113,10 +108,15 @@ class Profile extends React.Component {
 const mapState = (state) => ({
   user: state.user.data,
   userIsLoading: state.user.isLoading,
+  friends: state.friends.data,
+  friendsAreLoading: state.friends.isLoading,
+  friendRequestCount: state.friendRequests.count,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
+  getRequests: (id) => dispatch(getRequests(id)),
+  listenForRequests: (id) => dispatch(listenForRequests(id)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(Profile));
