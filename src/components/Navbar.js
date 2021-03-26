@@ -35,31 +35,6 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
   const classes = useStyles();
 
-  // const getLocation = () => {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     const { longitude, latitude } = position.coords;
-  //     console.log(
-  //       `%cLongitude: ${longitude} --- Latitude: ${latitude}`,
-  //       'color: blue'
-  //     );
-  //   });
-  //   // Link to redirect to google maps
-  //   // https://www.google.com/maps/dir/?api=1&origin={orgn.lon,orgn.lat}&destination={dest.lon, dest.lat}
-  // };
-
-  // const getContacts = async () => {
-  //   const props = ['name', 'email', 'tel', 'address', 'icon'];
-  //   const opts = { multiple: true };
-  //   const supported = 'contacts' in navigator && 'ContactsManager' in window;
-
-  //   if (supported) {
-  //     const contacts = await navigator.contacts.select(props, opts);
-  //     console.table(contacts);
-  //   } else {
-  //     console.log('%cContacts Unsupported', 'color: #FF8C00');
-  //   }
-  // };
-
   return (
     <AppBar className={classes.root}>
       <Toolbar>
