@@ -23,6 +23,7 @@ export async function addGoogleUserToFirestore() {
   // check if user exists as a doc in FIRESTORE
   const existingUser = await checkUserExists(userRef);
 
+  // checks to see if user exists in FIRESTORE
   if (!existingUser) {
     const { email, displayName, photoURL } = currentUser;
     // since user doc doesn't exist, set them up in FIRESTORE
@@ -35,6 +36,9 @@ export async function addGoogleUserToFirestore() {
       .then(() => {
         window.location.href = '/';
       });
+  } else {
+    // user exists in AUTH & FIRESTORE so this will just redirect the page without adding the user to FIRESTORE
+    window.location.href = '/';
   }
 }
 
