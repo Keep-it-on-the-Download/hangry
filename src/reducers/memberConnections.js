@@ -68,11 +68,13 @@ export const acceptConnection = (sessionId, memberId) => {
 export const sendConnection = (sessionId, memberId) => {
   return async (dispatch) => {
     try {
+      console.log('runnign here?');
       const connectionReference = firestore
-        .collection('sessions')
-        .doc(sessionId)
+        .collection('users')
+        .doc(memberId)
         .collection('membersConnections')
-        .doc(memberId);
+        .doc(sessionId);
+      console.log('connectionReference: ', connectionReference);
       connectionReference.set({ party: sessionId }, { merge: true });
     } catch (err) {
       console.log('Origin: memberConnections.sendConnection()', err);

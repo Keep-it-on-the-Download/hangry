@@ -93,7 +93,7 @@ class FriendsList extends React.Component {
                     <IconButton
                       edge='end'
                       aria-label='create session'
-                      onClick={createSession}
+                      onClick={() => createSession(email)}
                     >
                       <Fastfood />
                       Start session
