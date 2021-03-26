@@ -15,7 +15,7 @@ const auth = firebase.auth();
 function CreateUser(email, password, firstName, lastName) {
   // authenticates with firebase then redirects to home screen
   auth
-    .createUserWithEmailAndPassword(email, password)
+    .createUserWithEmailAndPassword(email.toLowerCase(), password)
     .then(() => {
       addUserToFirestore({
         email,

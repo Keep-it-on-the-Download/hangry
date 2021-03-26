@@ -20,8 +20,10 @@ async function runIdleDetection() {
   });
 }
 
-if ('IdelDetector' in window) {
-  runIdleDetection();
-} else {
-  console.log('%cIdle Detection Unsupported', 'color: #FF8C00');
+export function askForIdlePermission() {
+  if ('IdleDetector' in window) {
+    runIdleDetection();
+  } else {
+    console.log('%cIdle Detection Unsupported', 'color: #FF8C00');
+  }
 }
