@@ -18,7 +18,7 @@ function CreateUser(email, password, firstName, lastName) {
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
       addUserToFirestore({
-        email,
+        email: email.toLowerCase(),
         firstName,
         lastName,
       });
