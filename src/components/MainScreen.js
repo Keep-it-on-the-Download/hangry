@@ -10,6 +10,8 @@ import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
 import { getMoreRestaurants } from '../reducers/restaurants';
 
+import Deck from './content/Deck';
+
 const styles = (theme) => ({
   root: {
     '& > *': {
@@ -24,17 +26,18 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    this.props.fetchMoreWorkers(10);
+    this.props.getMoreRestaurants(10);
   }
 
   render() {
     const { classes, inventory } = this.props;
+    const cards = inventory.map((item) => item.image_url);
 
     return (
       <Container maxWidth='sm' className={classes.root}>
         <Grid container>
           <Grid item xs={12}>
-            {/* <Deck /> */}
+            <Deck cards={cards} />
             <Controls />
           </Grid>
         </Grid>
