@@ -16,10 +16,6 @@ class Card extends React.Component {
 
     return (
       <div className='card' style={styles}>
-        <img
-          src={`https://randomuser.me/api/portraits/${worker.gender}/${worker.id}.jpg`}
-          alt='worker'
-        />
         <p>{worker.name}</p>
       </div>
     );
@@ -43,10 +39,6 @@ class Card extends React.Component {
               style={styles}
               {...provided.dragHandleProps}
             >
-              <img
-                src={`https://randomuser.me/api/portraits/${worker.gender}/${worker.id}.jpg`}
-                alt='worker'
-              />
               <p>{worker.name}</p>
             </div>
           );

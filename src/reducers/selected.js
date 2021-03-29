@@ -1,25 +1,26 @@
-import { getWorker } from './inventory';
+import { getRestaurant } from './restaurants';
 
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
 
-function addWorkerToSelected(worker) {
+function addRestaurantToSelected(restaurant) {
   return {
     type: ADD_TO_SELECTED,
-    payload: { worker },
+    restaurant,
   };
 }
 
-export function selectWorker() {
+// TODO: Make push to Firestore
+export function selectRestaurant() {
   return (dispatch, getState) => {
-    const worker = getWorker(dispatch, getState);
-    dispatch(addWorkerToSelected(worker));
+    const restaurant = getRestaurant(dispatch, getState);
+    dispatch(addRestaurantToSelected(restaurant));
   };
 }
 
 export default function reducer(state = [], action) {
   switch (action.type) {
     case ADD_TO_SELECTED:
-      return [...state, action.payload.worker];
+      return [...state, action.restaurant];
 
     default:
       return state;

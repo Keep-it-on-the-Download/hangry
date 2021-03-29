@@ -1,18 +1,14 @@
 import React from 'react';
-import {
-  Container,
-  IconButton,
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  Fab,
-} from '@material-ui/core';
-import { Close, Favorite, AddCircle, Star } from '@material-ui/icons';
 import { connect } from 'react-redux';
+
 import { withStyles } from '@material-ui/core/styles';
-import { getRestaurants } from '../reducers/restaurants';
-import { createSession } from '../firebase/firestoreSession';
+import { Container, Grid } from '@material-ui/core';
+
+import Controls from './content/Controls';
+
+import { selectRestaurant } from '../reducers/selected';
+import { unselectRestaurant } from '../reducers/unselected';
+import { getMoreRestaurants } from '../reducers/restaurants';
 
 const styles = (theme) => ({
   root: {
@@ -28,60 +24,33 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    // commented out for failing uncomment when working
-    this.props.getRestaurants();
+    this.props.fetchMoreWorkers(10);
   }
 
   render() {
-    const { classes, restaurants } = this.props;
-    const businesses = restaurants.businesses || [];
+    const { classes, inventory } = this.props;
 
     return (
-      <React.Fragment>
-        <Container maxWidth='sm'>
-          {businesses.map((business) => (
-            <Card key={business.id} className={classes.cardContainer}>
-              <CardMedia
-                component='img'
-                src={business.image_url}
-                alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
-              />
-              <CardContent>
-                <Typography>{business.name}</Typography>
-                <Typography>{business.price}</Typography>
-              </CardContent>
-            </Card>
-          ))}
-        </Container>
-        <Container maxWidth='md' className={classes.root}>
-          <Fab color='primary'>
-            <Close aria-label='Dislike' />
-          </Fab>
-          <Fab color='primary' size='medium'>
-            <Star aria-label='Star' />
-          </Fab>
-          <Fab color='primary'>
-            <Favorite aria-label='Like' />
-          </Fab>
-        </Container>
-
-        <Container maxWidth='sm' className={classes.container}>
-          <IconButton onClick={createSession}>
-            <AddCircle />
-            Decide with a friend
-          </IconButton>
-        </Container>
-      </React.Fragment>
+      <Container maxWidth='sm' className={classes.root}>
+        <Grid container>
+          <Grid item xs={12}>
+            {/* <Deck /> */}
+            <Controls />
+          </Grid>
+        </Grid>
+      </Container>
     );
   }
 }
 
 const mapState = (state) => ({
-  restaurants: state.restaurants.data,
+  inventory: state.restaurants.inventory,
 });
 
 const mapDispatch = (dispatch) => ({
-  getRestaurants: () => dispatch(getRestaurants()),
+  selectRestaurant: () => dispatch(selectRestaurant()),
+  unselectRestaurant: () => dispatch(unselectRestaurant()),
+  getMoreRestaurants: () => dispatch(getMoreRestaurants()),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));

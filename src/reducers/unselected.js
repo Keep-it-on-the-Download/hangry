@@ -1,25 +1,25 @@
-import { getWorker } from './inventory';
+import { getRestaurant } from './restaurants';
 
 const ADD_TO_UNSELECTED = 'ADD_TO_UNSELECTED';
 
-function addWorkerToUnselected(worker) {
+function addRestaurantToUnselected(restaurant) {
   return {
     type: ADD_TO_UNSELECTED,
-    payload: { worker },
+    restaurant,
   };
 }
 
-export function unselectWorker() {
+export function unselectRestaurant() {
   return (dispatch, getState) => {
-    const worker = getWorker(dispatch, getState);
-    dispatch(addWorkerToUnselected(worker));
+    const restaurant = getRestaurant(dispatch, getState);
+    dispatch(addRestaurantToUnselected(restaurant));
   };
 }
 
 export default function reducer(state = [], action) {
   switch (action.type) {
     case ADD_TO_UNSELECTED:
-      return [...state, action.payload.worker];
+      return [...state, action.restaurant];
 
     default:
       return state;
