@@ -23,7 +23,7 @@ export const getMember = (memberId) => {
   return async (dispatch) => {
     try {
       const membersCollectionReference = firestore
-        .collection('sessions')
+        .collection('parties')
         .doc(memberId)
         .collection('members');
 
@@ -43,28 +43,25 @@ export const getMember = (memberId) => {
   };
 };
 
-export const addMember = (sessionId, memberId) => {
+export const addMember = (partyId, memberId) => {
   return async (dispatch) => {
     try {
       const newMemberReference = firestore
-        .collection('sessions')
-        .doc(sessionId)
+        .collection('parties')
+        .doc(partyId)
         .collection('members')
         .doc(memberId);
 
-      const memberSessionsReference = firestore
-        .collection('sessions')
-        .doc(memberId);
+      const memberUsersReference = firestore.collection('users').doc(memberId);
 
-      await newMemberReference.set({
-        ref: memberSessionsReference,
-      });
+      await newMemberReference.set(
+        {
+          ref: memberUsersReference,
+        },
+        { merge: true }
+      );
 
-      const newMember = await memberSessionsReference.get();
-      const currentUserId = firebase.auth().currentUser.email;
-      if (currentUserId !== memberId) {
-        dispatch(addedMember(newMember));
-      }
+      dispatch(addedMember(newMember));
     } catch (err) {
       console.log('Origin: members.addMember', err);
     }

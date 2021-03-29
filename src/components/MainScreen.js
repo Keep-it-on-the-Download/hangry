@@ -12,7 +12,7 @@ import { Close, Favorite, AddCircle, Star } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { getRestaurants } from '../reducers/restaurants';
-import { createSession } from '../firebase/firestoreSession';
+import { createParty } from '../firebase/firestoreParty';
 
 const styles = (theme) => ({
   root: {
@@ -66,7 +66,7 @@ class MainScreen extends React.Component {
         </Container>
 
         <Container maxWidth='sm' className={classes.container}>
-          <IconButton onClick={createSession}>
+          <IconButton onClick={createParty}>
             <AddCircle />
             Decide with a friend
           </IconButton>

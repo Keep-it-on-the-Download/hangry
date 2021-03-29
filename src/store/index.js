@@ -9,8 +9,9 @@ import friends from '../reducers/friends';
 import restaurants from '../reducers/restaurants';
 import searchResult from '../reducers/searchResult';
 import friendRequests from '../reducers/friendRequests';
-import memberConnections from '../reducers/memberConnections';
-import members from '../reducers/sessionMembers';
+import partyRequests from '../reducers/partyRequests';
+import members from '../reducers/partyMembers';
+import party from '../reducers/party';
 
 const reducer = combineReducers({
   user,
@@ -19,7 +20,8 @@ const reducer = combineReducers({
   friends,
   friendRequests,
   members,
-  memberConnections,
+  partyRequests,
+  party,
 });
 
 const middleware = composeWithDevTools(

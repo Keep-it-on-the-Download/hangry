@@ -22,7 +22,7 @@ import InviteFriends from './InviteFriends';
 
 import { getFriends } from '../reducers/friends';
 
-import { createSession } from '../firebase/firestoreSession';
+import { createParty } from '../firebase/firestoreParty';
 
 const styles = (theme) => ({
   listHeader: {
@@ -92,11 +92,11 @@ class FriendsList extends React.Component {
                   <ListItemSecondaryAction>
                     <IconButton
                       edge='end'
-                      aria-label='create session'
-                      onClick={() => createSession(email)}
+                      aria-label='create party'
+                      onClick={() => createparty(email)}
                     >
                       <Fastfood />
-                      Start session
+                      Start party
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>

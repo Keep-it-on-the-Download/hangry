@@ -16,9 +16,9 @@
   ],
   "shortcuts": [
     {
-      "name": "New Session",
-      "short_name": "New Session",
-      "description": "Start a new swipe session with a friend",
+      "name": "New Party",
+      "short_name": "New Party",
+      "description": "Start a new swipe party with a friend",
       "url": "/"
     }
   ],
