@@ -11,18 +11,28 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 
 const styles = (theme) => ({
+  loginScreen: {
+    marginTop: '200px',
+  },
   login: {
     color: 'green',
+  },
+  loginOrCreate: {
+    fontFamily: 'avenir',
+  },
+  google: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
 class LoginScreen extends React.Component {
   render() {
-    //const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
-      <Container maxWidth='sm'>
-        <p>
+      <Container className={classes.loginScreen} maxWidth='sm'>
+        <p className={classes.loginOrCreate}>
           Login below or{' '}
           <Link onClick={SignUpScreen} component={RouterLink} to='/signup'>
             Create An Account
@@ -31,7 +41,7 @@ class LoginScreen extends React.Component {
 
         <LoginForm />
 
-        <SignIn />
+        <SignIn className={classes.google} />
       </Container>
     );
   }

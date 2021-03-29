@@ -1,12 +1,28 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-
+import { withStyles } from '@material-ui/core/styles';
 import { CreateUser } from '../firebase/authentication';
 
 const defaultState = {
   email: '',
   password: '',
 };
+
+const styles = (theme) => ({
+  button: {
+    boxShadow:
+      '0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    borderRadius: '8px',
+    fontFamily: 'avenir',
+    backgroundColor: 'rgb(129, 163, 238)',
+    border: 'none',
+    fontSize: '20px',
+    color: 'white',
+    padding: '16px',
+    marginTop: '10px',
+    marginBottom: '10px',
+  },
+});
 
 class SignUpForm extends React.Component {
   constructor() {
@@ -29,6 +45,7 @@ class SignUpForm extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <form noValidate autoComplete='off' onSubmit={this.handleSubmit}>
         <div>
@@ -60,10 +77,12 @@ class SignUpForm extends React.Component {
           />
         </div>
 
-        <button type='submit'>Sign Up</button>
+        <button className={classes.button} type='submit'>
+          Sign Up
+        </button>
       </form>
     );
   }
 }
 
-export default SignUpForm;
+export default withStyles(styles)(SignUpForm);

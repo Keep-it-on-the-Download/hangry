@@ -6,8 +6,8 @@ import { SignIn } from '../firebase/authentication';
 function SignUp() {
   // google auth
   return (
-    <div>
-      <h3>Create an Account</h3>
+    <div style={{ marginTop: '200px' }}>
+      <h3 style={{ fontFamily: 'avenir' }}>Create an Account</h3>
       <SignUpForm />
       <SignIn />
     </div>
