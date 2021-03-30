@@ -31,7 +31,6 @@ class Notifications extends React.Component {
       friendRequestsAreLoading,
       partyRequestsAreLoading,
       partyRequests,
-      partyId,
     } = this.props;
 
     console.log('this.props: ', this.props);
@@ -46,22 +45,23 @@ class Notifications extends React.Component {
           {!partyRequestsAreLoading &&
             (partyRequests.length ? (
               partyRequests.map((partyRequest) => {
-                const memberId = partyRequest.id;
-                console.log('memberId: ', memberId);
+                const partyId = partyRequest.id;
+                console.log('partyId: ', partyId);
+                console.log('userId IN NOTIFS', userId);
                 return (
-                  <ListItem key={memberId}>
+                  <ListItem key={partyId}>
                     <ListItemAvatar>
                       <Avatar />
                     </ListItemAvatar>
                     <ListItemText
-                      primary={memberId}
+                      primary={partyId}
                       secondary='Secondary text'
                     />
                     <ListItemSecondaryAction>
                       <IconButton
                         edge='end'
                         aria-label='accept'
-                        onClick={this.handlePartyRequest(partyId, memberId)}
+                        onClick={this.handlePartyRequest(partyId, userId)}
                       >
                         <CheckIcon />
                       </IconButton>
@@ -110,7 +110,7 @@ class Notifications extends React.Component {
 }
 
 const mapState = (state) => ({
-  userId: state.user.data.email,
+  userId: state.user.data.displayName,
   friendRequests: state.friendRequests.data,
   friendRequestsAreLoading: state.friendRequests.isLoading,
 

@@ -51,13 +51,15 @@ export const listenForPartyRequests = (userId) => {
 };
 
 export const acceptPartyRequest = (partyId, memberId) => {
+  console.log('PARTY REQ MEMBER ID:', memberId);
+  console.log('PARTY REQ PARTY ID:', partyId);
   return async (dispatch) => {
     try {
       const requestReference = firestore
-        .collection('parties')
-        .doc(partyId)
+        .collection('users')
+        .doc(memberId)
         .collection('partyRequests')
-        .doc(memberId);
+        .doc(partyId);
 
       await requestReference.delete();
       // user 1 should already be in party so we're adding user2 here?
