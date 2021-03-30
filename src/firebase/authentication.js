@@ -24,7 +24,7 @@ function CreateUser(email, password, firstName, lastName) {
       });
     })
     .catch((error) => {
-      console.log('error, ', error);
+      console.error('error, ', error);
     });
 }
 
@@ -47,7 +47,7 @@ function SignIn() {
         addGoogleUserToFirestore();
       })
       .catch((error) => {
-        console.log('Google error, ', error);
+        console.error('Google error, ', error);
       });
   };
 

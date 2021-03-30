@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '400px',
     height: '80vh',
     maxHeight: '700px',
+    userDrag: 'none',
+    userSelect: 'none',
   },
   text: {
     position: 'absolute',
