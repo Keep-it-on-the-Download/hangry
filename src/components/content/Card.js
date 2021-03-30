@@ -1,57 +1,61 @@
 import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-// import * as constants from '../constants';
 
-class Card extends React.Component {
-  renderCard = () => {
-    const { worker, index } = this.props;
-    const styles = {
-      zIndex: 100 - index,
-      transform: `
-        translateY(${index * 10}px)
-        translateX(-50%)
-        scale(${1 - index * 0.02})
-      `,
-    };
+import { makeStyles } from '@material-ui/core/styles';
+import { Container, Card as MaterialCard, CardMedia } from '@material-ui/core';
 
-    return (
-      <div className='card' style={styles}>
-        <p>{worker.name}</p>
+const useStyles = makeStyles((theme) => ({
+  cardContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: '85vw',
+    maxHeight: '400px',
+    width: '90vh',
+    maxWidth: '500px',
+  },
+  cardImage: {
+    height: '85vw',
+    maxHeight: '400px',
+    width: '90vh',
+    maxWidth: '500px',
+  },
+  text: {
+    position: 'absolute',
+    bottom: '0.5px',
+    left: '0.5px',
+    fontFamily: 'avenir',
+    fontSize: '35px',
+    color: '#FFFFFF',
+    fontWeight: 'bolder',
+    fontStyle: 'italic',
+    textAlign: 'left',
+  },
+  price: {
+    marginTop: '5px',
+    position: 'absolute',
+    bottom: '0.5px',
+    fontSize: '15px',
+  },
+}));
+
+const Card = (props) => {
+  const classes = useStyles();
+  const { id, name, price, image_url } = props;
+  return (
+    <Container key={id} maxWidth='sm' className={classes.cardContainer}>
+      <MaterialCard>
+        <CardMedia
+          component='img'
+          className={classes.cardImage}
+          src={image_url}
+          alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
+        />
+      </MaterialCard>
+      <div className={classes.text}>
+        <p>{name}</p>
+        <p className={classes.price}>{price}</p>
       </div>
-    );
-  };
-
-  renderDraggableCard = () => {
-    const { worker } = this.props;
-
-    return (
-      <Draggable draggableId={worker.id} type='CARD'>
-        {(provided, snapshot) => {
-          const styles = {
-            ...provided.draggableStyle,
-            zIndex: 100,
-            left: 'calc(50% - 125px)',
-          };
-          return (
-            <div
-              ref={provided.innerRef}
-              className='card'
-              style={styles}
-              {...provided.dragHandleProps}
-            >
-              <p>{worker.name}</p>
-            </div>
-          );
-        }}
-      </Draggable>
-    );
-  };
-
-  render() {
-    return this.props.index === 0
-      ? this.renderDraggableCard()
-      : this.renderCard();
-  }
-}
+    </Container>
+  );
+};
 
 export default Card;

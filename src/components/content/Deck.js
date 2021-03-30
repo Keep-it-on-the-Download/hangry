@@ -3,6 +3,8 @@ import { useSprings, animated, interpolate } from 'react-spring';
 import { useDrag } from 'react-use-gesture';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Card from './Card';
+
 // These two are just helpers, they curate spring data, values that are later being interpolated into css
 const to = (i) => ({
   x: 0,
@@ -49,8 +51,6 @@ function Deck(props) {
     from: from(i),
   })); // Create a bunch of springs using the helpers above
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
-  console.log('SPRINGS -->', springs);
-  console.log('SET -->', set);
   const bind = useDrag(
     ({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
       const trigger = velocity > 1; // If you flick hard enough it should trigger the card to fly out
@@ -98,12 +98,19 @@ function Deck(props) {
       {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
       <animated.div
         {...bind(i)}
-        className={classes.card}
+        // className={classes.card}
         style={{
           transform: interpolate([rot, scale], trans),
-          backgroundImage: `url(${cards[i]})`,
         }}
-      />
+      >
+        <Card
+          className={classes.card}
+          id={cards[i].id}
+          name={cards[i].name}
+          price={cards[i].price}
+          image_url={cards[i].image_url}
+        />
+      </animated.div>
     </animated.div>
   ));
 }

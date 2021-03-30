@@ -31,7 +31,7 @@ class MainScreen extends React.Component {
 
   render() {
     const { classes, inventory } = this.props;
-    const cards = inventory.map((item) => item.image_url).reverse();
+    const cards = [...inventory].reverse();
 
     return (
       <Container maxWidth='sm' className={classes.root}>
