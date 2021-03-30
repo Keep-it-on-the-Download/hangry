@@ -2,7 +2,7 @@ import firebase from './index';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { sendRequest } from '../reducers/partyRequests';
+import { sendPartyRequest } from '../reducers/partyRequests';
 
 import store from '../store';
 
@@ -34,6 +34,6 @@ export async function createParty(user2) {
       user1: firestore.doc(`users/${currentUser.email}`),
     })
     .then(console.log('party started'))
-    .then(store.dispatch(sendRequest(docRef.id, user2)))
+    .then(store.dispatch(sendPartyRequest(docRef.id, user2)))
     .finally(console.log('send success'));
 }

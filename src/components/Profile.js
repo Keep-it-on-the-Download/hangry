@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
 import { listenForRequests, getRequests } from '../reducers/friendRequests';
 import {
-  listenForRequests as listenForPartyRequests,
-  getRequests as getPartyRequests,
+  listenForPartyRequests,
+  getPartyRequests,
 } from '../reducers/partyRequests';
 import { getParty } from '../reducers/party';
 

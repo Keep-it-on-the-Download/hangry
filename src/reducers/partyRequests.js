@@ -9,12 +9,12 @@ const firestore = firebase.firestore();
 const GOT_PARTY_REQUESTS = 'GOT_PARTY_REQUESTS';
 
 // Action creator
-const gotRequests = (requests) => ({
+const gotPartyRequests = (requests) => ({
   type: GOT_PARTY_REQUESTS,
   requests,
 });
 
-export const getRequests = (userId) => {
+export const getPartyRequests = (userId) => {
   return async (dispatch) => {
     try {
       console.log('userID::::: , ', userId);
@@ -27,14 +27,14 @@ export const getRequests = (userId) => {
 
       const collectionSnapshot = await partyRequestsCollectionRef.get();
       console.log('collection snapshot:: , ', collectionSnapshot.docs);
-      dispatch(gotRequests(collectionSnapshot.docs));
+      dispatch(gotPartyRequests(collectionSnapshot.docs));
     } catch (err) {
-      console.error('Origin: partyRequests.getRequests(): ', err);
+      console.error('Origin: partyRequests.getPartyRequests(): ', err);
     }
   };
 };
 
-export const listenForRequests = (userId) => {
+export const listenForPartyRequests = (userId) => {
   return async (dispatch) => {
     try {
       firestore
@@ -42,15 +42,15 @@ export const listenForRequests = (userId) => {
         .doc(userId)
         .collection('partyRequests')
         .onSnapshot((collection) => {
-          dispatch(gotRequests(collection.docs));
+          dispatch(gotPartyRequests(collection.docs));
         });
     } catch (err) {
-      console.log('Origin: partyRequests.listenForRequests', err);
+      console.log('Origin: partyRequests.listenForPartyRequests', err);
     }
   };
 };
 
-export const acceptRequest = (partyId, memberId) => {
+export const acceptPartyRequest = (partyId, memberId) => {
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -63,12 +63,12 @@ export const acceptRequest = (partyId, memberId) => {
       // user 1 should already be in party so we're adding user2 here?
       dispatch(addMember(partyId, memberId));
     } catch (err) {
-      console.log('ORIGIN: partyRequests.acceptRequest()', err);
+      console.log('ORIGIN: partyRequests.acceptPartyRequest()', err);
     }
   };
 };
 
-export const sendRequest = (partyId, memberId) => {
+export const sendPartyRequest = (partyId, memberId) => {
   return async (dispatch) => {
     try {
       console.log('runnign here?');
@@ -85,7 +85,7 @@ export const sendRequest = (partyId, memberId) => {
         { merge: true }
       );
     } catch (err) {
-      console.log('Origin: partyRequests.sendRequest()', err);
+      console.log('Origin: partyRequests.sendPartyRequest()', err);
     }
   };
 };

@@ -14,7 +14,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import { acceptRequest } from '../reducers/friendRequests';
-import { acceptRequest as acceptPartyRequest } from '../reducers/partyRequests';
+import { acceptPartyRequest } from '../reducers/partyRequests';
 
 class Notifications extends React.Component {
   handleFriendRequest = (myId, friendId) => () => {
