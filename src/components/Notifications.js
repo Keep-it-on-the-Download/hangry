@@ -49,7 +49,7 @@ class Notifications extends React.Component {
                 const memberId = partyRequest.id;
                 console.log('memberId: ', memberId);
                 return (
-                  <ListItem>
+                  <ListItem key={memberId}>
                     <ListItemAvatar>
                       <Avatar />
                     </ListItemAvatar>
@@ -80,7 +80,7 @@ class Notifications extends React.Component {
                 const friendId = friendRequest.id;
                 console.log('FRIEND ID: ', friendId);
                 return (
-                  <ListItem>
+                  <ListItem key={friendId}>
                     <ListItemAvatar>
                       <Avatar />
                     </ListItemAvatar>
