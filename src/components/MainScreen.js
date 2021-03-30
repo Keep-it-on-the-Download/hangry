@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { createParty } from '../firebase/firestoreParty';
+import { Container, Grid, IconButton } from '@material-ui/core';
 
 import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
 import { getMoreRestaurants } from '../reducers/restaurants';
+import { AddCircle } from '@material-ui/icons';
 
 import Deck from './content/Deck';
 
@@ -40,6 +42,12 @@ class MainScreen extends React.Component {
           </Grid>
           <Grid item xs={12} className={classes.container}>
             <Controls />
+          </Grid>
+          <Grid>
+            <IconButton onClick={createParty}>
+              <AddCircle />
+              Decide with a friend
+            </IconButton>
           </Grid>
         </Grid>
       </Container>
