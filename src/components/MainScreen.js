@@ -2,22 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { createParty } from '../firebase/firestoreParty';
+import { Container, Grid, IconButton } from '@material-ui/core';
 
 import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
 import { getMoreRestaurants } from '../reducers/restaurants';
+import { AddCircle } from '@material-ui/icons';
 
 import Deck from './content/Deck';
 
 const styles = (theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
   container: {
     display: 'flex',
     justifyContent: 'center',
@@ -31,14 +28,26 @@ class MainScreen extends React.Component {
 
   render() {
     const { classes, inventory } = this.props;
-    const cards = inventory.map((item) => item.image_url);
+    const cards = [...inventory].reverse();
 
     return (
-      <Container maxWidth='sm' className={classes.root}>
+      <Container maxWidth='sm'>
         <Grid container>
-          <Grid item xs={12}>
-            <Deck cards={cards} />
+          <Grid item xs={12} className={classes.container}>
+            <Deck
+              cards={cards}
+              selectRestaurant={this.props.selectRestaurant}
+              unselectRestaurant={this.props.unselectRestaurant}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.container}>
             <Controls />
+          </Grid>
+          <Grid>
+            <IconButton onClick={createParty}>
+              <AddCircle />
+              Decide with a friend
+            </IconButton>
           </Grid>
         </Grid>
       </Container>

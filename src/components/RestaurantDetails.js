@@ -1,14 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-// import Typography from '@material-ui/core/Typography';
-// import { sizing } from '@material-ui/system';
-// import { spacing } from '@material-ui/system';
-// // import Card from '@material-ui/core/Card';
-// import { makeStyles } from '@material-ui/core/styles';
-// import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -74,71 +69,70 @@ const styles = (theme) => ({
 
 class RestaurantDetails extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, restaurant } = this.props;
+    console.log('RESTAURANT -->', restaurant);
     return (
-      <body className={classes.body}>
-        <Container className={classes.root} maxWidthLg>
-          <Card className={classes.cardStyle}>
-            <CardHeader title='Poke Parlor' />
-            <CardMedia
-              className={classes.media}
-              image='https://raster-static.postmates.com/?url=com.postmates.img.prod.s3.amazonaws.com/a8bf805d-1aff-4863-82ee-bfdac151f41e/orig.jpg&quality=90&w=1500&h=900&mode=crop&format=jpg&v=4'
-              title='Paella dish'
-            />
-            <CardContent>
-              <Grid container>
-                <Grid align='justify' item xs={4}>
-                  <p className={classes.category}>Price:</p>
-                  <p className={classes.category}>Address:</p>
-                  <p className={classes.category}>Cuisine:</p>
-                  <p className={classes.category}>Distance:</p>
-                </Grid>
-                <Grid align='justify' item xs={8}>
-                  <p className={classes.content}>
-                    <strong>$</strong>
-                  </p>
-                  <p className={classes.content}>
-                    <strong>2485 Telegraph Ave</strong>
-                  </p>
-                  <p className={classes.content}>
-                    <strong>Hawaiian</strong>
-                  </p>
-                  <p className={classes.content}>
-                    <strong>0.15 miles</strong>
-                  </p>
-                </Grid>
-                <p align='justify'>
-                  Here is where the reviews widget will show up
+      <Container className={classes.root}>
+        <Card className={classes.cardStyle}>
+          <CardHeader title={restaurant.name} />
+          <CardMedia
+            className={classes.media}
+            image={restaurant.image_url}
+            title={restaurant.alias}
+          />
+          <CardContent>
+            <Grid container>
+              <Grid align='justify' item xs={4}>
+                <p className={classes.category}>Price:</p>
+                <p className={classes.category}>Address:</p>
+                <p className={classes.category}>Cuisine:</p>
+                <p className={classes.category}>Distance:</p>
+              </Grid>
+              <Grid align='justify' item xs={8}>
+                <p className={classes.content}>
+                  <strong>{restaurant.price}</strong>
+                </p>
+                <p className={classes.content}>
+                  <strong>{restaurant.location.address1}</strong>
+                </p>
+                <p className={classes.content}>
+                  <strong>{restaurant.categories[0].title}</strong>
+                </p>
+                <p className={classes.content}>
+                  <strong>0.15 miles</strong>
                 </p>
               </Grid>
-            </CardContent>
-          </Card>
-          <CardActions disableSpacing>
-            <IconButton
-              aria-label='back to main screen'
-              component={Link}
-              to='/'
-            >
-              <ArrowBackRoundedIcon />
-            </IconButton>
-            <IconButton aria-label='add to favorites'>
-              <FavoriteIcon style={{ fill: '#FF85A6' }} />
-            </IconButton>
-            <IconButton aria-label='Go to yelp'>
-              <FastfoodIcon style={{ fill: '#FF9E30' }} />
-            </IconButton>
-            <Button
-              className={classes.directions}
-              variant='contained'
-              color='primary'
-            >
-              Directions
-            </Button>
-          </CardActions>
-        </Container>
-      </body>
+              <p align='justify'>
+                Here is where the reviews widget will show up
+              </p>
+            </Grid>
+          </CardContent>
+        </Card>
+        <CardActions disableSpacing>
+          <IconButton aria-label='back to main screen' component={Link} to='/'>
+            <ArrowBackRoundedIcon />
+          </IconButton>
+          <IconButton aria-label='add to favorites'>
+            <FavoriteIcon style={{ fill: '#FF85A6' }} />
+          </IconButton>
+          <IconButton aria-label='Go to yelp'>
+            <FastfoodIcon style={{ fill: '#FF9E30' }} />
+          </IconButton>
+          <Button
+            className={classes.directions}
+            variant='contained'
+            color='primary'
+          >
+            Directions
+          </Button>
+        </CardActions>
+      </Container>
     );
   }
 }
 
-export default withStyles(styles)(RestaurantDetails);
+const mapState = (state) => ({
+  restaurant: state.restaurants.inventory[0],
+});
+
+export default connect(mapState)(withStyles(styles)(RestaurantDetails));

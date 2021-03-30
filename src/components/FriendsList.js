@@ -14,10 +14,15 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import Fastfood from '@material-ui/icons/Fastfood';
 
 import InviteFriends from './InviteFriends';
 
 import { getFriends } from '../reducers/friends';
+
+import { createParty } from '../firebase/firestoreParty';
 
 const styles = (theme) => ({
   listHeader: {
@@ -84,6 +89,16 @@ class FriendsList extends React.Component {
                     primary={`${displayName}`}
                     secondary='Some info'
                   />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge='end'
+                      aria-label='create party'
+                      onClick={() => createParty(email)}
+                    >
+                      <Fastfood />
+                      Start party
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               );
             })

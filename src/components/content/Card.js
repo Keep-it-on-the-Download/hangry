@@ -1,57 +1,63 @@
 import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-// import * as constants from '../constants';
 
-class Card extends React.Component {
-  renderCard = () => {
-    const { worker, index } = this.props;
-    const styles = {
-      zIndex: 100 - index,
-      transform: `
-        translateY(${index * 10}px)
-        translateX(-50%)
-        scale(${1 - index * 0.02})
-      `,
-    };
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Box,
+  Card as MaterialCard,
+  CardMedia,
+  Typography,
+} from '@material-ui/core';
 
-    return (
-      <div className='card' style={styles}>
-        <p>{worker.name}</p>
-      </div>
-    );
-  };
+import { Link } from 'react-router-dom';
 
-  renderDraggableCard = () => {
-    const { worker } = this.props;
+const useStyles = makeStyles((theme) => ({
+  cardContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+    marginTop: 10,
+  },
+  cardImage: {
+    width: '90vw',
+    maxWidth: '400px',
+    height: '80vh',
+    maxHeight: '700px',
+  },
+  text: {
+    position: 'absolute',
+    width: '100%',
+    bottom: '0.5px',
+    left: '0.5px',
+    color: '#FFFFFF',
+    fontWeight: 'bolder',
+    fontStyle: 'italic',
+    textAlign: 'left',
+    background:
+      'linear-gradient(to bottom, rgba(0,0,0,0) 0.5%, rgba(0,0,0,0.75))',
+    textDecoration: 'none',
+  },
+  price: {
+    marginTop: '5px',
+  },
+}));
 
-    return (
-      <Draggable draggableId={worker.id} type='CARD'>
-        {(provided, snapshot) => {
-          const styles = {
-            ...provided.draggableStyle,
-            zIndex: 100,
-            left: 'calc(50% - 125px)',
-          };
-          return (
-            <div
-              ref={provided.innerRef}
-              className='card'
-              style={styles}
-              {...provided.dragHandleProps}
-            >
-              <p>{worker.name}</p>
-            </div>
-          );
-        }}
-      </Draggable>
-    );
-  };
-
-  render() {
-    return this.props.index === 0
-      ? this.renderDraggableCard()
-      : this.renderCard();
-  }
-}
+const Card = (props) => {
+  const classes = useStyles();
+  const { name, price, image_url } = props;
+  return (
+    <MaterialCard className={classes.cardContainer}>
+      <CardMedia
+        component='img'
+        className={classes.cardImage}
+        src={image_url}
+        alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
+      />
+      <Box className={classes.text} component={Link} to={'/restaurantDetails'}>
+        <Typography variant='h3'>{name}</Typography>
+        <Typography className={classes.price}>{price}</Typography>
+      </Box>
+    </MaterialCard>
+  );
+};
 
 export default Card;
