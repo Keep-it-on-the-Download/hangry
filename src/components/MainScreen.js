@@ -9,7 +9,7 @@ import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
-import { getMoreRestaurants } from '../reducers/restaurants';
+import { getInitialRestaurants } from '../reducers/restaurants';
 import { AddCircle } from '@material-ui/icons';
 
 import Deck from './content/Deck';
@@ -23,7 +23,9 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    this.props.getMoreRestaurants(10);
+    if (!this.props.inventory.length) {
+      this.props.getInitialRestaurants();
+    }
   }
 
   render() {
@@ -62,7 +64,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
-  getMoreRestaurants: () => dispatch(getMoreRestaurants()),
+  getInitialRestaurants: () => dispatch(getInitialRestaurants()),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));
