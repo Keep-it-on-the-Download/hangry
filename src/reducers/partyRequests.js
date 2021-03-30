@@ -6,11 +6,11 @@ import { addMember } from './partyMembers';
 const firestore = firebase.firestore();
 
 // Action type
-const GOT_REQUESTS = 'GOT_REQUESTS';
+const GOT_PARTY_REQUESTS = 'GOT_PARTY_REQUESTS';
 
 // Action creator
 const gotRequests = (requests) => ({
-  type: GOT_REQUESTS,
+  type: GOT_PARTY_REQUESTS,
   requests,
 });
 
@@ -95,7 +95,7 @@ const initialState = { data: [], count: 0, isLoading: true };
 
 const partyRequests = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_REQUESTS:
+    case GOT_PARTY_REQUESTS:
       return {
         ...state,
         data: action.requests,
