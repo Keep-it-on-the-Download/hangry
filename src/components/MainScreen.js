@@ -31,13 +31,24 @@ class MainScreen extends React.Component {
 
   render() {
     const { classes, inventory } = this.props;
-    const cards = inventory.map((item) => item.image_url);
+    const cards = inventory.map((item) => item.image_url).reverse();
 
     return (
       <Container maxWidth='sm' className={classes.root}>
         <Grid container>
-          <Grid item xs={12}>
-            <Deck cards={cards} />
+          <Grid
+            item
+            xs={12}
+            className={classes.container}
+            style={{ height: '75vh' }}
+          >
+            <Deck
+              cards={cards}
+              selectRestaurant={this.props.selectRestaurant}
+              unselectRestaurant={this.props.unselectRestaurant}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.container}>
             <Controls />
           </Grid>
         </Grid>

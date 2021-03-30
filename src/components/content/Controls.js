@@ -9,11 +9,11 @@ import { Close, Favorite } from '@material-ui/icons';
 
 const Controls = (props) => {
   const handleLikeClick = () => {
-    props.selectWorker();
+    props.selectRestaurant();
   };
 
   const handleDislikeClick = () => {
-    props.unselectWorker();
+    props.unselectRestaurant();
   };
 
   return (
