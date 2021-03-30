@@ -29,7 +29,7 @@ export async function createParty(user2) {
   // add members collection to party doc. The first user doc will be added to the subcollection with user's displayName
   docRef
     .collection('members')
-    .doc(currentUser.displayName)
+    .doc(currentUser.email)
     .set({
       user1: firestore.doc(`users/${currentUser.email}`),
     })

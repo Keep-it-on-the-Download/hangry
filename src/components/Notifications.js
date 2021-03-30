@@ -110,7 +110,7 @@ class Notifications extends React.Component {
 }
 
 const mapState = (state) => ({
-  userId: state.user.data.displayName,
+  userId: state.user.data.email,
   friendRequests: state.friendRequests.data,
   friendRequestsAreLoading: state.friendRequests.isLoading,
 
