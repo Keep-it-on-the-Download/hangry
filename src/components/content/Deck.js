@@ -26,18 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  card: {
-    backgroundColor: 'black',
-    backgroundSize: 'auto 85%',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    width: '75vw',
-    maxWidth: '400px',
-    height: '85vh',
-    maxHeight: '570px',
-    borderRadius: '10px',
-    borderColor: '#000',
+    touchAction: 'none',
   },
 }));
 
@@ -53,9 +42,8 @@ function Deck(props) {
   // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
   const bind = useDrag(
     ({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
-      const trigger = velocity > 1; // If you flick hard enough it should trigger the card to fly out
+      const trigger = velocity > 0.2; // If you flick hard enough it should trigger the card to fly out
       const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
-      // console.log('innerwidth -->', window.innerWidth);
       if (!down && trigger && Math.abs(mx) > window.innerWidth / 2) {
         // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
         gone.add(index);

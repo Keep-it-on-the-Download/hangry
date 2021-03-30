@@ -17,16 +17,12 @@ const gotPartyRequests = (requests) => ({
 export const getPartyRequests = (userId) => {
   return async (dispatch) => {
     try {
-      console.log('userID::::: , ', userId);
       const partyRequestsCollectionRef = firestore
         .collection('users')
         .doc(userId)
         .collection('partyRequests');
 
-      console.log('partyRequestsRef before: ', partyRequestsCollectionRef);
-
       const collectionSnapshot = await partyRequestsCollectionRef.get();
-      console.log('collection snapshot:: , ', collectionSnapshot.docs);
       dispatch(gotPartyRequests(collectionSnapshot.docs));
     } catch (err) {
       console.error('Origin: partyRequests.getPartyRequests(): ', err);
@@ -45,14 +41,12 @@ export const listenForPartyRequests = (userId) => {
           dispatch(gotPartyRequests(collection.docs));
         });
     } catch (err) {
-      console.log('Origin: partyRequests.listenForPartyRequests', err);
+      console.error('Origin: partyRequests.listenForPartyRequests', err);
     }
   };
 };
 
 export const acceptPartyRequest = (partyId, memberId) => {
-  console.log('PARTY REQ MEMBER ID:', memberId);
-  console.log('PARTY REQ PARTY ID:', partyId);
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -65,7 +59,7 @@ export const acceptPartyRequest = (partyId, memberId) => {
       // user 1 should already be in party so we're adding user2 here?
       dispatch(addMember(partyId, memberId));
     } catch (err) {
-      console.log('ORIGIN: partyRequests.acceptPartyRequest()', err);
+      console.error('ORIGIN: partyRequests.acceptPartyRequest()', err);
     }
   };
 };
@@ -73,13 +67,11 @@ export const acceptPartyRequest = (partyId, memberId) => {
 export const sendPartyRequest = (partyId, memberId) => {
   return async (dispatch) => {
     try {
-      console.log('runnign here?');
       const requestReference = firestore
         .collection('users')
         .doc(memberId)
         .collection('partyRequests')
         .doc(partyId);
-      console.log('requestReference: ', requestReference);
       requestReference.set(
         {
           party: partyId,
@@ -87,7 +79,7 @@ export const sendPartyRequest = (partyId, memberId) => {
         { merge: true }
       );
     } catch (err) {
-      console.log('Origin: partyRequests.sendPartyRequest()', err);
+      console.error('Origin: partyRequests.sendPartyRequest()', err);
     }
   };
 };

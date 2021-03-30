@@ -33,12 +33,6 @@ class Notifications extends React.Component {
       partyRequests,
     } = this.props;
 
-    console.log('this.props: ', this.props);
-    console.log('FRIEND REQUESTS: ', friendRequests);
-    console.log('loading? ', partyRequestsAreLoading);
-    console.log('FR loading??? ', friendRequestsAreLoading);
-    console.log('partyRequests:: ', partyRequests);
-
     return (
       <div>
         <List>
@@ -46,8 +40,6 @@ class Notifications extends React.Component {
             (partyRequests.length ? (
               partyRequests.map((partyRequest) => {
                 const partyId = partyRequest.id;
-                console.log('partyId: ', partyId);
-                console.log('userId IN NOTIFS', userId);
                 return (
                   <ListItem key={partyId}>
                     <ListItemAvatar>
@@ -78,7 +70,6 @@ class Notifications extends React.Component {
             (friendRequests.length ? (
               friendRequests.map((friendRequest) => {
                 const friendId = friendRequest.id;
-                console.log('FRIEND ID: ', friendId);
                 return (
                   <ListItem key={friendId}>
                     <ListItemAvatar>

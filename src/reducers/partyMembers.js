@@ -38,7 +38,7 @@ export const getMember = (memberId) => {
 
       dispatch(gotMembers(members));
     } catch (err) {
-      console.log('Origin: members.getMembers()', err);
+      console.error('Origin: members.getMembers()', err);
     }
   };
 };
@@ -63,7 +63,7 @@ export const addMember = (partyId, memberId) => {
 
       dispatch(addedMember(newMemberReference));
     } catch (err) {
-      console.log('Origin: members.addMember', err);
+      console.error('Origin: members.addMember', err);
     }
   };
 };
