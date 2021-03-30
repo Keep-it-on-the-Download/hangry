@@ -70,7 +70,7 @@ function Deck(props) {
         const isGone = gone.has(index);
         const x = isGone ? (100 + window.innerWidth) * dir : down ? mx : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
         const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0); // How much the card tilts, flicking it harder makes it rotate faster
-        const scale = down ? 1.1 : 1; // Active cards lift up a bit
+        const scale = down ? 1.01 : 1; // Active cards lift up a bit
         return {
           x,
           rot,
@@ -83,7 +83,7 @@ function Deck(props) {
         setTimeout(() => gone.clear() || set((i) => to(i)), 600);
     }
   );
-  // Now we're just mapping the animated values to our view, that's it. Btw, this component only renders once. :-)
+
   return springs.map(({ x, y, rot, scale }, i) => (
     <animated.div
       key={i}
@@ -95,16 +95,13 @@ function Deck(props) {
         ),
       }}
     >
-      {/* This is the card itself, we're binding our gesture to it (and inject its index so we know which is which) */}
       <animated.div
         {...bind(i)}
-        // className={classes.card}
         style={{
           transform: interpolate([rot, scale], trans),
         }}
       >
         <Card
-          className={classes.card}
           id={cards[i].id}
           name={cards[i].name}
           price={cards[i].price}

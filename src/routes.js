@@ -41,7 +41,7 @@ const Routes = () => {
       </Route>
       <Route
         exact
-        path='/restaurants/1'
+        path='/restaurantDetails'
         render={(routeProps) => <RestaurantDetails {...routeProps} />}
       />
       {/* PSA: the route is temporarily /restaurants/1 so i can see it while updating*/}

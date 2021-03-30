@@ -13,11 +13,6 @@ import { getMoreRestaurants } from '../reducers/restaurants';
 import Deck from './content/Deck';
 
 const styles = (theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
   container: {
     display: 'flex',
     justifyContent: 'center',
@@ -34,14 +29,9 @@ class MainScreen extends React.Component {
     const cards = [...inventory].reverse();
 
     return (
-      <Container maxWidth='sm' className={classes.root}>
+      <Container maxWidth='sm'>
         <Grid container>
-          <Grid
-            item
-            xs={12}
-            className={classes.container}
-            style={{ height: '75vh' }}
-          >
+          <Grid item xs={12} className={classes.container}>
             <Deck
               cards={cards}
               selectRestaurant={this.props.selectRestaurant}
