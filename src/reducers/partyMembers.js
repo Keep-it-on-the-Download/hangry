@@ -61,7 +61,7 @@ export const addMember = (partyId, memberId) => {
         { merge: true }
       );
 
-      dispatch(addedMember(newMember));
+      dispatch(addedMember(newMemberReference));
     } catch (err) {
       console.log('Origin: members.addMember', err);
     }

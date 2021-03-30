@@ -93,7 +93,7 @@ class FriendsList extends React.Component {
                     <IconButton
                       edge='end'
                       aria-label='create party'
-                      onClick={() => createparty(email)}
+                      onClick={() => createParty(email)}
                     >
                       <Fastfood />
                       Start party
