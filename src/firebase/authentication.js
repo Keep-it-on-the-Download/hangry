@@ -32,7 +32,7 @@ function CreateUser(email, password, firstName, lastName) {
 function LoginWithEmailAndPassword(email, password) {
   // authenticates with firebase then redirects to home screen
   auth.signInWithEmailAndPassword(email, password).then(() => {
-    window.location.href = '/';
+    window.location.href = '/profile';
   });
 }
 

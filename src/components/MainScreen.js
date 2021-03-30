@@ -2,15 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { createParty } from '../firebase/firestoreParty';
-import { Container, Grid, IconButton, Typography } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 
 import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
 import { getInitialRestaurants } from '../reducers/restaurants';
-import { AddCircle } from '@material-ui/icons';
 
 import Deck from './content/Deck';
 

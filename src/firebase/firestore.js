@@ -34,11 +34,11 @@ export async function addGoogleUserToFirestore() {
         photoURL,
       })
       .then(() => {
-        window.location.href = '/';
+        window.location.href = '/profile';
       });
   } else {
     // user exists in AUTH & FIRESTORE so this will just redirect the page without adding the user to FIRESTORE
-    window.location.href = '/';
+    window.location.href = '/profile';
   }
 }
 
@@ -58,7 +58,7 @@ export async function addUserToFirestore(user) {
         displayName: `${firstName} ${lastName}`,
       })
       .then(() => {
-        window.location.href = '/';
+        window.location.href = '/profile';
       });
   }
 }
