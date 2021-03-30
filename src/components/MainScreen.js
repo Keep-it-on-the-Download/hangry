@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import { createParty } from '../firebase/firestoreParty';
-import { Container, Grid, IconButton } from '@material-ui/core';
+import { Container, Grid, IconButton, Typography } from '@material-ui/core';
 
 import Controls from './content/Controls';
 
@@ -18,6 +18,9 @@ const styles = (theme) => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  buttonContainer: {
+    marginTop: '80vh',
   },
 });
 
@@ -42,14 +45,8 @@ class MainScreen extends React.Component {
               unselectRestaurant={this.props.unselectRestaurant}
             />
           </Grid>
-          <Grid item xs={12} className={classes.container}>
+          <Grid item xs={12} className={classes.buttonContainer}>
             <Controls />
-          </Grid>
-          <Grid>
-            <IconButton onClick={createParty}>
-              <AddCircle />
-              Decide with a friend
-            </IconButton>
           </Grid>
         </Grid>
       </Container>
