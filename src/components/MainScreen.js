@@ -2,15 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-import { createParty } from '../firebase/firestoreParty';
-import { Container, Grid, IconButton } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 
 import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
-import { getMoreRestaurants } from '../reducers/restaurants';
-import { AddCircle } from '@material-ui/icons';
+import { getInitialRestaurants } from '../reducers/restaurants';
 
 import Deck from './content/Deck';
 
@@ -19,11 +17,16 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    marginTop: '80vh',
+  },
 });
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    this.props.getMoreRestaurants(10);
+    if (!this.props.inventory.length) {
+      this.props.getInitialRestaurants();
+    }
   }
 
   render() {
@@ -40,14 +43,8 @@ class MainScreen extends React.Component {
               unselectRestaurant={this.props.unselectRestaurant}
             />
           </Grid>
-          <Grid item xs={12} className={classes.container}>
+          <Grid item xs={12} className={classes.buttonContainer}>
             <Controls />
-          </Grid>
-          <Grid>
-            <IconButton onClick={createParty}>
-              <AddCircle />
-              Decide with a friend
-            </IconButton>
           </Grid>
         </Grid>
       </Container>
@@ -62,7 +59,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
-  getMoreRestaurants: () => dispatch(getMoreRestaurants()),
+  getInitialRestaurants: () => dispatch(getInitialRestaurants()),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));
