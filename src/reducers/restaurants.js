@@ -4,6 +4,11 @@ let BATCH_SIZE = 10;
 let BATCH_NUM = 1;
 let STORAGE = [];
 
+const YELP_API_KEY =
+  process.env.NODE_ENV === 'production'
+    ? process.env.YELP_API_KEY
+    : process.env.REACT_APP_YELP_API_KEY;
+
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
 const ADD_TO_UNSELECTED = 'ADD_TO_UNSELECTED';
 
@@ -42,7 +47,7 @@ export function getInitialRestaurants() {
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+          Authorization: `Bearer ${YELP_API_KEY}`,
         },
         params: {
           limit: BATCH_SIZE * 2,
@@ -66,7 +71,7 @@ export function getMoreRestaurants(batch) {
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.YELP_API_KEY}`,
+          Authorization: `Bearer ${YELP_API_KEY}`,
         },
         params: {
           limit: BATCH_SIZE,
