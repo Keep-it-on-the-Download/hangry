@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { HomeRounded, AccountCircle } from '@material-ui/icons';
+import PeopleIcon from '@material-ui/icons/People';
 // import LocationOn from '@material-ui/icons';
 // import ButtonGroup from '@material-ui/core/ButtonGroup';
 // import Button from '@material-ui/core/Button';
@@ -46,15 +47,15 @@ const Navbar = (props) => {
         >
           <HomeRounded />
         </IconButton>
+        <div className={classes.filler} />
         <IconButton
           aria-label='Home'
           className={classes.icon}
           component={Link}
           to='/parties'
         >
-          <HomeRounded />
+          <PeopleIcon />
         </IconButton>
-        <div className={classes.filler} />
         <div className={classes.filler} />
         <IconButton
           aria-label='Profile'
