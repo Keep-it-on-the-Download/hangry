@@ -44,7 +44,7 @@ function Deck(props) {
     ({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
       const trigger = velocity > 0.2; // If you flick hard enough it should trigger the card to fly out
       const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
-      if (!down && trigger && Math.abs(mx) > window.innerWidth / 2) {
+      if (!down && trigger) {
         // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
         gone.add(index);
         if (dir < 0) {
