@@ -46,6 +46,14 @@ const Navbar = (props) => {
         >
           <HomeRounded />
         </IconButton>
+        <IconButton
+          aria-label='Home'
+          className={classes.icon}
+          component={Link}
+          to='/parties'
+        >
+          <HomeRounded />
+        </IconButton>
         <div className={classes.filler} />
         <div className={classes.filler} />
         <IconButton
