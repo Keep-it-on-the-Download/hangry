@@ -15,13 +15,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     position: 'relative',
-    marginTop: 10,
+    marginTop: 15,
   },
   cardImage: {
     width: '90vw',
     maxWidth: '400px',
-    height: '80vh',
+    height: '75vh',
     maxHeight: '700px',
+    userDrag: 'none',
+    userSelect: 'none',
   },
   text: {
     position: 'absolute',

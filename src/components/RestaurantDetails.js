@@ -70,7 +70,6 @@ const styles = (theme) => ({
 class RestaurantDetails extends React.Component {
   render() {
     const { classes, restaurant } = this.props;
-    console.log('RESTAURANT -->', restaurant);
     return (
       <Container className={classes.root}>
         <Card className={classes.cardStyle}>
