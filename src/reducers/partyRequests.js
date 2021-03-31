@@ -18,16 +18,13 @@ const gotPartyRequests = (requests) => ({
 export const getPartyRequests = (userId) => {
   return async (dispatch) => {
     try {
-      console.log('userID::::: , ', userId);
       const partyRequestsCollectionRef = firestore
         .collection('users')
         .doc(userId)
         .collection('partyRequests');
 
-      console.log('partyRequestsRef before: ', partyRequestsCollectionRef);
-
       const collectionSnapshot = await partyRequestsCollectionRef.get();
-      console.log('collection snapshot:: , ', collectionSnapshot.docs);
+
       dispatch(gotPartyRequests(collectionSnapshot.docs));
     } catch (err) {
       console.error('Origin: partyRequests.getPartyRequests(): ', err);
@@ -73,7 +70,6 @@ export const acceptPartyRequest = (partyId, memberId) => {
 export const sendPartyRequest = (partyId, memberId) => {
   return async (dispatch) => {
     try {
-      console.log('runnign here?');
       const requestReference = firestore
         .collection('users')
         .doc(memberId)
