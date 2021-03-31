@@ -55,7 +55,7 @@ class MainScreen extends React.Component {
 const mapState = (state) => ({
   inventory: state.restaurants.inventory,
   userId: state.user.data.email,
-  partyId: state.party.data.id,
+  partyId: state.user.data.currentParty,
 });
 
 const mapDispatch = (dispatch) => ({
