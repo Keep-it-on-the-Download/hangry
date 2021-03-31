@@ -51,9 +51,6 @@ class ActiveParties extends React.Component {
         <Card className={classes.root}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
-              {/* <Typography variant='subtitle1' color='textSecondary'>
-                  Mac Miller
-                </Typography> */}
               <Grid container>
                 <Grid align='justify' item xs={9}>
                   <Typography
