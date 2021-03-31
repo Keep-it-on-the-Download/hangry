@@ -17,7 +17,7 @@ export const getParty = (partyId) => {
     try {
       const partyReference = firestore.collection('parties').doc(partyId);
       const doc = await partyReference.get();
-      dispatch(gotParty(doc.data()));
+      dispatch(gotParty(doc));
     } catch (err) {
       console.error('Origin: party.getParty(): ', err);
     }

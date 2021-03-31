@@ -2,6 +2,8 @@ import firebase from '../firebase';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+import { getParty } from './party';
+
 const firestore = firebase.firestore();
 
 // Action types
@@ -57,10 +59,12 @@ export const addMember = (partyId, memberId) => {
       await newMemberReference.set(
         {
           ref: memberUsersReference,
+          pointer: 0,
         },
         { merge: true }
       );
 
+      dispatch(getParty(partyId));
       dispatch(addedMember(newMemberReference));
     } catch (err) {
       console.error('Origin: members.addMember', err);

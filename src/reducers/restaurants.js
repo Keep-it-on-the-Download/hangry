@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+import firebase from '../firebase';
+import 'firebase/firestore';
+
+const firestore = firebase.firestore();
+
 let BATCH_SIZE = 10;
 let BATCH_NUM = 1;
 let STORAGE = [];
@@ -36,28 +41,49 @@ function gotMoreRestaurants(inventory) {
   };
 }
 
-export function getInitialRestaurants() {
-  // Get double restaurant batch assign first half to inventory
-  // assign second half to storage
+export function getInitialRestaurants(userId, partyId) {
   return async (dispatch) => {
-    // Check Firestore for available shared workers
-    // Query Yelp using shared parameters and correct offset
-    // push next set of restaurants to FireStore
-    const { data } = await axios.get(
-      `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
-      {
-        headers: {
-          Authorization: `Bearer ${YELP_API_KEY}`,
-        },
-        params: {
-          limit: BATCH_SIZE * 2,
-          latitude: 40.73108511040957,
-          longitude: -73.98939547296847,
-          categories: 'food',
-        },
-      }
-    );
-    dispatch(gotInitialRestaurants(data.businesses));
+    console.log('USERID --> ', userId);
+    console.log('PARTYID --> ', partyId);
+
+    const partyReference = firestore.collection('parties').doc(partyId);
+    const memberReference = partyReference.collection('members').doc(userId);
+
+    const partySnapshot = await partyReference.get();
+    const memberSnapshot = await memberReference.get();
+
+    const party = partySnapshot.data();
+    const member = memberSnapshot.data();
+
+    console.log('PARTY -->', party);
+
+    if (member.pointer === party.sharedRestaurants.length) {
+      const { data } = await axios.get(
+        `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
+        {
+          headers: {
+            Authorization: `Bearer ${YELP_API_KEY}`,
+          },
+          params: {
+            limit: BATCH_SIZE * 2,
+            latitude: 40.73108511040957,
+            longitude: -73.98939547296847,
+            categories: 'food',
+            // location: partySnapshot.location
+          },
+        }
+      );
+
+      partyReference.update({ sharedRestaurants: data.businesses });
+
+      dispatch(gotInitialRestaurants(data.businesses));
+    } else {
+      const data = party.sharedRestaurants.slice(
+        member.pointer,
+        BATCH_SIZE * 2
+      );
+      dispatch(gotInitialRestaurants(data));
+    }
   };
 }
 
@@ -82,7 +108,19 @@ export function getMoreRestaurants(batch) {
         },
       }
     );
-    dispatch(gotMoreRestaurants(data.businesses));
+
+    // const currArr = partySnapshot.sharedRestaurants;
+
+    // partySnapshot.update({
+    //   sharedRestaurants: [...currArr, ...data.businesses],
+    // });
+
+    // dispatch(gotMoreRestaurants(data.businesses));
+
+    // const data = partySnapshot.sharedRestaurants.slice(
+    //   pointer + 1,
+    //   pointer + BATCH_SIZE + 1
+    // );
   };
 }
 

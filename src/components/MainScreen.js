@@ -25,7 +25,7 @@ const styles = (theme) => ({
 class MainScreen extends React.Component {
   componentDidMount() {
     if (!this.props.inventory.length) {
-      this.props.getInitialRestaurants();
+      this.props.getInitialRestaurants(this.props.userId, this.props.partyId);
     }
   }
 
@@ -54,12 +54,15 @@ class MainScreen extends React.Component {
 
 const mapState = (state) => ({
   inventory: state.restaurants.inventory,
+  userId: state.user.data.email,
+  partyId: state.party.data.id,
 });
 
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
-  getInitialRestaurants: () => dispatch(getInitialRestaurants()),
+  getInitialRestaurants: (userId, partyId) =>
+    dispatch(getInitialRestaurants(userId, partyId)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));

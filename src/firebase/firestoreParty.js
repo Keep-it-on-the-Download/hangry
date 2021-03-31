@@ -18,7 +18,7 @@ export async function createParty(user2) {
 
   // since party doc doesn't exist, set up the fields in the collection
   const docRef = await partyRef.add({
-    sentBatches: [],
+    sharedRestaurants: [],
     preferences: {
       cuisine: ['italian', 'sushi'],
       distance: '5 miles',
@@ -30,7 +30,8 @@ export async function createParty(user2) {
     .collection('members')
     .doc(currentUser.email)
     .set({
-      user1: firestore.doc(`users/${currentUser.email}`),
+      ref: firestore.doc(`users/${currentUser.email}`),
+      pointer: 0,
     })
     .then(store.dispatch(sendPartyRequest(docRef.id, user2)));
 }
