@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
 import Notifications from './components/Notifications';
+import Settings from './components/Settings';
 
 import firebase from './firebase';
 import 'firebase/auth';
@@ -43,6 +44,11 @@ const Routes = () => {
         exact
         path='/restaurantDetails'
         render={(routeProps) => <RestaurantDetails {...routeProps} />}
+      />
+      <Route
+        exact
+        path='/settings'
+        render={(routeProps) => <Settings {...routeProps} />}
       />
       {/* PSA: the route is temporarily /restaurants/1 so i can see it while updating*/}
     </Switch>
