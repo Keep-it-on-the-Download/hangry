@@ -3,7 +3,12 @@ import { SignOut } from '../firebase/authentication';
 
 class Settings extends React.Component {
   render() {
-    return <SignOut />;
+    return (
+      <div>
+        hello
+        <SignOut />
+      </div>
+    );
   }
 }
 
