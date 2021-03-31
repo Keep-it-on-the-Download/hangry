@@ -38,6 +38,7 @@ export function getInitialRestaurants() {
     // Check Firestore for available shared workers
     // Query Yelp using shared parameters and correct offset
     // push next set of restaurants to FireStore
+    console.log('YELP KEY -->', process.env.YELP_API_KEY);
     const { data } = await axios.get(
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
       {
