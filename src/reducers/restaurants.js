@@ -11,7 +11,7 @@ const GOT_RESTAURANTS = 'GOT_RESTAURANTS';
 const GOT_INITIAL_RESTAURANTS = 'GOT_INITIAL_RESTAURANTS';
 const GOT_RESTAURANTS_FROM_STORAGE = 'GOT_RESTAURANTS_FROM_STORAGE';
 
-function gotRestaurantsFromSotrage() {
+function gotRestaurantsFromStorage() {
   return {
     type: GOT_RESTAURANTS_FROM_STORAGE,
   };
@@ -38,12 +38,11 @@ export function getInitialRestaurants() {
     // Check Firestore for available shared workers
     // Query Yelp using shared parameters and correct offset
     // push next set of restaurants to FireStore
-    console.log('YELP KEY -->', process.env.YELP_API_KEY);
     const { data } = await axios.get(
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
       {
         headers: {
-          Authorization: `Bearer ${'X4WiSe_RRFmQewagsdvv74hIJ_10rCbnsXzgreokPG3WIYEJ2sNmgtYAFVI44lKI1MEhAHv6CcljzhsHh5mEZB8gSrHm1mBCuyJ0okP_iq08TQCx8c60BOVgTwFVYHYx'}`,
+          Authorization: `Bearer ${process.env.YELP_API_KEY}`,
         },
         params: {
           limit: BATCH_SIZE * 2,
@@ -67,7 +66,7 @@ export function getMoreRestaurants(batch) {
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
       {
         headers: {
-          Authorization: `Bearer ${'X4WiSe_RRFmQewagsdvv74hIJ_10rCbnsXzgreokPG3WIYEJ2sNmgtYAFVI44lKI1MEhAHv6CcljzhsHh5mEZB8gSrHm1mBCuyJ0okP_iq08TQCx8c60BOVgTwFVYHYx'}`,
+          Authorization: `Bearer ${process.env.YELP_API_KEY}`,
         },
         params: {
           limit: BATCH_SIZE,
@@ -86,7 +85,7 @@ export function getRestaurant(dispatch, getState) {
   const { inventory } = getState().restaurants;
 
   if (inventory.length <= 5) {
-    dispatch(gotRestaurantsFromSotrage());
+    dispatch(gotRestaurantsFromStorage());
     dispatch(getMoreRestaurants(BATCH_NUM++));
   }
 
