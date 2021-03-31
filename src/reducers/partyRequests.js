@@ -3,6 +3,7 @@ import 'firebase/firestore';
 
 import { addMember } from './partyMembers';
 
+import { createActivePartiesForUsersInFirestore } from '../firebase/firestoreParty';
 const firestore = firebase.firestore();
 
 // Action type
@@ -51,8 +52,6 @@ export const listenForPartyRequests = (userId) => {
 };
 
 export const acceptPartyRequest = (partyId, memberId) => {
-  console.log('PARTY REQ MEMBER ID:', memberId);
-  console.log('PARTY REQ PARTY ID:', partyId);
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -64,6 +63,7 @@ export const acceptPartyRequest = (partyId, memberId) => {
       await requestReference.delete();
       // user 1 should already be in party so we're adding user2 here?
       dispatch(addMember(partyId, memberId));
+      createActivePartiesForUsersInFirestore(partyId);
     } catch (err) {
       console.log('ORIGIN: partyRequests.acceptPartyRequest()', err);
     }
@@ -79,7 +79,7 @@ export const sendPartyRequest = (partyId, memberId) => {
         .doc(memberId)
         .collection('partyRequests')
         .doc(partyId);
-      console.log('requestReference: ', requestReference);
+
       requestReference.set(
         {
           party: partyId,
