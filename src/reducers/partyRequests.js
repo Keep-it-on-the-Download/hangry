@@ -43,7 +43,7 @@ export const listenForPartyRequests = (userId) => {
           dispatch(gotPartyRequests(collection.docs));
         });
     } catch (err) {
-      console.log('Origin: partyRequests.listenForPartyRequests', err);
+      console.error('Origin: partyRequests.listenForPartyRequests', err);
     }
   };
 };
@@ -62,7 +62,7 @@ export const acceptPartyRequest = (partyId, memberId) => {
       dispatch(addMember(partyId, memberId));
       createActivePartiesForUsersInFirestore(partyId);
     } catch (err) {
-      console.log('ORIGIN: partyRequests.acceptPartyRequest()', err);
+      console.error('ORIGIN: partyRequests.acceptPartyRequest()', err);
     }
   };
 };
@@ -83,7 +83,7 @@ export const sendPartyRequest = (partyId, memberId) => {
         { merge: true }
       );
     } catch (err) {
-      console.log('Origin: partyRequests.sendPartyRequest()', err);
+      console.error('Origin: partyRequests.sendPartyRequest()', err);
     }
   };
 };

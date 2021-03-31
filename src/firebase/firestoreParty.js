@@ -33,9 +33,7 @@ export async function createParty(user2) {
     .set({
       ref: firestore.doc(`users/${currentUser.email}`),
     })
-    .then(console.log('party started'))
-    .then(store.dispatch(sendPartyRequest(docRef.id, user2)))
-    .finally(console.log('send success'));
+    .then(store.dispatch(sendPartyRequest(docRef.id, user2)));
 }
 
 export function createActivePartiesForUsersInFirestore(partyId) {
