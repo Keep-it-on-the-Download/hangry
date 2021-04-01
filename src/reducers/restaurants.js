@@ -45,7 +45,7 @@ export function getInitialRestaurants() {
     // push next set of restaurants to FireStore
 
     console.log('NODE ENV -->', process.env.NODE_ENV);
-    console.log('YELP API KEY -->', YELP_API_KEY);
+    console.log('ENV -->', process.env);
 
     const { data } = await axios.get(
       `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
