@@ -1,6 +1,13 @@
 import axios from 'axios';
 
-const functions = require('firebase-functions');
+import firebase from '../firebase';
+import 'firebase/functions';
+
+const functions = firebase.functions();
+
+console.log('FUNCTIONS -->', functions);
+
+// import functions from 'firebase-functions';
 
 let BATCH_SIZE = 10;
 let BATCH_NUM = 1;
