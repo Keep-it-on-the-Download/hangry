@@ -23,12 +23,22 @@ export default function createActivePartiesForUsersInFirestore(partyId) {
       console.log('THIS IS USER REF ID::::', userRef.id);
       console.log('DOCC::::', doc);
       const activePartiesRef = userRef.collection('activeParties');
-      activePartiesRef
-        .doc(`Eat with ${userRef.id}`)
-        .set({
-          partyRef: `/parties/${partyId}`,
-        })
-        .then(console.log('DOC DATA ,', doc.data()));
+
+      if (userRef.id === user1) {
+        activePartiesRef
+          .doc(`Feast with ${user2}`)
+          .set({
+            partyRef: `/parties/${partyId}`,
+          })
+          .then(console.log('DOC DATA ,', doc.data()));
+      } else {
+        activePartiesRef
+          .doc(`Feast with ${user1}`)
+          .set({
+            partyRef: `/parties/${partyId}`,
+          })
+          .then(console.log('DOC DATA ,', doc.data()));
+      }
     });
   });
 }

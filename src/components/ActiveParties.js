@@ -47,9 +47,7 @@ const styles = (theme) => ({
   },
 });
 
-// const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
-
-const dummy = [];
+const currentActiveParties = [];
 
 class ActiveParties extends React.Component {
   componentDidMount() {
@@ -73,23 +71,15 @@ class ActiveParties extends React.Component {
       .then((querySnapshot) => {
         console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
         querySnapshot.docs.forEach((doc) => {
-          // console.log('INSIDE QUERY SNAPSHOT.id', doc.id);
-          // return snapshot.id;
-          // console.log('THIS IS EACH SNAPSHOTS DATA', snapshot.data());
-
-          dummy.push(doc.id);
-          // if (!dummy.includes(doc.id)) {
-          //   dummy.push(doc.id);
-          // }
+          if (!currentActiveParties.includes(doc.id)) {
+            currentActiveParties.push(doc.id);
+          }
         });
       });
 
-    // console.log('PROPS FROM ACTIVE PARTIES', this.props);
-    // console.log('USERSSSS', user);
-    // console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesCollectionRef.data);
     console.log('PARTY DOCSSS', partyDocs);
-    console.log('DUMMY DATA', dummy);
-    return dummy.map((party) => {
+    console.log('DUMMY DATA', currentActiveParties);
+    return currentActiveParties.map((party) => {
       return (
         <Card className={classes.root}>
           <div className={classes.details}>
@@ -101,7 +91,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    Party ID: {party}
+                    {party}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
