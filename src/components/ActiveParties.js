@@ -52,12 +52,11 @@ const currentActiveParties = [];
 class ActiveParties extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
-
     this.props.getUser(email);
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
 
     const firestore = firebase.firestore();
     const activePartiesCollectionRef = firestore
@@ -65,20 +64,15 @@ class ActiveParties extends React.Component {
       .doc(this.props.user.email)
       .collection('activeParties');
 
-    const partyDocs = activePartiesCollectionRef
-      .where('partyRef', '!=', false)
-      .get()
-      .then((querySnapshot) => {
-        console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
-        querySnapshot.docs.forEach((doc) => {
-          if (!currentActiveParties.includes(doc.id)) {
-            currentActiveParties.push(doc.id);
-          }
-        });
+    activePartiesCollectionRef.get().then((querySnapshot) => {
+      console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
+      querySnapshot.docs.forEach((doc) => {
+        if (!currentActiveParties.includes(doc.id)) {
+          currentActiveParties.push(doc.id);
+        }
       });
+    });
 
-    console.log('PARTY DOCSSS', partyDocs);
-    console.log('DUMMY DATA', currentActiveParties);
     return currentActiveParties.map((party) => {
       return (
         <Card className={classes.root}>
