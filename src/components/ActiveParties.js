@@ -62,29 +62,31 @@ class ActiveParties extends React.Component {
     const { classes, user } = this.props;
 
     const firestore = firebase.firestore();
-    const activePartiesRef = firestore
+    const activePartiesCollectionRef = firestore
       .collection('users')
       .doc(this.props.user.email)
       .collection('activeParties');
 
-    const partyDocs = activePartiesRef
+    const partyDocs = activePartiesCollectionRef
       .where('partyRef', '!=', false)
       .get()
       .then((querySnapshot) => {
         console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
         querySnapshot.docs.forEach((doc) => {
-          console.log('INSIDE QUERY SNAPSHOT.id', doc.id);
+          // console.log('INSIDE QUERY SNAPSHOT.id', doc.id);
           // return snapshot.id;
           // console.log('THIS IS EACH SNAPSHOTS DATA', snapshot.data());
-          if (!dummy.includes(doc.id)) {
-            dummy.push(doc.id);
-          }
+
+          dummy.push(doc.id);
+          // if (!dummy.includes(doc.id)) {
+          //   dummy.push(doc.id);
+          // }
         });
       });
 
     // console.log('PROPS FROM ACTIVE PARTIES', this.props);
     // console.log('USERSSSS', user);
-    // console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesRef.data);
+    // console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesCollectionRef.data);
     console.log('PARTY DOCSSS', partyDocs);
     console.log('DUMMY DATA', dummy);
     return dummy.map((party) => {
@@ -99,7 +101,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    Feast inside {party}
+                    Party ID: {party}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
