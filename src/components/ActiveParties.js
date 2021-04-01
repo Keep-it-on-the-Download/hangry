@@ -85,7 +85,7 @@ class ActiveParties extends React.Component {
     // console.log('PROPS FROM ACTIVE PARTIES', this.props);
     // console.log('USERSSSS', user);
     // console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesRef.data);
-    // console.log('PARTY DOCSSS', partyDocs);
+    console.log('PARTY DOCSSS', partyDocs);
     console.log('DUMMY DATA', dummy);
     return dummy.map((party) => {
       return (
@@ -99,7 +99,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    Feast with {party.friend}
+                    Feast inside {party}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
