@@ -49,6 +49,8 @@ const styles = (theme) => ({
 
 const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
 
+const firestore = firebase.firestore();
+
 class ActiveParties extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
@@ -59,8 +61,27 @@ class ActiveParties extends React.Component {
   render() {
     const { classes, user } = this.props;
 
+    const activePartiesRef = firestore
+      .collection('users')
+      .doc(this.props.user.email)
+      .collection('activeParties');
+
+    const partyDocs = activePartiesRef
+      .where('partyRef', '!=', false)
+      .get()
+      .then((querySnapshot) => {
+        console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
+        querySnapshot.docs.map((snapshot) => {
+          console.log('INSIDE QUERY SNAPSHOT.id', snapshot.id);
+          return snapshot.id;
+          // console.log('THIS IS EACH SNAPSHOTS DATA', snapshot.data());
+        });
+      });
+
     console.log('PROPS FROM ACTIVE PARTIES', this.props);
     console.log('USERSSSS', user);
+    console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesRef.data);
+    console.log('PARTY DOCSSS', partyDocs);
 
     return dummy.map((party) => {
       return (
