@@ -12,7 +12,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
+
+import firebase from '../firebase';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+import { getUser } from '../reducers/user';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   root: {
@@ -41,9 +47,21 @@ const styles = (theme) => ({
   },
 });
 
+const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
+
 class ActiveParties extends React.Component {
+  componentDidMount() {
+    const email = firebase.auth().currentUser.email;
+
+    this.props.getUser(email);
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+
+    console.log('PROPS FROM ACTIVE PARTIES', this.props);
+    console.log('USERSSSS', user);
+
     return dummy.map((party) => {
       return (
         <Card className={classes.root}>
@@ -89,4 +107,16 @@ class ActiveParties extends React.Component {
   }
 }
 
-export default withStyles(styles)(ActiveParties);
+const mapState = (state) => ({
+  user: state.user.data,
+  userIsLoading: state.user.userIsLoading,
+});
+
+const mapDispatch = (dispatch) => ({
+  getUser: (id) => dispatch(getUser(id)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles)(ActiveParties));
