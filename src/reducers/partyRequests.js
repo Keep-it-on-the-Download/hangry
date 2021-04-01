@@ -3,7 +3,8 @@ import 'firebase/firestore';
 
 import { addMember } from './partyMembers';
 
-import { createActivePartiesForUsersInFirestore } from '../firebase/firestoreParty';
+import createActivePartiesForUsersInFirestore from '../firebase/createActiveParties';
+
 const firestore = firebase.firestore();
 
 // Action type
