@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+const functions = require('firebase-functions');
+
 let BATCH_SIZE = 10;
 let BATCH_NUM = 1;
 let STORAGE = [];
 
 const YELP_API_KEY =
   process.env.NODE_ENV === 'production'
-    ? process.env.YELP_API_KEY
+    ? functions.config().yelp.key
     : process.env.REACT_APP_YELP_API_KEY;
 
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
