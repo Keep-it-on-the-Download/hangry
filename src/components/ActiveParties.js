@@ -19,6 +19,7 @@ import 'firebase/firestore';
 
 import { getUser } from '../reducers/user';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
   root: {
@@ -93,6 +94,8 @@ class ActiveParties extends React.Component {
                     className={classes.button}
                     variant='contained'
                     color='primary'
+                    component={Link}
+                    to='/'
                   >
                     Start Swiping
                   </Button>
