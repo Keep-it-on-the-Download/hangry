@@ -47,9 +47,9 @@ const styles = (theme) => ({
   },
 });
 
-const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
+// const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
 
-const firestore = firebase.firestore();
+const dummy = [];
 
 class ActiveParties extends React.Component {
   componentDidMount() {
@@ -61,6 +61,7 @@ class ActiveParties extends React.Component {
   render() {
     const { classes, user } = this.props;
 
+    const firestore = firebase.firestore();
     const activePartiesRef = firestore
       .collection('users')
       .doc(this.props.user.email)
@@ -71,18 +72,21 @@ class ActiveParties extends React.Component {
       .get()
       .then((querySnapshot) => {
         console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
-        querySnapshot.docs.map((snapshot) => {
-          console.log('INSIDE QUERY SNAPSHOT.id', snapshot.id);
-          return snapshot.id;
+        querySnapshot.docs.forEach((doc) => {
+          console.log('INSIDE QUERY SNAPSHOT.id', doc.id);
+          // return snapshot.id;
           // console.log('THIS IS EACH SNAPSHOTS DATA', snapshot.data());
+          if (!dummy.includes(doc.id)) {
+            dummy.push(doc.id);
+          }
         });
       });
 
-    console.log('PROPS FROM ACTIVE PARTIES', this.props);
-    console.log('USERSSSS', user);
-    console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesRef.data);
-    console.log('PARTY DOCSSS', partyDocs);
-
+    // console.log('PROPS FROM ACTIVE PARTIES', this.props);
+    // console.log('USERSSSS', user);
+    // console.log('THIS IS ACTIVE PARTIES REF.data', activePartiesRef.data);
+    // console.log('PARTY DOCSSS', partyDocs);
+    console.log('DUMMY DATA', dummy);
     return dummy.map((party) => {
       return (
         <Card className={classes.root}>
