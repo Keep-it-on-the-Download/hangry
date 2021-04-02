@@ -17,6 +17,8 @@ const YELP_API_KEY =
     ? '6Lwcjhdx5TnC8ihWU5XGbb-APaK9Lnl1_ZLHujY_p3CrToR89CBnFztzU8I-rza_Eh35DKUHRPv7K3OWe1KztJvqg0xMyJmbGr0G8ECqLrvGIYi5Hn4SHiA4acBkYHYx'
     : process.env.REACT_APP_YELP_API_KEY;
 
+const FOUND_MATCH = 'FOUND_MATCH';
+
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
 const ADD_TO_UNSELECTED = 'ADD_TO_UNSELECTED';
 
@@ -44,9 +46,9 @@ function gotMoreRestaurants(inventory) {
   };
 }
 
-export function getInitialRestaurants(userId, partyId) {
+export function getInitialRestaurants(userId, partyRef) {
   return async (dispatch) => {
-    const partyReference = firestore.collection('parties').doc(partyId);
+    const partyReference = firestore.doc(partyRef);
     const memberReference = partyReference.collection('members').doc(userId);
 
     const partySnapshot = await partyReference.get();
@@ -84,9 +86,9 @@ export function getInitialRestaurants(userId, partyId) {
   };
 }
 
-export function getMoreRestaurants(partyId) {
+export function getMoreRestaurants(partyRef) {
   return async (dispatch) => {
-    const partyReference = firestore.collection('parties').doc(partyId);
+    const partyReference = firestore.doc(partyRef);
     const partySnapshot = await partyReference.get();
     const partyData = partySnapshot.data();
 
@@ -126,21 +128,22 @@ export function getMoreRestaurants(partyId) {
 
 export function getRestaurant(dispatch, getState) {
   const { inventory } = getState().restaurants;
+  const { activeParty } = getState().user;
 
   LOCAL_POINTER++;
 
   if (inventory.length <= LIMIT) {
     BATCH_NUM++;
     dispatch(gotRestaurantsFromStorage());
-    dispatch(getMoreRestaurants('uFrHg1yH7LplEDh1SkzF'));
+    dispatch(getMoreRestaurants(activeParty));
   }
 
   return inventory[0];
 }
 
-export function syncPointer(userId, partyId) {
+export function syncPointer(userId, partyRef) {
   return async (dispatch) => {
-    const partyReference = firestore.collection('parties').doc(partyId);
+    const partyReference = firestore.doc(partyRef);
     const memberReference = partyReference.collection('members').doc(userId);
 
     memberReference.update({ pointer: LOCAL_POINTER });
@@ -150,7 +153,8 @@ export function syncPointer(userId, partyId) {
 const INITIAL_STATE = {
   inventory: [],
   isLoading: false,
-  error: null,
+  foundMatch: false,
+  matchedRestaurant: {},
 };
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -178,6 +182,13 @@ export default function reducer(state = INITIAL_STATE, action) {
     case GOT_RESTAURANTS:
       STORAGE = [...action.inventory];
       return state;
+
+    case FOUND_MATCH:
+      return {
+        ...state,
+        foundMatch: true,
+        matchedRestaurant: action.restaurant,
+      };
 
     default:
       return state;

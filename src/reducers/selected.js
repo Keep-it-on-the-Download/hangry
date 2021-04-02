@@ -5,6 +5,7 @@ import 'firebase/firestore';
 
 const firestore = firebase.firestore();
 
+const FOUND_MATCH = 'FOUND_MATCH';
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
 
 function addRestaurantToSelected(restaurant) {
@@ -14,7 +15,13 @@ function addRestaurantToSelected(restaurant) {
   };
 }
 
-// TODO: Make push to Firestore
+function foundMatch(restaurant) {
+  return {
+    type: FOUND_MATCH,
+    restaurant,
+  };
+}
+
 export function selectRestaurant() {
   return (dispatch, getState) => {
     const restaurant = getRestaurant(dispatch, getState);
@@ -25,15 +32,17 @@ export function selectRestaurant() {
 
 function checkForMatches(restaurant) {
   return async (dispatch, getState) => {
-    const { data } = getState().user;
-    const partyReference = firestore
-      .collection('parties')
-      .doc('uFrHg1yH7LplEDh1SkzF');
+    const { activeParty } = getState().user;
+    const partyReference = firestore.doc(activeParty);
     const partySnapshot = await partyReference.get();
     const party = partySnapshot.data();
 
     if (party.liked.includes(restaurant.id)) {
-      console.log('YOU MATCHED!!!');
+      dispatch(foundMatch(restaurant));
+      partyReference.update({
+        matchedRestaurant: restaurant,
+        foundMatch: true,
+      });
     } else {
       partyReference.update({ liked: [...party.liked, restaurant.id] });
     }

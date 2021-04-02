@@ -1,11 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-// import List from '@material-ui/core/List';
-// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-// import ListItem from '@material-ui/core/ListItem';
-// import ListItemText from '@material-ui/core/ListItemText';
-// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,7 +12,8 @@ import firebase from '../firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-import { getUser } from '../reducers/user';
+import { getUser, setActiveParty } from '../reducers/user';
+import { getParties } from '../reducers/parties';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -48,33 +44,19 @@ const styles = (theme) => ({
   },
 });
 
-const currentActiveParties = [];
-
 class ActiveParties extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
     this.props.getUser(email);
+    this.props.getParties(email);
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, parties } = this.props;
 
-    const firestore = firebase.firestore();
-    const activePartiesCollectionRef = firestore
-      .collection('users')
-      .doc(this.props.user.email)
-      .collection('activeParties');
-
-    activePartiesCollectionRef.get().then((querySnapshot) => {
-      console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
-      querySnapshot.docs.forEach((doc) => {
-        if (!currentActiveParties.includes(doc.id)) {
-          currentActiveParties.push(doc.id);
-        }
-      });
-    });
-
-    return currentActiveParties.map((party) => {
+    return parties.map((party) => {
+      const { foundMatch } = party.data();
+      console.log('PARTY -->', party);
       return (
         <Card className={classes.root}>
           <div className={classes.details}>
@@ -86,7 +68,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    {party}
+                    {`${foundMatch}`}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
@@ -94,6 +76,7 @@ class ActiveParties extends React.Component {
                     className={classes.button}
                     variant='contained'
                     color='primary'
+                    onClick={() => this.props.setActiveParty(party.ref.path)}
                     component={Link}
                     to='/'
                   >
@@ -110,11 +93,6 @@ class ActiveParties extends React.Component {
               </Grid>
             </CardContent>
           </div>
-          <CardMedia
-            className={classes.cover}
-            image='/static/images/cards/live-from-space.jpg'
-            title='Live from space album cover'
-          />
         </Card>
       );
     });
@@ -124,10 +102,13 @@ class ActiveParties extends React.Component {
 const mapState = (state) => ({
   user: state.user.data,
   userIsLoading: state.user.userIsLoading,
+  parties: state.parties.data,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
+  setActiveParty: (id) => dispatch(setActiveParty(id)),
+  getParties: (id) => dispatch(getParties(id)),
 });
 
 export default connect(

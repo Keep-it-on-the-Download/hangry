@@ -11,6 +11,7 @@ import { unselectRestaurant } from '../reducers/unselected';
 import { getInitialRestaurants, syncPointer } from '../reducers/restaurants';
 
 import Deck from './content/Deck';
+import MatchDialog from './MatchDialog';
 
 const styles = (theme) => ({
   container: {
@@ -23,22 +24,41 @@ const styles = (theme) => ({
 });
 
 class MainScreen extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+    };
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
   componentDidMount() {
     if (!this.props.inventory.length) {
-      this.props.getInitialRestaurants(
-        this.props.userId,
-        'uFrHg1yH7LplEDh1SkzF'
-      );
+      this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
     }
   }
 
   componentWillUnmount() {
-    this.props.syncPointer(this.props.userId, 'uFrHg1yH7LplEDh1SkzF');
+    this.props.syncPointer(this.props.userId, this.props.partyRef);
+  }
+
+  handleOpen() {
+    this.setState({ open: true });
+  }
+
+  handleClose() {
+    this.setState({ open: false });
   }
 
   render() {
-    const { classes, inventory } = this.props;
+    const { classes, inventory, foundMatch } = this.props;
     const cards = [...inventory].reverse();
+
+    if (foundMatch && !this.state.open) {
+      this.handleOpen();
+    }
 
     return (
       <Container maxWidth='sm'>
@@ -54,6 +74,7 @@ class MainScreen extends React.Component {
             <Controls />
           </Grid>
         </Grid>
+        <MatchDialog open={this.state.open} onClose={this.handleClose} />
       </Container>
     );
   }
@@ -62,7 +83,8 @@ class MainScreen extends React.Component {
 const mapState = (state) => ({
   inventory: state.restaurants.inventory,
   userId: state.user.data.email,
-  partyId: state.user.data.currentParty,
+  partyRef: state.user.activeParty,
+  foundMatch: state.restaurants.foundMatch,
 });
 
 const mapDispatch = (dispatch) => ({
