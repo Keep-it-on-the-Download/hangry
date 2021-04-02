@@ -41,6 +41,7 @@ class FriendsList extends React.Component {
     this.state = {
       open: false,
       openLocation: false,
+      selectedFriendId: '',
     };
 
     this.handleOpen = this.handleOpen.bind(this);
@@ -58,10 +59,11 @@ class FriendsList extends React.Component {
     this.setState({ open: false });
   }
 
-  handleOpenLocation() {
+  handleOpenLocation(friendId) {
     console.log('PRESSED HANDLE OPEN LOCATION 11111');
-    this.setState({ openLocation: true });
+    this.setState({ openLocation: true, selectedFriendId: friendId });
     console.log('PRESSED HANDLE OPEN LOCATION 22222');
+    console.log('THIS IS FRIEND ID IN HANDLE OPEN LOCATION', friendId);
   }
 
   handleCloseLocation() {
@@ -117,15 +119,10 @@ class FriendsList extends React.Component {
                       variant='contained'
                       size='small'
                       color='primary'
-                      onClick={this.handleOpenLocation}
+                      onClick={() => this.handleOpenLocation(email)}
                     >
                       START PARTY!!
                     </Button>
-                    <LocationForm
-                      email={email}
-                      openLocation={this.state.openLocation}
-                      onCloseLocation={this.handleCloseLocation}
-                    />
                   </ListItemSecondaryAction>
                 </ListItem>
               );
@@ -140,6 +137,11 @@ class FriendsList extends React.Component {
           id={id}
           open={this.state.open}
           onClose={this.handleClose}
+        />
+        <LocationForm
+          email={this.state.selectedFriendId}
+          openLocation={this.state.openLocation}
+          onCloseLocation={this.handleCloseLocation}
         />
       </React.Fragment>
     );
