@@ -6,7 +6,6 @@ import {
   listenForPartyRequests,
   getPartyRequests,
 } from '../reducers/partyRequests';
-import { getParty } from '../reducers/party';
 
 import { Link } from 'react-router-dom';
 
@@ -68,7 +67,6 @@ class Profile extends React.Component {
     this.props.listenForRequests(email);
     this.props.getPartyRequests(email);
     this.props.listenForPartyRequests(email);
-    this.props.getParty(email);
   }
 
   render() {
@@ -129,13 +127,11 @@ const mapState = (state) => ({
   friendRequestCount: state.friendRequests.count,
   membersAreLoading: state.partyRequests.isLoading,
   partyRequestsCount: state.partyRequests.count,
-  party: state.party.data,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
   getRequests: (id) => dispatch(getRequests(id)),
-  getParty: (id) => dispatch(getParty(id)),
   listenForRequests: (id) => dispatch(listenForRequests(id)),
   getPartyRequests: (partyId) => dispatch(getPartyRequests(partyId)),
   listenForPartyRequests: (partyId) =>
