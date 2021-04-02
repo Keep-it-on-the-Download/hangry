@@ -5,14 +5,16 @@ import 'firebase/firestore';
 
 const firestore = firebase.firestore();
 
-const LIMIT = 5;
 const BATCH_SIZE = 10;
+const LIMIT = 5;
+
+let LOCAL_POINTER = 0;
 let BATCH_NUM = 1;
 let STORAGE = [];
 
 const YELP_API_KEY =
   process.env.NODE_ENV === 'production'
-    ? process.env.FIREBASE_YELP_API_KEY
+    ? '6Lwcjhdx5TnC8ihWU5XGbb-APaK9Lnl1_ZLHujY_p3CrToR89CBnFztzU8I-rza_Eh35DKUHRPv7K3OWe1KztJvqg0xMyJmbGr0G8ECqLrvGIYi5Hn4SHiA4acBkYHYx'
     : process.env.REACT_APP_YELP_API_KEY;
 
 const ADD_TO_SELECTED = 'ADD_TO_SELECTED';
@@ -44,9 +46,6 @@ function gotMoreRestaurants(inventory) {
 
 export function getInitialRestaurants(userId, partyId) {
   return async (dispatch) => {
-    console.log('USERID --> ', userId);
-    console.log('PARTYID --> ', partyId);
-
     const partyReference = firestore.collection('parties').doc(partyId);
     const memberReference = partyReference.collection('members').doc(userId);
 
@@ -56,9 +55,9 @@ export function getInitialRestaurants(userId, partyId) {
     const party = partySnapshot.data();
     const member = memberSnapshot.data();
 
-    console.log('PARTY -->', party);
+    LOCAL_POINTER = member.pointer;
 
-    if (member.pointer === party.sharedRestaurants.length) {
+    if (LOCAL_POINTER === party.sharedRestaurants.length) {
       const { data } = await axios.get(
         `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
         {
@@ -79,39 +78,23 @@ export function getInitialRestaurants(userId, partyId) {
 
       dispatch(gotInitialRestaurants(data.businesses));
     } else {
-      const data = party.sharedRestaurants.slice(
-        member.pointer,
-        BATCH_SIZE * 2
-      );
+      const data = party.sharedRestaurants.slice(LOCAL_POINTER, BATCH_SIZE * 2);
       dispatch(gotInitialRestaurants(data));
     }
   };
 }
 
-export function getMoreRestaurants(batch, partyId, userId, inventoryLength) {
+export function getMoreRestaurants(partyId) {
   return async (dispatch) => {
-    // Check Firestore for available shared workers
-    // Query Yelp using shared parameters and correct offset
-    // push next set of restaurants to FireStore
-    console.log('OFFSET --> ', BATCH_SIZE * BATCH_NUM);
-
     const partyReference = firestore.collection('parties').doc(partyId);
-    const memberReference = partyReference.collection('members').doc(userId);
-
     const partySnapshot = await partyReference.get();
-    const memberSnapshot = await memberReference.get();
-
     const partyData = partySnapshot.data();
-    console.log('PARTY DATA --->', partyData);
-    const memberData = memberSnapshot.data();
 
     const sharedRestaurants = partyData.sharedRestaurants;
-    const pointer = memberData.pointer;
 
     const limitIndex = sharedRestaurants.length - BATCH_SIZE - LIMIT - 1;
-    const pointerIndex = pointer + BATCH_SIZE - inventoryLength;
 
-    if (pointerIndex >= limitIndex) {
+    if (LOCAL_POINTER >= limitIndex) {
       const { data } = await axios.get(
         `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
         {
@@ -132,32 +115,36 @@ export function getMoreRestaurants(batch, partyId, userId, inventoryLength) {
       });
       dispatch(gotMoreRestaurants(data.businesses));
     } else {
-      const data = sharedRestaurants.slice(pointer, pointer + BATCH_SIZE + 1);
+      const data = sharedRestaurants.slice(
+        LOCAL_POINTER,
+        LOCAL_POINTER + BATCH_SIZE + 1
+      );
       dispatch(gotMoreRestaurants(data));
     }
-    memberReference.update({ pointer: pointerIndex });
   };
 }
 
 export function getRestaurant(dispatch, getState) {
   const { inventory } = getState().restaurants;
-  const { data } = getState().user;
-  const userId = data.email;
-  const inventoryLength = inventory.length;
 
-  if (inventoryLength <= LIMIT) {
+  LOCAL_POINTER++;
+
+  if (inventory.length <= LIMIT) {
+    BATCH_NUM++;
     dispatch(gotRestaurantsFromStorage());
-    dispatch(
-      getMoreRestaurants(
-        BATCH_NUM++,
-        'yJDDzamE9W1XvLFCJiOA',
-        userId,
-        inventoryLength
-      )
-    );
+    dispatch(getMoreRestaurants('uFrHg1yH7LplEDh1SkzF'));
   }
 
   return inventory[0];
+}
+
+export function syncPointer(userId, partyId) {
+  return async (dispatch) => {
+    const partyReference = firestore.collection('parties').doc(partyId);
+    const memberReference = partyReference.collection('members').doc(userId);
+
+    memberReference.update({ pointer: LOCAL_POINTER });
+  };
 }
 
 const INITIAL_STATE = {

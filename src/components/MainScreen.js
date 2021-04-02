@@ -8,7 +8,7 @@ import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
-import { getInitialRestaurants } from '../reducers/restaurants';
+import { getInitialRestaurants, syncPointer } from '../reducers/restaurants';
 
 import Deck from './content/Deck';
 
@@ -27,9 +27,13 @@ class MainScreen extends React.Component {
     if (!this.props.inventory.length) {
       this.props.getInitialRestaurants(
         this.props.userId,
-        'yJDDzamE9W1XvLFCJiOA'
+        'uFrHg1yH7LplEDh1SkzF'
       );
     }
+  }
+
+  componentWillUnmount() {
+    this.props.syncPointer(this.props.userId, 'uFrHg1yH7LplEDh1SkzF');
   }
 
   render() {
@@ -64,6 +68,7 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
+  syncPointer: (userId, partyId) => dispatch(syncPointer(userId, partyId)),
   getInitialRestaurants: (userId, partyId) =>
     dispatch(getInitialRestaurants(userId, partyId)),
 });
