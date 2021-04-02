@@ -12,7 +12,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-const dummy = [{ friend: 'Alan' }, { friend: 'Charles' }, { friend: 'Jason' }];
+
+import firebase from '../firebase';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+import { getUser } from '../reducers/user';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const styles = (theme) => ({
   root: {
@@ -41,10 +48,33 @@ const styles = (theme) => ({
   },
 });
 
+const currentActiveParties = [];
+
 class ActiveParties extends React.Component {
+  componentDidMount() {
+    const email = firebase.auth().currentUser.email;
+    this.props.getUser(email);
+  }
+
   render() {
     const { classes } = this.props;
-    return dummy.map((party) => {
+
+    const firestore = firebase.firestore();
+    const activePartiesCollectionRef = firestore
+      .collection('users')
+      .doc(this.props.user.email)
+      .collection('activeParties');
+
+    activePartiesCollectionRef.get().then((querySnapshot) => {
+      console.log('THHIS IS QUERY SNAPSHOT.docs', querySnapshot.docs);
+      querySnapshot.docs.forEach((doc) => {
+        if (!currentActiveParties.includes(doc.id)) {
+          currentActiveParties.push(doc.id);
+        }
+      });
+    });
+
+    return currentActiveParties.map((party) => {
       return (
         <Card className={classes.root}>
           <div className={classes.details}>
@@ -56,7 +86,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    Feast with {party.friend}
+                    {party}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
@@ -64,6 +94,8 @@ class ActiveParties extends React.Component {
                     className={classes.button}
                     variant='contained'
                     color='primary'
+                    component={Link}
+                    to='/'
                   >
                     Start Swiping
                   </Button>
@@ -89,4 +121,16 @@ class ActiveParties extends React.Component {
   }
 }
 
-export default withStyles(styles)(ActiveParties);
+const mapState = (state) => ({
+  user: state.user.data,
+  userIsLoading: state.user.userIsLoading,
+});
+
+const mapDispatch = (dispatch) => ({
+  getUser: (id) => dispatch(getUser(id)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(withStyles(styles)(ActiveParties));
