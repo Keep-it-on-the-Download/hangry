@@ -32,10 +32,7 @@ export async function createParty(user2) {
     .doc(currentUser.email)
     .set({
       ref: firestore.doc(`users/${currentUser.email}`),
-<<<<<<< HEAD
       pointer: 0,
-=======
->>>>>>> master
     })
     .then(store.dispatch(sendPartyRequest(docRef.id, user2)));
 }

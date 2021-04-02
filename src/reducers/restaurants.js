@@ -5,7 +5,8 @@ import 'firebase/firestore';
 
 const firestore = firebase.firestore();
 
-let BATCH_SIZE = 10;
+const LIMIT = 5;
+const BATCH_SIZE = 10;
 let BATCH_NUM = 1;
 let STORAGE = [];
 
@@ -87,49 +88,73 @@ export function getInitialRestaurants(userId, partyId) {
   };
 }
 
-export function getMoreRestaurants(batch) {
+export function getMoreRestaurants(batch, partyId, userId, inventoryLength) {
   return async (dispatch) => {
     // Check Firestore for available shared workers
     // Query Yelp using shared parameters and correct offset
     // push next set of restaurants to FireStore
     console.log('OFFSET --> ', BATCH_SIZE * BATCH_NUM);
-    const { data } = await axios.get(
-      `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
-      {
-        headers: {
-          Authorization: `Bearer ${YELP_API_KEY}`,
-        },
-        params: {
-          limit: BATCH_SIZE,
-          offset: BATCH_SIZE * BATCH_NUM,
-          latitude: 40.73108511040957,
-          longitude: -73.98939547296847,
-          categories: 'food',
-        },
-      }
-    );
 
-    // const currArr = partySnapshot.sharedRestaurants;
+    const partyReference = firestore.collection('parties').doc(partyId);
+    const memberReference = partyReference.collection('members').doc(userId);
 
-    // partySnapshot.update({
-    //   sharedRestaurants: [...currArr, ...data.businesses],
-    // });
+    const partySnapshot = await partyReference.get();
+    const memberSnapshot = await memberReference.get();
 
-    // dispatch(gotMoreRestaurants(data.businesses));
+    const partyData = partySnapshot.data();
+    console.log('PARTY DATA --->', partyData);
+    const memberData = memberSnapshot.data();
 
-    // const data = partySnapshot.sharedRestaurants.slice(
-    //   pointer + 1,
-    //   pointer + BATCH_SIZE + 1
-    // );
+    const sharedRestaurants = partyData.sharedRestaurants;
+    const pointer = memberData.pointer;
+
+    const limitIndex = sharedRestaurants.length - BATCH_SIZE - LIMIT - 1;
+    const pointerIndex = pointer + BATCH_SIZE - inventoryLength;
+
+    if (pointerIndex >= limitIndex) {
+      const { data } = await axios.get(
+        `${'https://cors.bridged.cc/'}https://api.yelp.com/v3/businesses/search`,
+        {
+          headers: {
+            Authorization: `Bearer ${YELP_API_KEY}`,
+          },
+          params: {
+            limit: BATCH_SIZE,
+            offset: BATCH_SIZE * BATCH_NUM,
+            latitude: 40.73108511040957,
+            longitude: -73.98939547296847,
+            categories: 'food',
+          },
+        }
+      );
+      partyReference.update({
+        sharedRestaurants: [...sharedRestaurants, ...data.businesses],
+      });
+      dispatch(gotMoreRestaurants(data.businesses));
+    } else {
+      const data = sharedRestaurants.slice(pointer, pointer + BATCH_SIZE + 1);
+      dispatch(gotMoreRestaurants(data));
+    }
+    memberReference.update({ pointer: pointerIndex });
   };
 }
 
 export function getRestaurant(dispatch, getState) {
   const { inventory } = getState().restaurants;
+  const { data } = getState().user;
+  const userId = data.email;
+  const inventoryLength = inventory.length;
 
-  if (inventory.length <= 5) {
+  if (inventoryLength <= LIMIT) {
     dispatch(gotRestaurantsFromStorage());
-    dispatch(getMoreRestaurants(BATCH_NUM++));
+    dispatch(
+      getMoreRestaurants(
+        BATCH_NUM++,
+        'yJDDzamE9W1XvLFCJiOA',
+        userId,
+        inventoryLength
+      )
+    );
   }
 
   return inventory[0];
