@@ -19,6 +19,11 @@ export async function createParty(user2) {
   // since party doc doesn't exist, set up the fields in the collection
 
   const docRef = await partyRef.add({
+    // location: new firebase.firestore.GeoPoint(
+    //   40.73108511040957,
+    //   -73.98939547296847
+    // ),
+
     sentBatches: [],
     preferences: {
       cuisine: ['italian', 'sushi'],

@@ -22,7 +22,7 @@ import InviteFriends from './InviteFriends';
 
 import { getFriends } from '../reducers/friends';
 
-import { createParty } from '../firebase/firestoreParty';
+import LocationForm from './LocationForm';
 
 const styles = (theme) => ({
   listHeader: {
@@ -40,10 +40,14 @@ class FriendsList extends React.Component {
     super();
     this.state = {
       open: false,
+      openLocation: false,
     };
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+
+    this.handleOpenLocation = this.handleOpenLocation.bind(this);
+    this.handleCloseLocation = this.handleCloseLocation.bind(this);
   }
 
   handleOpen() {
@@ -54,6 +58,16 @@ class FriendsList extends React.Component {
     this.setState({ open: false });
   }
 
+  handleOpenLocation() {
+    console.log('PRESSED HANDLE OPEN LOCATION 11111');
+    this.setState({ openLocation: true });
+    console.log('PRESSED HANDLE OPEN LOCATION 22222');
+  }
+
+  handleCloseLocation() {
+    this.setState({ openLocation: false });
+  }
+
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
     this.props.getFriends(email);
@@ -61,6 +75,7 @@ class FriendsList extends React.Component {
 
   render() {
     const { classes, friends, friendsAreLoading, id } = this.props;
+    console.log('FRIENDS ????::::', friends);
 
     return (
       <React.Fragment>
@@ -90,14 +105,27 @@ class FriendsList extends React.Component {
                     secondary='Some info'
                   />
                   <ListItemSecondaryAction>
-                    <IconButton
+                    {/* <IconButton
                       edge='end'
                       aria-label='create party'
                       onClick={() => createParty(email)}
                     >
                       <Fastfood />
                       Start party
-                    </IconButton>
+                    </IconButton> */}
+                    <Button
+                      variant='contained'
+                      size='small'
+                      color='primary'
+                      onClick={this.handleOpenLocation}
+                    >
+                      START PARTY!!
+                    </Button>
+                    <LocationForm
+                      email={email}
+                      openLocation={this.state.openLocation}
+                      onCloseLocation={this.handleCloseLocation}
+                    />
                   </ListItemSecondaryAction>
                 </ListItem>
               );
