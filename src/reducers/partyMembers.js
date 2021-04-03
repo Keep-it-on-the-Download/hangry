@@ -57,10 +57,10 @@ export const addMember = (partyId, memberId) => {
       await newMemberReference.set(
         {
           ref: memberUsersReference,
+          pointer: 0,
         },
         { merge: true }
       );
-
       dispatch(addedMember(newMemberReference));
     } catch (err) {
       console.error('Origin: members.addMember', err);

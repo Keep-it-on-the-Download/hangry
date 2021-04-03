@@ -69,15 +69,19 @@ const styles = (theme) => ({
 
 class RestaurantDetails extends React.Component {
   render() {
-    const { classes, restaurant } = this.props;
+    const { classes, restaurant, matchedRestaurant } = this.props;
+
+    const displayRestaurant = Object.keys(matchedRestaurant).length
+      ? matchedRestaurant
+      : restaurant;
     return (
       <Container className={classes.root}>
         <Card className={classes.cardStyle}>
-          <CardHeader title={restaurant.name} />
+          <CardHeader title={displayRestaurant.name} />
           <CardMedia
             className={classes.media}
-            image={restaurant.image_url}
-            title={restaurant.alias}
+            image={displayRestaurant.image_url}
+            title={displayRestaurant.alias}
           />
           <CardContent>
             <Grid container>
@@ -89,13 +93,13 @@ class RestaurantDetails extends React.Component {
               </Grid>
               <Grid align='justify' item xs={8}>
                 <p className={classes.content}>
-                  <strong>{restaurant.price}</strong>
+                  <strong>{displayRestaurant.price}</strong>
                 </p>
                 <p className={classes.content}>
-                  <strong>{restaurant.location.address1}</strong>
+                  <strong>{displayRestaurant.location.address1}</strong>
                 </p>
                 <p className={classes.content}>
-                  <strong>{restaurant.categories[0].title}</strong>
+                  <strong>{displayRestaurant.categories[0].title}</strong>
                 </p>
                 <p className={classes.content}>
                   <strong>0.15 miles</strong>
@@ -132,6 +136,7 @@ class RestaurantDetails extends React.Component {
 
 const mapState = (state) => ({
   restaurant: state.restaurants.inventory[0],
+  matchedRestaurant: state.restaurants.matchedRestaurant,
 });
 
 export default connect(mapState)(withStyles(styles)(RestaurantDetails));

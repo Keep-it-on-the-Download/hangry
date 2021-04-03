@@ -21,7 +21,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CheckIcon from '@material-ui/icons/Check';
 
 import { findUsers, clearResults } from '../reducers/searchResult';
-import { sendRequest } from '../reducers/friendRequests';
+import { sendFriendRequest } from '../reducers/friendRequests';
 
 const styles = (theme) => ({
   search: {
@@ -119,7 +119,7 @@ class InviteFriends extends React.Component {
   handleSubmit() {
     // if selection is empty send error message
     this.state.selection.forEach((user) => {
-      this.props.sendRequest(this.props.id, user.email);
+      this.props.sendFriendRequest(this.props.id, user.email);
     });
     this.handleClose();
   }
@@ -215,7 +215,7 @@ const mapDispatch = (dispatch) => {
   return {
     findUsers: (query) => dispatch(findUsers(query)),
     clearResults: () => dispatch(clearResults()),
-    sendRequest: (id, user) => dispatch(sendRequest(id, user)),
+    sendFriendRequest: (id, user) => dispatch(sendFriendRequest(id, user)),
   };
 };
 

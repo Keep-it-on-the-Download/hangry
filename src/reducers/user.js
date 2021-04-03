@@ -5,11 +5,17 @@ const firestore = firebase.firestore();
 
 // Action Types
 const GOT_USER = 'GOT_USER';
+const CHANGE_PARTY = 'CHANGE_PARTY';
 
 // Action Creators
 const gotUser = (user) => ({
   type: GOT_USER,
   user,
+});
+
+const changeParty = (id) => ({
+  type: CHANGE_PARTY,
+  id,
 });
 
 // Redux Thunks
@@ -30,13 +36,25 @@ export const getUser = (id) => {
   };
 };
 
+export const setActiveParty = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(changeParty(id));
+    } catch (err) {
+      console.error('Origin: user.setActiveParty(): ', err);
+    }
+  };
+};
+
 // Initial State and Reducer
-const initialState = { data: {}, isLoading: true };
+const initialState = { data: {}, activeParty: '', isLoading: true };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
     case GOT_USER:
       return { ...state, data: action.user, isLoading: false };
+    case CHANGE_PARTY:
+      return { ...state, activeParty: action.id };
     default:
       return state;
   }

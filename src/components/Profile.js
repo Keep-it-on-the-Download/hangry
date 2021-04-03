@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
-import { listenForRequests, getRequests } from '../reducers/friendRequests';
-import {
-  listenForPartyRequests,
-  getPartyRequests,
-} from '../reducers/partyRequests';
-import { getParty } from '../reducers/party';
+import { listenForFriendRequests } from '../reducers/friendRequests';
+import { listenForPartyRequests } from '../reducers/partyRequests';
 
 import { Link } from 'react-router-dom';
 
@@ -37,6 +33,7 @@ import FriendsList from './FriendsList';
 const styles = (theme) => ({
   profile: {
     marginBottom: theme.spacing(3),
+    position: 'sticky',
   },
   settings: {
     padding: theme.spacing(2),
@@ -64,11 +61,8 @@ class Profile extends React.Component {
     const email = firebase.auth().currentUser.email;
 
     this.props.getUser(email);
-    this.props.getRequests(email);
-    this.props.listenForRequests(email);
-    this.props.getPartyRequests(email);
+    this.props.listenForFriendRequests(email);
     this.props.listenForPartyRequests(email);
-    this.props.getParty(email);
   }
 
   render() {
@@ -77,35 +71,40 @@ class Profile extends React.Component {
       user,
       userIsLoading,
       friendRequestCount,
-      //partyRequestCount,
+      partyRequestCount,
     } = this.props;
 
     return (
       <Container maxWidth='sm'>
         {!userIsLoading ? (
           <React.Fragment>
-            <Grid container position='fixed' className={classes.profile}>
-              <Grid item xs={6} className={classes.settings}>
-                <IconButton>
-                  <Settings />
-                </IconButton>
-              </Grid>
-              <Grid item xs={6} className={classes.notifications}>
-                <IconButton component={Link} to='/profile/notifications'>
-                  <Badge badgeContent={friendRequestCount} color='primary'>
-                    <Notifications />
-                  </Badge>
-                </IconButton>
-              </Grid>
-              <Grid item xs={12} className={classes.imageContainer}>
-                <Avatar
-                  alt='Name'
-                  src={user.photoURL}
-                  className={classes.profileImage}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Typography>{user.displayName}</Typography>
+            <Grid container>
+              <Grid container className={classes.profile}>
+                <Grid item xs={6} className={classes.settings}>
+                  <IconButton>
+                    <Settings />
+                  </IconButton>
+                </Grid>
+                <Grid item xs={6} className={classes.notifications}>
+                  <IconButton component={Link} to='/profile/notifications'>
+                    <Badge
+                      badgeContent={friendRequestCount + partyRequestCount}
+                      color='primary'
+                    >
+                      <Notifications />
+                    </Badge>
+                  </IconButton>
+                </Grid>
+                <Grid item xs={12} className={classes.imageContainer}>
+                  <Avatar
+                    alt='Name'
+                    src={user.photoURL}
+                    className={classes.profileImage}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography>{user.displayName}</Typography>
+                </Grid>
               </Grid>
               <Grid item xs={12}>
                 <FriendsList id={user.email} />
@@ -128,16 +127,12 @@ const mapState = (state) => ({
   friendsAreLoading: state.friends.isLoading,
   friendRequestCount: state.friendRequests.count,
   membersAreLoading: state.partyRequests.isLoading,
-  partyRequestsCount: state.partyRequests.count,
-  party: state.party.data,
+  partyRequestCount: state.partyRequests.count,
 });
 
 const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
-  getRequests: (id) => dispatch(getRequests(id)),
-  getParty: (id) => dispatch(getParty(id)),
-  listenForRequests: (id) => dispatch(listenForRequests(id)),
-  getPartyRequests: (partyId) => dispatch(getPartyRequests(partyId)),
+  listenForFriendRequests: (id) => dispatch(listenForFriendRequests(id)),
   listenForPartyRequests: (partyId) =>
     dispatch(listenForPartyRequests(partyId)),
 });

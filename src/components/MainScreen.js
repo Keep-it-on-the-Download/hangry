@@ -8,9 +8,10 @@ import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
-import { getInitialRestaurants } from '../reducers/restaurants';
+import { getInitialRestaurants, syncPointer } from '../reducers/restaurants';
 
 import Deck from './content/Deck';
+import MatchDialog from './MatchDialog';
 
 const styles = (theme) => ({
   container: {
@@ -25,12 +26,16 @@ const styles = (theme) => ({
 class MainScreen extends React.Component {
   componentDidMount() {
     if (!this.props.inventory.length) {
-      this.props.getInitialRestaurants();
+      this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
     }
   }
 
+  componentWillUnmount() {
+    this.props.syncPointer(this.props.userId, this.props.partyRef);
+  }
+
   render() {
-    const { classes, inventory } = this.props;
+    const { classes, inventory, foundMatch } = this.props;
     const cards = [...inventory].reverse();
 
     return (
@@ -47,6 +52,7 @@ class MainScreen extends React.Component {
             <Controls />
           </Grid>
         </Grid>
+        <MatchDialog open={foundMatch} />
       </Container>
     );
   }
@@ -54,12 +60,17 @@ class MainScreen extends React.Component {
 
 const mapState = (state) => ({
   inventory: state.restaurants.inventory,
+  userId: state.user.data.email,
+  partyRef: state.user.activeParty,
+  foundMatch: state.restaurants.foundMatch,
 });
 
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
-  getInitialRestaurants: () => dispatch(getInitialRestaurants()),
+  syncPointer: (userId, partyId) => dispatch(syncPointer(userId, partyId)),
+  getInitialRestaurants: (userId, partyId) =>
+    dispatch(getInitialRestaurants(userId, partyId)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));
