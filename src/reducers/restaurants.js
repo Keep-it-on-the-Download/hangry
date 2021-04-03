@@ -107,8 +107,7 @@ export function getMoreRestaurants(partyRef) {
           params: {
             limit: BATCH_SIZE,
             offset: BATCH_SIZE * BATCH_NUM,
-            latitude: 40.73108511040957,
-            longitude: -73.98939547296847,
+            location: partyData.location,
             categories: 'food',
           },
         }
