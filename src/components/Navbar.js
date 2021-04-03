@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import PeopleIcon from '@material-ui/icons/People';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: 'solid',
     borderColor: '#000',
     borderRadius: 100,
+  },
+  logo: {
+    height: 24,
+    width: 24,
   },
   button: {
     borderRadius: 100,
@@ -40,7 +43,11 @@ const Navbar = (props) => {
           component={Link}
           to='/parties'
         >
-          <PeopleIcon />
+          <img
+            className={classes.logo}
+            src={`${process.env.PUBLIC_URL}/images/simplified_icon.svg`}
+            alt='logo'
+          />
         </IconButton>
         <div className={classes.filler} />
         <IconButton

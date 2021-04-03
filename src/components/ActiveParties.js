@@ -55,9 +55,8 @@ class ActiveParties extends React.Component {
 
     return parties.map((party) => {
       const { foundMatch } = party.data();
-      console.log('PARTY -->', party);
       return (
-        <Card className={classes.root}>
+        <Card className={classes.root} key={party.id}>
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Grid container>

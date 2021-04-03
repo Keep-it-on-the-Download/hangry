@@ -62,8 +62,6 @@ class Profile extends React.Component {
   componentDidMount() {
     const email = firebase.auth().currentUser.email;
 
-    console.log('EMAIL -->', email);
-
     this.props.getUser(email);
     this.props.getRequests(email);
     this.props.listenForRequests(email);
