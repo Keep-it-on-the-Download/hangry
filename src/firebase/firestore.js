@@ -31,6 +31,7 @@ export async function addGoogleUserToFirestore() {
       .set({
         email,
         displayName,
+        searchName: displayName.toLowerCase(),
         photoURL,
       })
       .then(() => {
@@ -56,6 +57,7 @@ export async function addUserToFirestore(user) {
       .set({
         email,
         displayName: `${firstName} ${lastName}`,
+        searchName: `${firstName} ${lastName}`.toLowerCase(),
       })
       .then(() => {
         window.location.href = '/profile';

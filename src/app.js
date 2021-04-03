@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(8),
     textAlign: 'center',
+    overflow: 'hidden',
   },
 }));
 
