@@ -12,36 +12,59 @@ import firebase from './firebase';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+import Navbar from './components/Navbar';
+
 const auth = firebase.auth();
 
 const Routes = () => {
   const [user] = useAuthState(auth);
   return (
-    <Switch>
-      <Redirect exact from='/' to='/profile' />
-      <Route exact path='/login'>
-        {!user ? <LoginScreen /> : <Redirect to='/profile' />}
-      </Route>
-      <Route exact path='/signup'>
-        {!user ? <SignUpScreen /> : <Redirect to='/profile' />}
-      </Route>
-      <Route exact path='/profile/notifications'>
-        {user ? <Notifications /> : <Redirect to='/login' />}
-      </Route>
-      <Route exact path='/profile'>
-        {user ? <Profile /> : <Redirect to='/login' />}
-      </Route>
-      <Route
-        exact
-        path='/restaurantDetails'
-        render={(routeProps) => <RestaurantDetails {...routeProps} />}
-      />
-      <Route
-        exact
-        path='/parties'
-        render={(routeProps) => <ActiveParties {...routeProps} />}
-      />
-    </Switch>
+    <React.Fragment>
+      {user ? (
+        <React.Fragment>
+          <nav>
+            <Navbar />
+          </nav>
+          <Switch>
+            <Route
+              exact
+              path='/profile/notifications'
+              render={(routeProps) => <Notifications {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/profile'
+              render={(routeProps) => <Profile {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/restaurantDetails'
+              render={(routeProps) => <RestaurantDetails {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/parties'
+              render={(routeProps) => <ActiveParties {...routeProps} />}
+            />
+            <Redirect from='/' to='/profile' />
+          </Switch>
+        </React.Fragment>
+      ) : (
+        <Switch>
+          <Route
+            exact
+            path='/login'
+            render={(routeProps) => <LoginScreen {...routeProps} />}
+          />
+          <Route
+            exact
+            path='/signup'
+            render={(routeProps) => <SignUpScreen {...routeProps} />}
+          />
+          <Redirect from='/' to='/login' />
+        </Switch>
+      )}
+    </React.Fragment>
   );
 };
 
