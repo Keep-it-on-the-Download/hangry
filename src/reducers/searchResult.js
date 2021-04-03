@@ -26,13 +26,15 @@ export const clearResults = () => ({
 export const findUsers = (query) => {
   return async (dispatch) => {
     try {
-      const [lowerBound, upperBound] = generateStringSearchBoundaries(query);
+      const [lowerBound, upperBound] = generateStringSearchBoundaries(
+        query.toLowerCase()
+      );
 
       const userCollectionReference = firestore.collection('users');
 
       const collectionQuery = userCollectionReference
-        .where('displayName', '>=', lowerBound)
-        .where('displayName', '<', upperBound);
+        .where('searchName', '>=', lowerBound)
+        .where('searchName', '<', upperBound);
 
       const collectionSnapshot = await collectionQuery.get();
 

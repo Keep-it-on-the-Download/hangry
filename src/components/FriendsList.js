@@ -2,19 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-
-import firebase from '../firebase';
-import 'firebase/auth';
-
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Typography,
+} from '@material-ui/core';
 
 import InviteFriends from './InviteFriends';
 
@@ -23,10 +22,13 @@ import { getFriends } from '../reducers/friends';
 import LocationForm from './LocationForm';
 
 const styles = (theme) => ({
+  listContainer: {
+    maxHeight: '36vh',
+    overflow: 'auto',
+  },
   listHeader: {
     display: 'flex',
     justifyContent: 'space-between',
-    position: 'sticky',
   },
   listText: {
     margin: theme.spacing(2),
@@ -69,8 +71,7 @@ class FriendsList extends React.Component {
   }
 
   componentDidMount() {
-    const email = firebase.auth().currentUser.email;
-    this.props.getFriends(email);
+    this.props.getFriends(this.props.id);
   }
 
   render() {
@@ -80,7 +81,7 @@ class FriendsList extends React.Component {
     return (
       <React.Fragment>
         <List>
-          <ListItem id='header' className={classes.listHeader} key='header'>
+          <ListItem className={classes.listHeader}>
             <Typography>Friends</Typography>
             <Button
               variant='contained'
@@ -91,44 +92,46 @@ class FriendsList extends React.Component {
               Add Friends
             </Button>
           </ListItem>
-          <Divider variant='fullWidth' component='li' key='divider' />
-          {!friendsAreLoading && friends.length ? (
-            friends.map((friend) => {
-              const { email, photoURL, displayName } = friend.data();
-              return (
-                <ListItem key={email}>
-                  <ListItemAvatar>
-                    <Avatar alt={displayName} src={photoURL} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={`${displayName}`}
-                    secondary='Some info'
-                  />
-                  <ListItemSecondaryAction>
-                    {/* <IconButton
-                      edge='end'
-                      aria-label='create party'
-                      onClick={() => createParty(email)}
-                    >
-                      <Fastfood />
-                      Start party
-                    </IconButton> */}
-                    <Button
-                      variant='contained'
-                      size='small'
-                      color='primary'
-                      onClick={() => this.handleOpenLocation(email)}
-                    >
-                      START PARTY!!
-                    </Button>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              );
-            })
+          <Divider
+            variant='fullWidth'
+            component='li'
+            className={classes.listDivider}
+          />
+        </List>
+        <List className={classes.listContainer}>
+          {!friendsAreLoading ? (
+            friends.length ? (
+              friends.map((friend) => {
+                const { email, photoURL, displayName } = friend.data();
+                return (
+                  <ListItem key={email}>
+                    <ListItemAvatar>
+                      <Avatar alt={displayName} src={photoURL} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={`${displayName}`}
+                      secondary='Some info'
+                    />
+                    <ListItemSecondaryAction>
+                      <Button
+                        variant='contained'
+                        size='small'
+                        color='primary'
+                        onClick={() => this.handleOpenLocation(email)}
+                      >
+                        START PARTY!!
+                      </Button>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })
+            ) : (
+              <Typography className={classes.listText} key='empty text'>
+                Major Oof, you don't have any friends
+              </Typography>
+            )
           ) : (
-            <Typography className={classes.listText} key='empty text'>
-              Major Oof, you don't have any friends
-            </Typography>
+            <CircularProgress />
           )}
         </List>
         <InviteFriends

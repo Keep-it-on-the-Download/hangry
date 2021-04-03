@@ -6,11 +6,11 @@ import { addFriend } from './friends';
 const firestore = firebase.firestore();
 
 // Action Types
-const GOT_REQUESTS = 'GOT_REQUESTS';
+const GOT_FRIEND_REQUESTS = 'GOT_FRIEND_REQUESTS';
 
 // Action Creators
-const gotRequests = (requests) => ({
-  type: GOT_REQUESTS,
+const gotFriendRequests = (requests) => ({
+  type: GOT_FRIEND_REQUESTS,
   requests,
 });
 
@@ -20,7 +20,7 @@ const gotRequests = (requests) => ({
  * @param {string} id - email used to identify logged in user
  * @returns An asynchronous dispatch call to gotRequests
  */
-export const getRequests = (id) => {
+export const getFriendRequests = (id) => {
   return async (dispatch) => {
     try {
       const friendRequestsCollectionReference = firestore
@@ -30,9 +30,9 @@ export const getRequests = (id) => {
 
       const collectionSnapshot = await friendRequestsCollectionReference.get();
 
-      dispatch(gotRequests(collectionSnapshot.docs));
+      dispatch(gotFriendRequests(collectionSnapshot.docs));
     } catch (err) {
-      console.error('Origin: friendRequests.getRequests(): ', err);
+      console.error('Origin: friendRequests.getFriendRequests(): ', err);
     }
   };
 };
@@ -42,7 +42,7 @@ export const getRequests = (id) => {
  * @param {string} id - email used to identify logged in user
  * @returns An asynchronous dispatch call to gotRequests that is called everytime the firestore friendRequest collection is updated
  */
-export const listenForRequests = (id) => {
+export const listenForFriendRequests = (id) => {
   return async (dispatch) => {
     try {
       firestore
@@ -50,7 +50,7 @@ export const listenForRequests = (id) => {
         .doc(id)
         .collection('friendRequests')
         .onSnapshot((collection) => {
-          dispatch(gotRequests(collection.docs));
+          dispatch(gotFriendRequests(collection.docs));
         });
     } catch (err) {
       console.error('Origin: friendRequests.listenForRequests(): ', err);
@@ -64,7 +64,7 @@ export const listenForRequests = (id) => {
  * @param {string} friendId - email used to identify user who sent the request
  * @returns Two Asynchronous dispatch calls to addFriend from the friend reducer.
  */
-export const acceptRequest = (myId, friendId) => {
+export const acceptFriendRequest = (myId, friendId) => {
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -77,7 +77,7 @@ export const acceptRequest = (myId, friendId) => {
       dispatch(addFriend(myId, friendId));
       dispatch(addFriend(friendId, myId));
     } catch (err) {
-      console.error('Origin: friendRequests.acceptRequest(): ', err);
+      console.error('Origin: friendRequests.acceptFriendRequest(): ', err);
     }
   };
 };
@@ -87,7 +87,7 @@ export const acceptRequest = (myId, friendId) => {
  * @param {string} myId - email used to identify user accepting request
  * @param {string} friendId - email used to identify user who sent the request
  */
-export const sendRequest = (myId, friendId) => {
+export const sendFriendRequest = (myId, friendId) => {
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -97,7 +97,7 @@ export const sendRequest = (myId, friendId) => {
         .doc(myId);
       requestReference.set({ sender: myId }, { merge: true });
     } catch (err) {
-      console.error('Origin: friendRequests.sendRequest(): ', err);
+      console.error('Origin: friendRequests.sendFriendRequest(): ', err);
     }
   };
 };
@@ -107,7 +107,7 @@ const initialState = { data: [], count: 0, isLoading: true };
 
 const friendRequests = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_REQUESTS:
+    case GOT_FRIEND_REQUESTS:
       return {
         ...state,
         data: action.requests,

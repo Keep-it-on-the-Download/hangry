@@ -17,7 +17,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import { acceptRequest } from '../reducers/friendRequests';
+import { acceptFriendRequest } from '../reducers/friendRequests';
 import { acceptPartyRequest } from '../reducers/partyRequests';
 
 function TabPanel(props) {
@@ -103,68 +103,64 @@ class Notifications extends React.Component {
         </AppBar>
 
         <TabPanel value={value} index={0}>
-          <List>
-            {!partyRequestsAreLoading &&
-              (partyRequests.length ? (
-                partyRequests.map((partyRequest) => {
+          {!partyRequestsAreLoading &&
+            (partyRequests.length
+              ? partyRequests.map((partyRequest) => {
                   const partyId = partyRequest.id;
                   return (
-                    <ListItem key={partyId}>
-                      <ListItemAvatar>
-                        <Avatar />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={partyId}
-                        secondary='Secondary text'
-                      />
-                      <ListItemSecondaryAction>
-                        <IconButton
-                          edge='end'
-                          aria-label='accept'
-                          onClick={this.handlePartyRequest(partyId, userId)}
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
+                    <List>
+                      <ListItem key={partyId}>
+                        <ListItemAvatar>
+                          <Avatar />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={partyId}
+                          secondary='Secondary text'
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge='end'
+                            aria-label='accept'
+                            onClick={this.handlePartyRequest(partyId, userId)}
+                          >
+                            <CheckIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    </List>
                   );
                 })
-              ) : (
-                <Typography>No Party Requests At This Time!</Typography>
-              ))}
-          </List>
+              : 'No Party Requests At This Time!')}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <List>
-            {!friendRequestsAreLoading &&
-              (friendRequests.length ? (
-                friendRequests.map((friendRequest) => {
+          {!friendRequestsAreLoading &&
+            (friendRequests.length
+              ? friendRequests.map((friendRequest) => {
                   const friendId = friendRequest.id;
                   return (
-                    <ListItem key={friendId}>
-                      <ListItemAvatar>
-                        <Avatar />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={friendId}
-                        secondary='Secondary text'
-                      />
-                      <ListItemSecondaryAction>
-                        <IconButton
-                          edge='end'
-                          aria-label='accept'
-                          onClick={this.handleFriendRequest(userId, friendId)}
-                        >
-                          <CheckIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
+                    <List>
+                      <ListItem key={friendId}>
+                        <ListItemAvatar>
+                          <Avatar />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={friendId}
+                          secondary='Secondary text'
+                        />
+                        <ListItemSecondaryAction>
+                          <IconButton
+                            edge='end'
+                            aria-label='accept'
+                            onClick={this.handleFriendRequest(userId, friendId)}
+                          >
+                            <CheckIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    </List>
                   );
                 })
-              ) : (
-                <Typography>No Friend Requests At This Time!</Typography>
-              ))}
-          </List>
+              : 'No Friend Requests At This Time!')}
         </TabPanel>
       </div>
     );
@@ -182,7 +178,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   acceptFriendRequest: (myId, friendId) =>
-    dispatch(acceptRequest(myId, friendId)),
+    dispatch(acceptFriendRequest(myId, friendId)),
   acceptPartyRequest: (partyId, memberId) =>
     dispatch(acceptPartyRequest(partyId, memberId)),
 });

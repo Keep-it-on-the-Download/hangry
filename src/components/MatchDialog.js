@@ -13,28 +13,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({});
 
-const initialState = { query: '', selection: [] };
-
 class MatchDialog extends React.Component {
-  constructor() {
-    super();
-    this.state = initialState;
-
-    this.handleClose = this.handleClose.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleClose() {
-    this.setState(initialState);
-    this.props.onClose();
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
-
   render() {
     const { open, matchedRestaurant } = this.props;
 
@@ -68,8 +47,4 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
-  return {};
-};
-
-export default connect(mapState, mapDispatch)(withStyles(styles)(MatchDialog));
+export default connect(mapState, null)(withStyles(styles)(MatchDialog));
