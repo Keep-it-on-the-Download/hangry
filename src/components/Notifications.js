@@ -107,6 +107,8 @@ class Notifications extends React.Component {
             (partyRequests.length
               ? partyRequests.map((partyRequest) => {
                   const partyId = partyRequest.id;
+                  console.log('partyID = ', partyId);
+                  console.log('partyReq: ', partyRequest.data());
                   return (
                     <List>
                       <ListItem key={partyId}>
@@ -114,8 +116,8 @@ class Notifications extends React.Component {
                           <Avatar />
                         </ListItemAvatar>
                         <ListItemText
-                          primary={partyId}
-                          secondary='Secondary text'
+                          primary={partyRequest.data().partyName}
+                          secondary={partyId}
                         />
                         <ListItemSecondaryAction>
                           <IconButton
