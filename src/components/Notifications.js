@@ -17,7 +17,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CheckIcon from '@material-ui/icons/Check';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
-import { acceptRequest } from '../reducers/friendRequests';
+import { acceptFriendRequest } from '../reducers/friendRequests';
 import { acceptPartyRequest } from '../reducers/partyRequests';
 
 function TabPanel(props) {
@@ -178,7 +178,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   acceptFriendRequest: (myId, friendId) =>
-    dispatch(acceptRequest(myId, friendId)),
+    dispatch(acceptFriendRequest(myId, friendId)),
   acceptPartyRequest: (partyId, memberId) =>
     dispatch(acceptPartyRequest(partyId, memberId)),
 });
