@@ -58,7 +58,7 @@ export const acceptPartyRequest = (partyId, memberId) => {
         .collection('partyRequests')
         .doc(partyId);
 
-      await requestReference.delete();
+      requestReference.delete();
       // user 1 should already be in party so we're adding user2 here?
       dispatch(addMember(partyId, memberId));
       createActivePartiesForUsersInFirestore(partyId);
