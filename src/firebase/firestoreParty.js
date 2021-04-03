@@ -25,7 +25,7 @@ export async function createParty(user2, location) {
     // ),
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     location,
-    sentBatches: [],
+    sharedRestaurants: [],
     preferences: {
       cuisine: ['italian', 'sushi'],
       distance: '5 miles',
