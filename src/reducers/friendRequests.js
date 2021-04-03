@@ -6,11 +6,11 @@ import { addFriend } from './friends';
 const firestore = firebase.firestore();
 
 // Action Types
-const GOT_REQUESTS = 'GOT_REQUESTS';
+const GOT_FRIEND_REQUESTS = 'GOT_FRIEND_REQUESTS';
 
 // Action Creators
 const gotRequests = (requests) => ({
-  type: GOT_REQUESTS,
+  type: GOT_FRIEND_REQUESTS,
   requests,
 });
 
@@ -107,7 +107,7 @@ const initialState = { data: [], count: 0, isLoading: true };
 
 const friendRequests = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_REQUESTS:
+    case GOT_FRIEND_REQUESTS:
       return {
         ...state,
         data: action.requests,
