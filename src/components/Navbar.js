@@ -3,13 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import { HomeRounded, AccountCircle } from '@material-ui/icons';
+import { AccountCircle } from '@material-ui/icons';
 import PeopleIcon from '@material-ui/icons/People';
-// import LocationOn from '@material-ui/icons';
-// import ButtonGroup from '@material-ui/core/ButtonGroup';
-// import Button from '@material-ui/core/Button';
-
-// import ContactsIcon from '@material-ui/icons/Contacts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,16 +35,7 @@ const Navbar = (props) => {
     <AppBar className={classes.root}>
       <Toolbar>
         <IconButton
-          aria-label='Home'
-          className={classes.icon}
-          component={Link}
-          to='/'
-        >
-          <HomeRounded />
-        </IconButton>
-        <div className={classes.filler} />
-        <IconButton
-          aria-label='Home'
+          aria-label='Parties'
           className={classes.icon}
           component={Link}
           to='/parties'
