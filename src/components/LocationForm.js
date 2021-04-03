@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -92,13 +91,11 @@ class LocationForm extends React.Component {
         </DialogTitle>
 
         <DialogActions>
-          <Button onClick={() => createParty(email)}>
-            Yes! This is where I want to eat
-          </Button>
+          <Button onClick={() => createParty(email)}>Submit</Button>
         </DialogActions>
       </Dialog>
     );
   }
 }
 
-export default LocationForm;
+export default withStyles(styles)(LocationForm);

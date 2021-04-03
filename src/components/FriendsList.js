@@ -15,8 +15,6 @@ import ListItem from '@material-ui/core/ListItem';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import Fastfood from '@material-ui/icons/Fastfood';
 
 import InviteFriends from './InviteFriends';
 
