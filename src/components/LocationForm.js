@@ -3,7 +3,6 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import InputBase from '@material-ui/core/InputBase';
 
 import Button from '@material-ui/core/Button';
@@ -71,6 +70,14 @@ class LocationForm extends React.Component {
     this.state = initialState;
 
     this.handleCloseLocation = this.handleCloseLocation.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
   }
 
   handleCloseLocation() {
@@ -78,20 +85,29 @@ class LocationForm extends React.Component {
     this.props.onCloseLocation();
   }
 
+  handleSubmit() {
+    createParty(this.props.email, this.state.query);
+    this.handleCloseLocation();
+  }
+
   render() {
     const { query } = this.state;
-    const { openLocation, email } = this.props;
-    console.log('THIS IS EMAIL FROM LOCATION FORM:::', email);
+    const { openLocation } = this.props;
     return (
       <Dialog open={openLocation} onClose={this.handleCloseLocation}>
         <DialogTitle id='simple-dialog'>
           Where would you like to eat?
           <br />
-          <InputBase value={query} placeholder='Search Location...' />
+          <InputBase
+            value={query}
+            placeholder='Search Location...'
+            name='query'
+            onChange={this.handleChange}
+          />
         </DialogTitle>
 
         <DialogActions>
-          <Button onClick={() => createParty(email)}>Submit</Button>
+          <Button onClick={this.handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
     );
