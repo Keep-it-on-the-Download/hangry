@@ -86,7 +86,7 @@ class Profile extends React.Component {
                   </IconButton>
                 </Grid>
                 <Grid item xs={6} className={classes.notifications}>
-                  <IconButton component={Link} to='/profile/notifications'>
+                  <IconButton component={Link} to='/notifications'>
                     <Badge
                       badgeContent={friendRequestCount + partyRequestCount}
                       color='primary'

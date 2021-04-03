@@ -7,6 +7,7 @@ import LoginScreen from './components/LoginScreen';
 import SignUpScreen from './components/SignUpScreen';
 import Notifications from './components/Notifications';
 import ActiveParties from './components/ActiveParties';
+import MainScreen from './components/MainScreen';
 
 import firebase from './firebase';
 import 'firebase/auth';
@@ -28,23 +29,28 @@ const Routes = () => {
           <Switch>
             <Route
               exact
-              path='/profile/notifications'
-              render={(routeProps) => <Notifications {...routeProps} />}
-            />
-            <Route
-              exact
               path='/profile'
               render={(routeProps) => <Profile {...routeProps} />}
             />
             <Route
               exact
-              path='/restaurantDetails'
-              render={(routeProps) => <RestaurantDetails {...routeProps} />}
+              path='/notifications'
+              render={(routeProps) => <Notifications {...routeProps} />}
             />
             <Route
               exact
               path='/parties'
               render={(routeProps) => <ActiveParties {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/party'
+              render={(routeProps) => <MainScreen {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/restaurantDetails'
+              render={(routeProps) => <RestaurantDetails {...routeProps} />}
             />
             <Redirect from='/' to='/profile' />
           </Switch>
