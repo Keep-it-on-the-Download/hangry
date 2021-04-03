@@ -2,10 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
-
-import firebase from '../firebase';
-import 'firebase/auth';
-
 import {
   Avatar,
   Button,
@@ -28,10 +24,13 @@ import { getFriends } from '../reducers/friends';
 import { createParty } from '../firebase/firestoreParty';
 
 const styles = (theme) => ({
+  listContainer: {
+    maxHeight: '36vh',
+    overflow: 'auto',
+  },
   listHeader: {
     display: 'flex',
     justifyContent: 'space-between',
-    position: 'sticky',
   },
   listText: {
     margin: theme.spacing(2),
@@ -58,8 +57,7 @@ class FriendsList extends React.Component {
   }
 
   componentDidMount() {
-    const email = firebase.auth().currentUser.email;
-    this.props.getFriends(email);
+    this.props.getFriends(this.props.id);
   }
 
   render() {
@@ -68,7 +66,7 @@ class FriendsList extends React.Component {
     return (
       <React.Fragment>
         <List>
-          <ListItem id='header' className={classes.listHeader} key='header'>
+          <ListItem className={classes.listHeader}>
             <Typography>Friends</Typography>
             <Button
               variant='contained'
@@ -79,7 +77,13 @@ class FriendsList extends React.Component {
               Add Friends
             </Button>
           </ListItem>
-          <Divider variant='fullWidth' component='li' key='divider' />
+          <Divider
+            variant='fullWidth'
+            component='li'
+            className={classes.listDivider}
+          />
+        </List>
+        <List className={classes.listContainer}>
           {!friendsAreLoading ? (
             friends.length ? (
               friends.map((friend) => {
