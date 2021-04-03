@@ -40,8 +40,9 @@ class LoginScreen extends React.Component {
         </p>
 
         <LoginForm />
-
-        <SignIn className={classes.google} />
+        <div className={classes.google}>
+          <SignIn />
+        </div>
       </Container>
     );
   }

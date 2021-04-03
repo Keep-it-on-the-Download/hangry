@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import { CreateUser } from '../firebase/authentication';
+import { SignIn } from '../firebase/authentication';
 
 const defaultState = {
   email: '',
@@ -21,6 +22,10 @@ const styles = (theme) => ({
     padding: '16px',
     marginTop: '10px',
     marginBottom: '10px',
+  },
+  google: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -80,6 +85,9 @@ class SignUpForm extends React.Component {
         <button className={classes.button} type='submit'>
           Sign Up
         </button>
+        <div className={classes.google}>
+          <SignIn />
+        </div>
       </form>
     );
   }
