@@ -71,7 +71,7 @@ class RestaurantDetails extends React.Component {
   render() {
     const { classes, restaurant, matchedRestaurant } = this.props;
 
-    const displayRestaurant = matchedRestaurant
+    const displayRestaurant = Object.keys(matchedRestaurant).length
       ? matchedRestaurant
       : restaurant;
     return (

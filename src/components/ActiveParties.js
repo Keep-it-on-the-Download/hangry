@@ -76,7 +76,7 @@ class ActiveParties extends React.Component {
                     color='primary'
                     onClick={() => this.props.setActiveParty(party.ref.path)}
                     component={Link}
-                    to='/'
+                    to='/party'
                   >
                     Start Swiping
                   </Button>

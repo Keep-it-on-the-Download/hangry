@@ -6,22 +6,25 @@ import { withStyles } from '@material-ui/core/styles';
 import firebase from '../firebase';
 import 'firebase/auth';
 
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListItemSecondaryAction,
+  Typography,
+} from '@material-ui/core';
+
 import Fastfood from '@material-ui/icons/Fastfood';
 
 import InviteFriends from './InviteFriends';
 
 import { getFriends } from '../reducers/friends';
-
 import { createParty } from '../firebase/firestoreParty';
 
 const styles = (theme) => ({
@@ -77,35 +80,39 @@ class FriendsList extends React.Component {
             </Button>
           </ListItem>
           <Divider variant='fullWidth' component='li' key='divider' />
-          {!friendsAreLoading && friends.length ? (
-            friends.map((friend) => {
-              const { email, photoURL, displayName } = friend.data();
-              return (
-                <ListItem key={email}>
-                  <ListItemAvatar>
-                    <Avatar alt={displayName} src={photoURL} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={`${displayName}`}
-                    secondary='Some info'
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton
-                      edge='end'
-                      aria-label='create party'
-                      onClick={() => createParty(email)}
-                    >
-                      <Fastfood />
-                      Start party
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              );
-            })
+          {!friendsAreLoading ? (
+            friends.length ? (
+              friends.map((friend) => {
+                const { email, photoURL, displayName } = friend.data();
+                return (
+                  <ListItem key={email}>
+                    <ListItemAvatar>
+                      <Avatar alt={displayName} src={photoURL} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={`${displayName}`}
+                      secondary='Some info'
+                    />
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        edge='end'
+                        aria-label='create party'
+                        onClick={() => createParty(email)}
+                      >
+                        <Fastfood />
+                        Start party
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
+              })
+            ) : (
+              <Typography className={classes.listText} key='empty text'>
+                Major Oof, you don't have any friends
+              </Typography>
+            )
           ) : (
-            <Typography className={classes.listText} key='empty text'>
-              Major Oof, you don't have any friends
-            </Typography>
+            <CircularProgress />
           )}
         </List>
         <InviteFriends

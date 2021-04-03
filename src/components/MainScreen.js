@@ -24,16 +24,6 @@ const styles = (theme) => ({
 });
 
 class MainScreen extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      open: false,
-    };
-
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
-
   componentDidMount() {
     if (!this.props.inventory.length) {
       this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
@@ -44,21 +34,9 @@ class MainScreen extends React.Component {
     this.props.syncPointer(this.props.userId, this.props.partyRef);
   }
 
-  handleOpen() {
-    this.setState({ open: true });
-  }
-
-  handleClose() {
-    this.setState({ open: false });
-  }
-
   render() {
     const { classes, inventory, foundMatch } = this.props;
     const cards = [...inventory].reverse();
-
-    if (foundMatch && !this.state.open) {
-      this.handleOpen();
-    }
 
     return (
       <Container maxWidth='sm'>
@@ -74,7 +52,7 @@ class MainScreen extends React.Component {
             <Controls />
           </Grid>
         </Grid>
-        <MatchDialog open={this.state.open} onClose={this.handleClose} />
+        <MatchDialog open={foundMatch} />
       </Container>
     );
   }
