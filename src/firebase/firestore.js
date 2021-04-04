@@ -23,6 +23,7 @@ export async function addGoogleUserToFirestore() {
   // check if user exists as a doc in FIRESTORE
   const existingUser = await checkUserExists(userRef);
 
+  // checks to see if user exists in FIRESTORE
   if (!existingUser) {
     const { email, displayName, photoURL } = currentUser;
     // since user doc doesn't exist, set them up in FIRESTORE
@@ -30,11 +31,15 @@ export async function addGoogleUserToFirestore() {
       .set({
         email,
         displayName,
+        searchName: displayName.toLowerCase(),
         photoURL,
       })
       .then(() => {
-        window.location.href = '/';
+        window.location.href = '/profile';
       });
+  } else {
+    // user exists in AUTH & FIRESTORE so this will just redirect the page without adding the user to FIRESTORE
+    window.location.href = '/profile';
   }
 }
 
@@ -52,9 +57,10 @@ export async function addUserToFirestore(user) {
       .set({
         email,
         displayName: `${firstName} ${lastName}`,
+        searchName: `${firstName} ${lastName}`.toLowerCase(),
       })
       .then(() => {
-        window.location.href = '/';
+        window.location.href = '/profile';
       });
   }
 }

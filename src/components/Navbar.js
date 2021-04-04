@@ -3,12 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar } from '@material-ui/core';
-import { HomeRounded, AccountCircle } from '@material-ui/icons';
-// import LocationOn from '@material-ui/icons';
-// import ButtonGroup from '@material-ui/core/ButtonGroup';
-// import Button from '@material-ui/core/Button';
-
-// import ContactsIcon from '@material-ui/icons/Contacts';
+import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
     borderStyle: 'solid',
     borderColor: '#000',
     borderRadius: 100,
+  },
+  logo: {
+    height: 24,
+    width: 24,
   },
   button: {
     borderRadius: 100,
@@ -39,37 +38,17 @@ const Navbar = (props) => {
     <AppBar className={classes.root}>
       <Toolbar>
         <IconButton
-          aria-label='Home'
+          aria-label='Parties'
           className={classes.icon}
           component={Link}
-          to='/'
+          to='/parties'
         >
-          <HomeRounded />
+          <img
+            className={classes.logo}
+            src={`${process.env.PUBLIC_URL}/images/simplified_icon.svg`}
+            alt='logo'
+          />
         </IconButton>
-        <div className={classes.filler} />
-        {/* <ButtonGroup
-          color='secondary'
-          aria-label='outlined secondary button group'
-        >
-          <Button
-            variant='outlined'
-            color='secondary'
-            className={classes.button}
-            startIcon={<LocationOn />}
-            onClick={() => getLocation()}
-          >
-            Get Location
-          </Button>
-          <Button
-            variant='outlined'
-            color='secondary'
-            className={classes.button}
-            startIcon={<ContactsIcon />}
-            onClick={() => getContacts()}
-          >
-            Get Contacts
-          </Button>
-        </ButtonGroup> */}
         <div className={classes.filler} />
         <IconButton
           aria-label='Profile'

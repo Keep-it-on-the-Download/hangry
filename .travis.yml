@@ -3,15 +3,14 @@ node_js:
   - 14
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, installs only from package-lock
+  - npm ci
 script:
-  # - npm run test # Un-comment when there are tests to run
   - npm run build
 deploy:
-  skip_cleanup: true # prevents travis from deleting the build
+  skip_cleanup: true
   provider: firebase
   token:
     secure: YuaC2qKaoyCn38Zkfyc0rH2osacy1faocewbu3G+3KzxCRAwhi6cNfzFSbFIJtQSfwgm0B9dXfsBrQBdhesBVR4E/7oGVsjCjufQuZlkpDu7FIuiq5Drj55fdFYYQEX92J9EKfl0OBl9ivIDaeiCfKiiru4s1O12DwWcR3mMWth1ezYULdcyK24Ei+8qALn7PysaYotin3VH2K9UXX0MAs86GowSAid5ZhGatS3Xjg3HuvaQNZqIA1AlyNMQKm0L0fHiCD0U+2r1rgfpTiLlluIxm22l9z3JSb1kcc6SkiHYBxj6DGY9t7p9WIj+5oAPlvj6e0SgRTITqX61nSgxwPwWWLsyKhXqTi1PCkNic1aRdb31QLFhZkxkir0FjvCbAmxYuIuyaZLpF9JcY5QIFSQrpessvYIbRw0T1XxG0666/RfS4Q5BOeUmZBbrI+mBeOIlDGZxqXctNt1ktyJCv11lLiuTHCkUVzDOioGrPSiDEj+sw3l0mWhgwPaRwdl+m7C5b5t68WZJLLeWamL2tS9YNiVkawE9V+4t0ShDxs0PnihiGmyqk8s0wFbDKc96cJdcjehmNpaDQVnSIiEsyvbJgow5okgRa1R9GKG5Seqmiq+y4HnLVeyL5awfOGK0FbscpCmsKXF4V7vj/sa341H2Atwmw8nzzmXOZVvoSc0=

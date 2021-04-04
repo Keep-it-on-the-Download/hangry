@@ -26,15 +26,16 @@ export const clearResults = () => ({
 export const findUsers = (query) => {
   return async (dispatch) => {
     try {
-      const [lowerBound, upperBound] = generateStringSearchBoundaries(query);
+      const [lowerBound, upperBound] = generateStringSearchBoundaries(
+        query.toLowerCase()
+      );
 
       const userCollectionReference = firestore.collection('users');
 
       const collectionQuery = userCollectionReference
-        .where('displayName', '>=', lowerBound)
-        .where('displayName', '<', upperBound);
+        .where('searchName', '>=', lowerBound)
+        .where('searchName', '<', upperBound);
 
-      console.log('COLLECTION QUERY: ', collectionQuery);
       const collectionSnapshot = await collectionQuery.get();
 
       const users = await Promise.all(
@@ -45,7 +46,7 @@ export const findUsers = (query) => {
 
       dispatch(foundResults(users));
     } catch (err) {
-      console.log('Error getting document:', err);
+      console.error('Error getting document:', err);
     }
   };
 };

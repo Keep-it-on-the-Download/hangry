@@ -18,13 +18,13 @@ function CreateUser(email, password, firstName, lastName) {
     .createUserWithEmailAndPassword(email.toLowerCase(), password)
     .then(() => {
       addUserToFirestore({
-        email,
+        email: email.toLowerCase(),
         firstName,
         lastName,
       });
     })
     .catch((error) => {
-      console.log('error, ', error);
+      console.error('error, ', error);
     });
 }
 
@@ -32,7 +32,7 @@ function CreateUser(email, password, firstName, lastName) {
 function LoginWithEmailAndPassword(email, password) {
   // authenticates with firebase then redirects to home screen
   auth.signInWithEmailAndPassword(email, password).then(() => {
-    window.location.href = '/';
+    window.location.href = '/profile';
   });
 }
 
@@ -47,7 +47,7 @@ function SignIn() {
         addGoogleUserToFirestore();
       })
       .catch((error) => {
-        console.log('Google error, ', error);
+        console.error('Google error, ', error);
       });
   };
 
