@@ -71,6 +71,17 @@ export const acceptPartyRequest = (partyId, memberId) => {
 export const sendPartyRequest = (partyId, memberId) => {
   return async (dispatch) => {
     try {
+      const membersCollectionRef = firestore
+        .collection('parties')
+        .doc(partyId)
+        .collection('members');
+
+      const membersDocRef = await membersCollectionRef.get();
+      console.log('membersDocRef: ', membersDocRef);
+      const partySenderId = membersDocRef.docs[0].id;
+
+      //const senderId = membersDocRef.doc.data();
+
       const requestReference = firestore
         .collection('users')
         .doc(memberId)
@@ -80,6 +91,7 @@ export const sendPartyRequest = (partyId, memberId) => {
       requestReference.set(
         {
           party: partyId,
+          partyName: `${partySenderId}'s Party`,
         },
         { merge: true }
       );

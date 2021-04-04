@@ -62,10 +62,12 @@ class ActiveParties extends React.Component {
   }
 
   render() {
-    const { classes, parties } = this.props;
+    const { classes, parties, titles } = this.props;
 
-    return parties.map((party) => {
+    return parties.map((party, index) => {
       const { foundMatch } = party.data();
+      console.log(foundMatch);
+
       return (
         <Card className={classes.root} key={party.id}>
           <div className={classes.details}>
@@ -77,7 +79,7 @@ class ActiveParties extends React.Component {
                     variant='h6'
                     className={classes.feast}
                   >
-                    {`${foundMatch}`}
+                    {`${titles[index]}`}
                   </Typography>
                 </Grid>
                 <Grid align='justify' item xs={3}>
@@ -112,6 +114,7 @@ const mapState = (state) => ({
   user: state.user.data,
   userIsLoading: state.user.userIsLoading,
   parties: state.parties.data,
+  titles: state.parties.titles,
 });
 
 const mapDispatch = (dispatch) => ({
