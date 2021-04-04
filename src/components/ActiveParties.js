@@ -19,8 +19,18 @@ import { Link } from 'react-router-dom';
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    marginTop: '20px',
+    justifyContent: 'center',
+    position: 'relative',
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    width: '90vw',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // position: 'relative',
+    // marginTop: '20px',
     backgroundColor: '#FBF3F0',
+    // width: '75vw',
   },
   details: {
     display: 'flex',
@@ -34,7 +44,8 @@ const styles = (theme) => ({
   },
   button: {
     display: 'flex',
-    alignContent: 'flex-end',
+    justifyContent: 'center',
+    position: 'relative',
     width: 200,
     marginTop: '5px',
   },
@@ -80,13 +91,13 @@ class ActiveParties extends React.Component {
                   >
                     Start Swiping
                   </Button>
-                  <Button
+                  {/* <Button
                     className={classes.button}
                     variant='contained'
                     color='primary'
                   >
                     Edit Preferences
-                  </Button>
+                  </Button> */}
                 </Grid>
               </Grid>
             </CardContent>
