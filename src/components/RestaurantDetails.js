@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Rating from '@material-ui/lab/Rating';
 
 //icons
 import IconButton from '@material-ui/core/IconButton';
@@ -23,40 +24,29 @@ const styles = (theme) => ({
     background: '#FFFFFF',
   },
   root: {
-    maxWidth: 345,
-    padding: '30px',
-    font: 'Proxima',
+    marginTop: '50px',
+    width: '90vw',
+    maxWidth: '350px',
+    fontFamily: 'avenir',
+  },
+  title: {
+    color: '#888888',
   },
   cardStyle: {
     display: 'block',
     width: '100',
     height: '100',
   },
-  title: {
-    fontFamily: 'avenir',
-  },
   address: {
     color: '#888888',
   },
   media: {
-    // paddingTop: '56.25%', // 16:9
     paddingTop: '60%',
     width: '100%',
     height: '100%',
   },
   category: {
     color: '#888888',
-    fontFamily: 'avenir',
-  },
-  content: {
-    fontFamily: 'avenir',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -64,12 +54,19 @@ const styles = (theme) => ({
   directions: {
     display: 'flex',
     justifyContent: 'flex-end',
+    marginLeft: '15px',
+  },
+  reviews: {
+    display: 'flex',
+    justifyContent: 'center',
+    color: '#888888',
   },
 });
 
 class RestaurantDetails extends React.Component {
   render() {
     const { classes, restaurant, matchedRestaurant } = this.props;
+    console.log('RESTAURANT', restaurant);
 
     const displayRestaurant = Object.keys(matchedRestaurant).length
       ? matchedRestaurant
@@ -77,7 +74,10 @@ class RestaurantDetails extends React.Component {
     return (
       <Container className={classes.root}>
         <Card className={classes.cardStyle}>
-          <CardHeader title={displayRestaurant.name} />
+          <CardHeader
+            className={classes.title}
+            title={displayRestaurant.name}
+          />
           <CardMedia
             className={classes.media}
             image={displayRestaurant.image_url}
@@ -92,22 +92,30 @@ class RestaurantDetails extends React.Component {
                 <p className={classes.category}>Distance:</p>
               </Grid>
               <Grid align='justify' item xs={8}>
-                <p className={classes.content}>
+                <p>
                   <strong>{displayRestaurant.price}</strong>
                 </p>
-                <p className={classes.content}>
+                <p>
                   <strong>{displayRestaurant.location.address1}</strong>
                 </p>
-                <p className={classes.content}>
+                <p>
                   <strong>{displayRestaurant.categories[0].title}</strong>
                 </p>
-                <p className={classes.content}>
+                <p>
                   <strong>0.15 miles</strong>
                 </p>
               </Grid>
-              <p align='justify'>
-                Here is where the reviews widget will show up
-              </p>
+            </Grid>
+            <Grid className={classes.reviews}>
+              <Rating
+                name='read-only size-medium'
+                precision={0.5}
+                value={displayRestaurant.rating}
+                readOnly
+              />
+            </Grid>
+            <Grid className={classes.reviews}>
+              <p>({displayRestaurant.review_count} reviews)</p>
             </Grid>
           </CardContent>
         </Card>
@@ -118,7 +126,10 @@ class RestaurantDetails extends React.Component {
           <IconButton aria-label='add to favorites'>
             <FavoriteIcon style={{ fill: '#FF85A6' }} />
           </IconButton>
-          <IconButton aria-label='Go to yelp'>
+          <IconButton
+            aria-label='Go to yelp'
+            onClick={() => window.open(displayRestaurant.url, '_blank')}
+          >
             <FastfoodIcon style={{ fill: '#FF9E30' }} />
           </IconButton>
           <Button
