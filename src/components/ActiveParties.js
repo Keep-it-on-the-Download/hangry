@@ -53,49 +53,55 @@ class ActiveParties extends React.Component {
   render() {
     const { classes, parties, titles } = this.props;
 
-    return parties.map((party, index) => {
-      const { foundMatch } = party.data();
-      console.log(foundMatch);
+    return !parties.length ? (
+      <h2>
+        We know you're gettin hangry, but you don't have any active parties!
+      </h2>
+    ) : (
+      parties.map((party, index) => {
+        const { foundMatch } = party.data();
+        console.log(foundMatch);
 
-      return (
-        <Card className={classes.root} key={party.id}>
-          <div className={classes.details}>
-            <CardContent className={classes.content}>
-              <Grid container>
-                <Grid align='justify' item xs={9}>
-                  <Typography
-                    component='h6'
-                    variant='h6'
-                    className={classes.feast}
-                  >
-                    {`${titles[index]}`}
-                  </Typography>
+        return (
+          <Card className={classes.root} key={party.id}>
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Grid container>
+                  <Grid align='justify' item xs={9}>
+                    <Typography
+                      component='h6'
+                      variant='h6'
+                      className={classes.feast}
+                    >
+                      {`${titles[index]}`}
+                    </Typography>
+                  </Grid>
+                  <Grid align='justify' item xs={3}>
+                    <Button
+                      className={classes.button}
+                      variant='contained'
+                      color='primary'
+                      onClick={() => this.props.setActiveParty(party.ref.path)}
+                      component={Link}
+                      to='/party'
+                    >
+                      Start Swiping
+                    </Button>
+                    <Button
+                      className={classes.button}
+                      variant='contained'
+                      color='primary'
+                    >
+                      Edit Preferences
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid align='justify' item xs={3}>
-                  <Button
-                    className={classes.button}
-                    variant='contained'
-                    color='primary'
-                    onClick={() => this.props.setActiveParty(party.ref.path)}
-                    component={Link}
-                    to='/party'
-                  >
-                    Start Swiping
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    variant='contained'
-                    color='primary'
-                  >
-                    Edit Preferences
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </div>
-        </Card>
-      );
-    });
+              </CardContent>
+            </div>
+          </Card>
+        );
+      })
+    );
   }
 }
 
