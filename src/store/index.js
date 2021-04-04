@@ -12,6 +12,7 @@ import friendRequests from '../reducers/friendRequests';
 import partyRequests from '../reducers/partyRequests';
 import members from '../reducers/partyMembers';
 import parties from '../reducers/parties';
+import location from '../reducers/location';
 
 const reducer = combineReducers({
   user,
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   members,
   partyRequests,
   parties,
+  location,
 });
 
 const middleware = composeWithDevTools(
