@@ -7,7 +7,6 @@ import {
   Button,
   CircularProgress,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -16,12 +15,11 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import Fastfood from '@material-ui/icons/Fastfood';
-
 import InviteFriends from './InviteFriends';
 
 import { getFriends } from '../reducers/friends';
-import { createParty } from '../firebase/firestoreParty';
+
+import LocationForm from './LocationForm';
 
 const styles = (theme) => ({
   listContainer: {
@@ -42,10 +40,15 @@ class FriendsList extends React.Component {
     super();
     this.state = {
       open: false,
+      openLocation: false,
+      selectedFriendId: '',
     };
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+
+    this.handleOpenLocation = this.handleOpenLocation.bind(this);
+    this.handleCloseLocation = this.handleCloseLocation.bind(this);
   }
 
   handleOpen() {
@@ -56,12 +59,24 @@ class FriendsList extends React.Component {
     this.setState({ open: false });
   }
 
+  handleOpenLocation(friendId) {
+    console.log('PRESSED HANDLE OPEN LOCATION 11111');
+    this.setState({ openLocation: true, selectedFriendId: friendId });
+    console.log('PRESSED HANDLE OPEN LOCATION 22222');
+    console.log('THIS IS FRIEND ID IN HANDLE OPEN LOCATION', friendId);
+  }
+
+  handleCloseLocation() {
+    this.setState({ openLocation: false });
+  }
+
   componentDidMount() {
     this.props.getFriends(this.props.id);
   }
 
   render() {
     const { classes, friends, friendsAreLoading, id } = this.props;
+    console.log('FRIENDS ????::::', friends);
 
     return (
       <React.Fragment>
@@ -98,14 +113,14 @@ class FriendsList extends React.Component {
                       secondary='Some info'
                     />
                     <ListItemSecondaryAction>
-                      <IconButton
-                        edge='end'
-                        aria-label='create party'
-                        onClick={() => createParty(email)}
+                      <Button
+                        variant='contained'
+                        size='small'
+                        color='primary'
+                        onClick={() => this.handleOpenLocation(email)}
                       >
-                        <Fastfood />
-                        Start party
-                      </IconButton>
+                        START PARTY!!
+                      </Button>
                     </ListItemSecondaryAction>
                   </ListItem>
                 );
@@ -123,6 +138,11 @@ class FriendsList extends React.Component {
           id={id}
           open={this.state.open}
           onClose={this.handleClose}
+        />
+        <LocationForm
+          email={this.state.selectedFriendId}
+          openLocation={this.state.openLocation}
+          onCloseLocation={this.handleCloseLocation}
         />
       </React.Fragment>
     );

@@ -10,7 +10,7 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 // add user to a party
-export async function createParty(user2) {
+export async function createParty(user2, location) {
   // using AUTH, grab current user
   const currentUser = auth.currentUser;
   // using FIRESTORE, grab currentUser's email address to use as reference
@@ -19,6 +19,8 @@ export async function createParty(user2) {
   // since party doc doesn't exist, set up the fields in the collection
 
   const docRef = await partyRef.add({
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    location,
     sharedRestaurants: [],
     preferences: {
       cuisine: ['italian', 'sushi'],
