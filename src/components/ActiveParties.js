@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 import firebase from '../firebase';
@@ -20,19 +20,17 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    position: 'relative',
-    marginTop: 15,
-    marginLeft: 15,
-    marginRight: 15,
+    marginTop: 20,
     width: '90vw',
-    backgroundColor: '#FBF3F0',
+    backgroundColor: '#f8f8ff',
   },
-  details: {
+  container: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
   },
   content: {
-    flex: '1 0 auto',
+    display: 'flex',
+    justifyContent: 'center',
   },
   cover: {
     width: 151,
@@ -40,6 +38,8 @@ const styles = (theme) => ({
   button: {
     display: 'flex',
     justifyContent: 'center',
+    fontFamily: 'arial-black',
+    color: '#FFFFFF',
   },
   feast: {
     display: 'flex',
@@ -48,8 +48,7 @@ const styles = (theme) => ({
     fontStyle: 'italic',
     fontFamily: 'arial-black',
     fontSize: '17px',
-    color: '#FFFFFF',
-    textShadow: '1px 1px #000000',
+    color: '#FF6961',
   },
 });
 
@@ -68,15 +67,12 @@ class ActiveParties extends React.Component {
       console.log(foundMatch);
 
       return (
-        <Card className={classes.root} key={party.id}>
-          <div className={classes.details}>
+        <Container className={classes.container}>
+          <Card className={classes.root} key={party.id}>
             <CardContent className={classes.content}>
               <Grid container>
                 <Grid item xs={9}>
                   <p className={classes.feast}>{`${titles[index]}`}</p>
-                  {/* <Typography component='p' variant='h6'>
-                    {`${titles[index]}`}
-                  </Typography> */}
                 </Grid>
                 <Grid className={classes.button} item xs={3}>
                   <Button
@@ -86,13 +82,13 @@ class ActiveParties extends React.Component {
                     component={Link}
                     to='/party'
                   >
-                    SWIPE!
+                    <p className={classes.button}>SWIPE!</p>
                   </Button>
                 </Grid>
               </Grid>
             </CardContent>
-          </div>
-        </Card>
+          </Card>
+        </Container>
       );
     });
   }

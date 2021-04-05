@@ -8,11 +8,9 @@ const styles = (theme) => ({
     color: 'green',
   },
   button: {
-    boxShadow:
-      '0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     borderRadius: '8px',
-    fontFamily: 'avenir',
-    backgroundColor: 'rgb(129, 163, 238)',
+    fontFamily: 'arial',
+    backgroundColor: '#FF6961',
     border: 'none',
     fontSize: '20px',
     color: 'white',

@@ -8,6 +8,7 @@ import SignUpScreen from './components/SignUpScreen';
 import Notifications from './components/Notifications';
 import ActiveParties from './components/ActiveParties';
 import MainScreen from './components/MainScreen';
+import Settings from './components/Settings';
 
 import firebase from './firebase';
 import 'firebase/auth';
@@ -51,6 +52,11 @@ const Routes = () => {
               exact
               path='/restaurantDetails'
               render={(routeProps) => <RestaurantDetails {...routeProps} />}
+            />
+            <Route
+              exact
+              path='/settings'
+              render={(routeProps) => <Settings {...routeProps} />}
             />
             <Redirect from='/' to='/profile' />
           </Switch>

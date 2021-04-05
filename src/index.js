@@ -13,15 +13,15 @@ import history from './history';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#A0DFDF',
-      main: '#59EBE1',
-      dark: '#A0DFDF',
+      light: '#FF6961',
+      main: '#FF6961',
+      dark: '#FF6961',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#A0DFDF',
-      main: '#59EBE1',
-      dark: '#A0DFDF',
+      light: '#FFF3D9',
+      main: '#FFF3D9',
+      dark: '#FF35B4',
       contrastText: '#000',
     },
   },

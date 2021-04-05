@@ -14,6 +14,9 @@ import pizzaicon from './icon/pizzaicon.png';
 const styles = (theme) => ({
   loginScreen: {
     marginTop: '30px',
+    // background: 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
+    // backgroundSize: '1000% 1000%',
+    // animation: 'gradient 15s ease infinite',
   },
   login: {
     color: 'green',
