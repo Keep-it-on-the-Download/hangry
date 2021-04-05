@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 import firebase from '../firebase';
@@ -19,27 +19,36 @@ import { Link } from 'react-router-dom';
 const styles = (theme) => ({
   root: {
     display: 'flex',
-    marginTop: '20px',
-    backgroundColor: '#FBF3F0',
+    justifyContent: 'center',
+    marginTop: 20,
+    width: '90vw',
+    backgroundColor: '#f8f8ff',
   },
-  details: {
+  container: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'center',
   },
   content: {
-    flex: '1 0 auto',
+    display: 'flex',
+    justifyContent: 'center',
   },
   cover: {
     width: 151,
   },
   button: {
     display: 'flex',
-    alignContent: 'flex-end',
-    width: 200,
-    marginTop: '5px',
+    justifyContent: 'center',
+    fontFamily: 'arial-black',
+    color: '#FFFFFF',
   },
   feast: {
-    fontStyle: 'bold',
+    display: 'flex',
+    fontDirection: 'row',
+    justifyContent: 'flex-start',
+    fontStyle: 'italic',
+    fontFamily: 'arial-black',
+    fontSize: '17px',
+    color: '#FF6961',
   },
 });
 
@@ -58,42 +67,28 @@ class ActiveParties extends React.Component {
       console.log(foundMatch);
 
       return (
-        <Card className={classes.root} key={party.id}>
-          <div className={classes.details}>
+        <Container className={classes.container}>
+          <Card className={classes.root} key={party.id}>
             <CardContent className={classes.content}>
               <Grid container>
-                <Grid align='justify' item xs={9}>
-                  <Typography
-                    component='h6'
-                    variant='h6'
-                    className={classes.feast}
-                  >
-                    {`${titles[index]}`}
-                  </Typography>
+                <Grid item xs={9}>
+                  <p className={classes.feast}>{`${titles[index]}`}</p>
                 </Grid>
-                <Grid align='justify' item xs={3}>
+                <Grid className={classes.button} item xs={3}>
                   <Button
-                    className={classes.button}
                     variant='contained'
                     color='primary'
                     onClick={() => this.props.setActiveParty(party.ref.path)}
                     component={Link}
                     to='/party'
                   >
-                    Start Swiping
-                  </Button>
-                  <Button
-                    className={classes.button}
-                    variant='contained'
-                    color='primary'
-                  >
-                    Edit Preferences
+                    <p className={classes.button}>SWIPE!</p>
                   </Button>
                 </Grid>
               </Grid>
             </CardContent>
-          </div>
-        </Card>
+          </Card>
+        </Container>
       );
     });
   }

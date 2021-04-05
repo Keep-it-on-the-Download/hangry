@@ -13,20 +13,20 @@ import history from './history';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#ff8780',
-      main: '#ff6961',
-      dark: '#b24943',
+      light: '#FF6961',
+      main: '#FF6961',
+      dark: '#FF6961',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#fdcb47',
-      main: '#fdbf19',
-      dark: '#b18511',
+      light: '#FFF3D9',
+      main: '#FFF3D9',
+      dark: '#FF35B4',
       contrastText: '#000',
     },
   },
   typography: {
-    fontFamily: ['Avenir'].join(','),
+    fontFamily: ['avenir'].join(','),
   },
 });
 

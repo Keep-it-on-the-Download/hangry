@@ -33,6 +33,11 @@ const styles = (theme) => ({
   listText: {
     margin: theme.spacing(2),
   },
+  button: {
+    fontFamily: 'arial-black',
+    fontStyle: 'bold',
+    color: '#FFF3D9',
+  },
 });
 
 class FriendsList extends React.Component {
@@ -89,7 +94,7 @@ class FriendsList extends React.Component {
               color='primary'
               onClick={this.handleOpen}
             >
-              Add Friends
+              <p className={classes.button}>Add Friends</p>
             </Button>
           </ListItem>
           <Divider
@@ -119,7 +124,7 @@ class FriendsList extends React.Component {
                         color='primary'
                         onClick={() => this.handleOpenLocation(email)}
                       >
-                        START PARTY!!
+                        <p className={classes.button}>🎉 START PARTY</p>
                       </Button>
                     </ListItemSecondaryAction>
                   </ListItem>

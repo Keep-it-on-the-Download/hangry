@@ -1,7 +1,27 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import { LoginWithEmailAndPassword } from '../firebase/authentication';
+
+const styles = (theme) => ({
+  login: {
+    color: 'green',
+  },
+  button: {
+    borderRadius: '8px',
+    fontFamily: 'arial',
+    backgroundColor: '#FF6961',
+    border: 'none',
+    fontSize: '20px',
+    color: 'white',
+    padding: '16px',
+    marginTop: '10px',
+    marginBottom: '10px',
+  },
+  input: {
+    fontSize: '20px',
+  },
+});
 
 const defaultState = {
   email: '',
@@ -28,6 +48,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <form noValidate autoComplete='off' onSubmit={this.handleSubmit}>
         <div>
@@ -37,6 +58,7 @@ class LoginForm extends React.Component {
             variant='filled'
             name='email'
             onChange={this.handleChange}
+            className={classes.input}
           />
           <TextField
             type='password'
@@ -44,15 +66,16 @@ class LoginForm extends React.Component {
             variant='filled'
             name='password'
             onChange={this.handleChange}
+            className={classes.input}
           />
         </div>
 
-        <Button type='submit' variant='contained' color='primary'>
+        <button className={classes.button} type='submit'>
           Login
-        </Button>
+        </button>
       </form>
     );
   }
 }
 
-export default LoginForm;
+export default withStyles(styles)(LoginForm);
