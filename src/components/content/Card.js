@@ -61,7 +61,6 @@ const Card = (props) => {
         alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
       />
       <Box className={classes.text} component={Link} to={'/restaurantDetails'}>
-        <h1 />
         <p className={classes.name}>{name}</p>
         <Typography className={classes.price}>{price}</Typography>
       </Box>
