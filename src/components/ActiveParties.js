@@ -25,12 +25,7 @@ const styles = (theme) => ({
     marginLeft: 15,
     marginRight: 15,
     width: '90vw',
-    // display: 'flex',
-    // justifyContent: 'center',
-    // position: 'relative',
-    // marginTop: '20px',
     backgroundColor: '#FBF3F0',
-    // width: '75vw',
   },
   details: {
     display: 'flex',
@@ -45,12 +40,16 @@ const styles = (theme) => ({
   button: {
     display: 'flex',
     justifyContent: 'center',
-    position: 'relative',
-    width: 200,
-    marginTop: '5px',
   },
   feast: {
-    fontStyle: 'bold',
+    display: 'flex',
+    fontDirection: 'row',
+    justifyContent: 'flex-start',
+    fontStyle: 'italic',
+    fontFamily: 'arial-black',
+    fontSize: '17px',
+    color: '#FFFFFF',
+    textShadow: '1px 1px #000000',
   },
 });
 
@@ -73,33 +72,22 @@ class ActiveParties extends React.Component {
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Grid container>
-                <Grid align='justify' item xs={9}>
-                  <Typography
-                    component='h6'
-                    variant='h6'
-                    className={classes.feast}
-                  >
+                <Grid item xs={9}>
+                  <p className={classes.feast}>{`${titles[index]}`}</p>
+                  {/* <Typography component='p' variant='h6'>
                     {`${titles[index]}`}
-                  </Typography>
+                  </Typography> */}
                 </Grid>
-                <Grid align='justify' item xs={3}>
+                <Grid className={classes.button} item xs={3}>
                   <Button
-                    className={classes.button}
                     variant='contained'
                     color='primary'
                     onClick={() => this.props.setActiveParty(party.ref.path)}
                     component={Link}
                     to='/party'
                   >
-                    Start Swiping
+                    SWIPE!
                   </Button>
-                  {/* <Button
-                    className={classes.button}
-                    variant='contained'
-                    color='primary'
-                  >
-                    Edit Preferences
-                  </Button> */}
                 </Grid>
               </Grid>
             </CardContent>

@@ -23,25 +23,17 @@ import FastfoodIcon from '@material-ui/icons/Fastfood';
 import { getDistance } from '../reducers/location';
 
 const styles = (theme) => ({
-  body: {
-    background: '#FFFFFF',
-  },
   root: {
-    marginTop: '50px',
-    width: '90vw',
-    maxWidth: '350px',
+    marginTop: '35px',
+    width: '93vw',
     fontFamily: 'avenir',
   },
-  title: {
-    color: '#888888',
-  },
   cardStyle: {
-    display: 'block',
     width: '100',
     height: '100',
   },
-  address: {
-    color: '#888888',
+  title: {
+    fontStyle: 'italic',
   },
   media: {
     paddingTop: '60%',
@@ -57,12 +49,16 @@ const styles = (theme) => ({
   directions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: '15px',
+    marginLeft: '10px',
   },
   reviews: {
     display: 'flex',
     justifyContent: 'center',
     color: '#888888',
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -120,18 +116,42 @@ class RestaurantDetails extends React.Component {
                 <p className={classes.category}>Distance:</p>
               </Grid>
               <Grid align='justify' item xs={8}>
-                <p>
-                  <strong>{price}</strong>
-                </p>
-                <p>
-                  <strong>{location.address1}</strong>
-                </p>
-                <p>
-                  <strong>{categories[0].title}</strong>
-                </p>
-                <p>
-                  <strong>{`${distance} miles`}</strong>
-                </p>
+                {price ? (
+                  <p>
+                    <strong>{price}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {location.address1 ? (
+                  <p>
+                    <strong>{location.address1}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {categories[0].title ? (
+                  <p>
+                    <strong>{categories[0].title}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {distance ? (
+                  <p>
+                    <strong>{`${distance} miles`}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
               </Grid>
             </Grid>
             <Grid className={classes.reviews}>
@@ -147,7 +167,7 @@ class RestaurantDetails extends React.Component {
             </Grid>
           </CardContent>
         </Card>
-        <CardActions disableSpacing>
+        <CardActions className={classes.actions} disableSpacing>
           <IconButton
             aria-label='back to main screen'
             component={Link}

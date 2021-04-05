@@ -119,7 +119,7 @@ class FriendsList extends React.Component {
                         color='primary'
                         onClick={() => this.handleOpenLocation(email)}
                       >
-                        START PARTY!!
+                        🎉START PARTY🎉
                       </Button>
                     </ListItemSecondaryAction>
                   </ListItem>
