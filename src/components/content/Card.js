@@ -35,8 +35,14 @@ const useStyles = makeStyles((theme) => ({
     fontStyle: 'italic',
     textAlign: 'left',
     background:
-      'linear-gradient(to bottom, rgba(0,0,0,0) 0.5%, rgba(0,0,0,0.75))',
+      'linear-gradient(to bottom, rgba(0,0,0,0) 0.5%, rgba(0,0,0,0.85))',
     textDecoration: 'none',
+  },
+  name: {
+    fontFamily: 'arial-black',
+    fontStyle: 'italic',
+    fontSize: '40px',
+    marginBottom: '0px',
   },
   price: {
     marginTop: '5px',
@@ -55,7 +61,7 @@ const Card = (props) => {
         alt='This should be pulled dynamically from the api, perhaps a description of the restaurant'
       />
       <Box className={classes.text} component={Link} to={'/restaurantDetails'}>
-        <Typography variant='h3'>{name}</Typography>
+        <p className={classes.name}>{name}</p>
         <Typography className={classes.price}>{price}</Typography>
       </Box>
     </MaterialCard>

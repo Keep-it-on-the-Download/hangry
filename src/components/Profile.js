@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
 import { listenForFriendRequests } from '../reducers/friendRequests';
 import { listenForPartyRequests } from '../reducers/partyRequests';
-
+import { SignOut } from '../firebase/authentication';
 import { Link } from 'react-router-dom';
 
 // Firebase imports
-import { SignOut } from '../firebase/authentication';
 import firebase from '../firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -17,7 +16,6 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   Container,
   Grid,
-  Typography,
   Avatar,
   IconButton,
   CircularProgress,
@@ -26,7 +24,7 @@ import {
 import Badge from '@material-ui/core/Badge';
 
 // Material-UI Icons
-import { Settings, Notifications } from '@material-ui/icons';
+import { Notifications } from '@material-ui/icons';
 
 import FriendsList from './FriendsList';
 
@@ -34,6 +32,11 @@ const styles = (theme) => ({
   profile: {
     marginBottom: theme.spacing(3),
     position: 'sticky',
+  },
+  name: {
+    fontFamily: 'arial-black',
+    fontStyle: 'italic',
+    color: '#731105',
   },
   settings: {
     padding: theme.spacing(2),
@@ -81,9 +84,7 @@ class Profile extends React.Component {
             <Grid container>
               <Grid container className={classes.profile}>
                 <Grid item xs={6} className={classes.settings}>
-                  <IconButton>
-                    <Settings />
-                  </IconButton>
+                  <SignOut />
                 </Grid>
                 <Grid item xs={6} className={classes.notifications}>
                   <IconButton component={Link} to='/notifications'>
@@ -103,14 +104,15 @@ class Profile extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography>{user.displayName}</Typography>
+                  <h2 className={classes.name}>
+                    {user.displayName.toUpperCase()}
+                  </h2>
                 </Grid>
               </Grid>
               <Grid item xs={12}>
                 <FriendsList id={user.email} />
               </Grid>
             </Grid>
-            <SignOut />
           </React.Fragment>
         ) : (
           <CircularProgress />

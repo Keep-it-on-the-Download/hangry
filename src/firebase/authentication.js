@@ -61,8 +61,7 @@ function SignOut() {
         onClick={() => auth.signOut()}
         component={Link}
         to='/login'
-        variant='contained'
-        color='primary'
+        color='#00008A'
       >
         Sign Out
       </Button>

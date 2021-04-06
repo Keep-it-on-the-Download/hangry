@@ -4,44 +4,37 @@ import { connect } from 'react-redux';
 
 // import statements Material-UI
 import { withStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 
 //icons
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 
 import { getDistance } from '../reducers/location';
 
 const styles = (theme) => ({
-  body: {
-    background: '#FFFFFF',
-  },
   root: {
-    marginTop: '50px',
-    width: '90vw',
-    maxWidth: '350px',
+    marginTop: '35px',
+    width: '93vw',
     fontFamily: 'avenir',
   },
-  title: {
-    color: '#888888',
-  },
   cardStyle: {
-    display: 'block',
     width: '100',
     height: '100',
   },
-  address: {
-    color: '#888888',
+  title: {
+    fontStyle: 'italic',
   },
   media: {
     paddingTop: '60%',
@@ -57,12 +50,16 @@ const styles = (theme) => ({
   directions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginLeft: '15px',
+    marginLeft: '10px',
   },
   reviews: {
     display: 'flex',
     justifyContent: 'center',
     color: '#888888',
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -75,7 +72,10 @@ class RestaurantDetails extends React.Component {
   sendToMaps(destLongitude, destLatitude) {
     navigator.geolocation.getCurrentPosition((position) => {
       const { longitude, latitude } = position.coords;
-      window.location.href = `https://www.google.com/maps/dir/?api=1&origin=${latitude}, ${longitude}&destination=${destLatitude}, ${destLongitude}`;
+      window.open(
+        `https://www.google.com/maps/dir/?api=1&origin=${latitude}, ${longitude}&destination=${destLatitude}, ${destLongitude}`,
+        '_blank'
+      );
     });
   }
 
@@ -120,18 +120,42 @@ class RestaurantDetails extends React.Component {
                 <p className={classes.category}>Distance:</p>
               </Grid>
               <Grid align='justify' item xs={8}>
-                <p>
-                  <strong>{price}</strong>
-                </p>
-                <p>
-                  <strong>{location.address1}</strong>
-                </p>
-                <p>
-                  <strong>{categories[0].title}</strong>
-                </p>
-                <p>
-                  <strong>{`${distance} miles`}</strong>
-                </p>
+                {price ? (
+                  <p>
+                    <strong>{price}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {location.address1 ? (
+                  <p>
+                    <strong>{location.address1}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {categories[0].title ? (
+                  <p>
+                    <strong>{categories[0].title}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
+                {distance ? (
+                  <p>
+                    <strong>{`${distance} miles`}</strong>
+                  </p>
+                ) : (
+                  <p>
+                    <strong>N/A</strong>
+                  </p>
+                )}
               </Grid>
             </Grid>
             <Grid className={classes.reviews}>
@@ -147,16 +171,13 @@ class RestaurantDetails extends React.Component {
             </Grid>
           </CardContent>
         </Card>
-        <CardActions disableSpacing>
+        <CardActions className={classes.actions} disableSpacing>
           <IconButton
             aria-label='back to main screen'
             component={Link}
             to='/party'
           >
             <ArrowBackRoundedIcon />
-          </IconButton>
-          <IconButton aria-label='add to favorites'>
-            <FavoriteIcon style={{ fill: '#FF85A6' }} />
           </IconButton>
           <IconButton
             aria-label='Go to yelp'
