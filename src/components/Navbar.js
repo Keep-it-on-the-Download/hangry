@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 100,
   },
   logo: {
-    height: 24,
-    width: 24,
+    height: 36,
+    width: 36,
   },
   button: {
     borderRadius: 100,
@@ -56,7 +56,7 @@ const Navbar = (props) => {
           component={Link}
           to='/profile'
         >
-          <AccountCircle />
+          <AccountCircle fontSize='large' />
         </IconButton>
       </Toolbar>
     </AppBar>

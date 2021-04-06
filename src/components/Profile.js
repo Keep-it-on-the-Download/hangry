@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getUser } from '../reducers/user';
 import { listenForFriendRequests } from '../reducers/friendRequests';
 import { listenForPartyRequests } from '../reducers/partyRequests';
-
+import { SignOut } from '../firebase/authentication';
 import { Link } from 'react-router-dom';
 
 // Firebase imports
@@ -36,7 +36,7 @@ const styles = (theme) => ({
   name: {
     fontFamily: 'arial-black',
     fontStyle: 'italic',
-    color: '#FF6961',
+    color: '#731105',
   },
   settings: {
     padding: theme.spacing(2),
@@ -84,9 +84,7 @@ class Profile extends React.Component {
             <Grid container>
               <Grid container className={classes.profile}>
                 <Grid item xs={6} className={classes.settings}>
-                  <IconButton component={Link} to='/settings'>
-                    <Settings />
-                  </IconButton>
+                  <SignOut />
                 </Grid>
                 <Grid item xs={6} className={classes.notifications}>
                   <IconButton component={Link} to='/notifications'>

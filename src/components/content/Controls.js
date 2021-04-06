@@ -4,15 +4,18 @@ import { connect } from 'react-redux';
 import { selectRestaurant } from '../../reducers/selected';
 import { unselectRestaurant } from '../../reducers/unselected';
 import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
+import Fab from '@material-ui/core/fab';
 import { Close, Favorite } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   dislike: {
     marginRight: '6vh',
+    boxShadow: 'none',
   },
   like: {
     marginLeft: '6vh',
+    boxShadow: 'none',
+    color: '#ff817b',
   },
 }));
 
@@ -34,10 +37,10 @@ const Controls = (props) => {
         onClick={handleDislikeClick}
         className={classes.dislike}
       >
-        <Close aria-label='Dislike' />
+        <Close fontSize='large' aria-label='Dislike' />
       </Fab>
       <Fab id='like' onClick={handleLikeClick} className={classes.like}>
-        <Favorite aria-label='Like' />
+        <Favorite fontSize='large' aria-label='Like' />
       </Fab>
     </React.Fragment>
   );

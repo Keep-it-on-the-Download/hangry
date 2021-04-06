@@ -18,7 +18,6 @@ import Rating from '@material-ui/lab/Rating';
 
 //icons
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 
@@ -73,7 +72,10 @@ class RestaurantDetails extends React.Component {
   sendToMaps(destLongitude, destLatitude) {
     navigator.geolocation.getCurrentPosition((position) => {
       const { longitude, latitude } = position.coords;
-      window.location.href = `https://www.google.com/maps/dir/?api=1&origin=${latitude}, ${longitude}&destination=${destLatitude}, ${destLongitude}`;
+      window.open(
+        `https://www.google.com/maps/dir/?api=1&origin=${latitude}, ${longitude}&destination=${destLatitude}, ${destLongitude}`,
+        '_blank'
+      );
     });
   }
 
@@ -176,9 +178,6 @@ class RestaurantDetails extends React.Component {
             to='/party'
           >
             <ArrowBackRoundedIcon />
-          </IconButton>
-          <IconButton aria-label='add to favorites'>
-            <FavoriteIcon style={{ fill: '#FF85A6' }} />
           </IconButton>
           <IconButton
             aria-label='Go to yelp'

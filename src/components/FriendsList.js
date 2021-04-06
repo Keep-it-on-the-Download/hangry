@@ -34,9 +34,10 @@ const styles = (theme) => ({
     margin: theme.spacing(2),
   },
   button: {
+    marginTop: '7px',
     fontFamily: 'arial-black',
     fontStyle: 'bold',
-    color: '#FFF3D9',
+    color: theme.palette.secondary,
   },
 });
 
@@ -81,7 +82,6 @@ class FriendsList extends React.Component {
 
   render() {
     const { classes, friends, friendsAreLoading, id } = this.props;
-    console.log('FRIENDS ????::::', friends);
 
     return (
       <React.Fragment>
@@ -113,14 +113,12 @@ class FriendsList extends React.Component {
                     <ListItemAvatar>
                       <Avatar alt={displayName} src={photoURL} />
                     </ListItemAvatar>
-                    <ListItemText
-                      primary={`${displayName}`}
-                      secondary='Some info'
-                    />
+                    <ListItemText primary={`${displayName}`} />
                     <ListItemSecondaryAction>
                       <Button
                         variant='contained'
                         size='small'
+                        className={classes.button}
                         color='primary'
                         onClick={() => this.handleOpenLocation(email)}
                       >

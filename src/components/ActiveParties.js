@@ -39,7 +39,7 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'center',
     fontFamily: 'arial-black',
-    color: '#FFFFFF',
+    color: theme.palette.primary.contrastText,
   },
   feast: {
     display: 'flex',
@@ -48,7 +48,7 @@ const styles = (theme) => ({
     fontStyle: 'italic',
     fontFamily: 'arial-black',
     fontSize: '17px',
-    color: '#FF6961',
+    color: '#731105',
   },
 });
 
