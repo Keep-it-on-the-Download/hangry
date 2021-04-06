@@ -29,9 +29,7 @@ const styles = (theme) => ({
 
 class MainScreen extends React.Component {
   componentDidMount() {
-    if (!this.props.inventory.length) {
-      this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
-    }
+    this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
     this.props.listenForMatch(this.props.partyRef);
   }
 

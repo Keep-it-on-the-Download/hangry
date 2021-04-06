@@ -26,6 +26,8 @@ const GOT_RESTAURANTS = 'GOT_RESTAURANTS';
 const GOT_INITIAL_RESTAURANTS = 'GOT_INITIAL_RESTAURANTS';
 const GOT_RESTAURANTS_FROM_STORAGE = 'GOT_RESTAURANTS_FROM_STORAGE';
 
+const CLEAR_MATCH = 'CLEAR_MATCH';
+
 const gotRestaurantsFromStorage = () => {
   return {
     type: GOT_RESTAURANTS_FROM_STORAGE,
@@ -49,6 +51,10 @@ const gotMoreRestaurants = (inventory) => {
 const foundMatch = (restaurant) => ({
   type: FOUND_MATCH,
   restaurant,
+});
+
+export const clearMatch = () => ({
+  type: CLEAR_MATCH,
 });
 
 export function listenForMatch(partyRef) {
@@ -207,6 +213,13 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         foundMatch: true,
         matchedRestaurant: action.restaurant,
+      };
+
+    case CLEAR_MATCH:
+      return {
+        ...state,
+        foundMatch: false,
+        matchedRestaurant: {},
       };
 
     default:
