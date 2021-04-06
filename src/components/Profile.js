@@ -24,7 +24,7 @@ import {
 import Badge from '@material-ui/core/Badge';
 
 // Material-UI Icons
-import { Settings, Notifications } from '@material-ui/icons';
+import { Notifications } from '@material-ui/icons';
 
 import FriendsList from './FriendsList';
 
