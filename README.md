@@ -2,7 +2,7 @@
 
 Deployed Site: https://hangry-b39ac.web.app/
 
-Has this ever happened to you? You and a friend want to go out to eat, but you can't come to a consensus. Now you're both irritated and hungry.
+Has this ever happened to you? You and a friend want to go out to eat, but you can't come to a consensus. Now you're both angry and hungry.
 
 Introducing Hangry, a Progressive Web App designed to help you decide where to eat with friends, family, or a significant other. With just the swipe of a finger Hangry lets you quickly find the perfect restaurant match.
 
