@@ -26,23 +26,42 @@ const GOT_RESTAURANTS = 'GOT_RESTAURANTS';
 const GOT_INITIAL_RESTAURANTS = 'GOT_INITIAL_RESTAURANTS';
 const GOT_RESTAURANTS_FROM_STORAGE = 'GOT_RESTAURANTS_FROM_STORAGE';
 
-function gotRestaurantsFromStorage() {
+const gotRestaurantsFromStorage = () => {
   return {
     type: GOT_RESTAURANTS_FROM_STORAGE,
   };
-}
+};
 
-function gotInitialRestaurants(inventory) {
+const gotInitialRestaurants = (inventory) => {
   return {
     type: GOT_INITIAL_RESTAURANTS,
     inventory,
   };
-}
+};
 
-function gotMoreRestaurants(inventory) {
+const gotMoreRestaurants = (inventory) => {
   return {
     type: GOT_RESTAURANTS,
     inventory,
+  };
+};
+
+const foundMatch = (restaurant) => ({
+  type: FOUND_MATCH,
+  restaurant,
+});
+
+export function listenForMatch(partyRef) {
+  return async (dispatch) => {
+    try {
+      firestore.doc(partyRef).onSnapshot((doc) => {
+        if (doc.data().foundMatch) {
+          dispatch(foundMatch(doc.data().matchedRestaurant));
+        }
+      });
+    } catch (err) {
+      console.error('Origin: restaurants.listenForMatch(): ', err);
+    }
   };
 }
 
