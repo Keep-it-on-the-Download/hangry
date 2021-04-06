@@ -11,22 +11,23 @@ import store from './store';
 import history from './history';
 
 const theme = createMuiTheme({
+  boxShadow: 'none',
   palette: {
     primary: {
-      light: '#FF6961',
-      main: '#FF6961',
-      dark: '#FF6961',
-      contrastText: '#fff',
+      light: '#FF817B',
+      main: '#FF817B',
+      dark: '#FF817B',
+      contrastText: '#731105',
     },
     secondary: {
-      light: '#FFF3D9',
-      main: '#FFF3D9',
-      dark: '#FF35B4',
+      light: '#FDDC7D',
+      main: '#FDBF19',
+      dark: '#FFFFFF',
       contrastText: '#000',
     },
   },
   typography: {
-    fontFamily: ['avenir'].join(','),
+    fontFamily: ['Raleway'].join(','),
   },
 });
 
