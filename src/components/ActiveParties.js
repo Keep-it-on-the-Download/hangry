@@ -62,35 +62,41 @@ class ActiveParties extends React.Component {
   render() {
     const { classes, parties, titles } = this.props;
 
-    return parties.map((party, index) => {
-      const { foundMatch } = party.data();
-      console.log(foundMatch);
+    return !parties.length ? (
+      <h2>
+        We know you're gettin hangry, but you don't have any active parties!
+      </h2>
+    ) : (
+      parties.map((party, index) => {
+        const { foundMatch } = party.data();
+        console.log(foundMatch);
 
-      return (
-        <Container className={classes.container}>
-          <Card className={classes.root} key={party.id}>
-            <CardContent className={classes.content}>
-              <Grid container>
-                <Grid item xs={9}>
-                  <p className={classes.feast}>{`${titles[index]}`}</p>
+        return (
+          <Container className={classes.container}>
+            <Card className={classes.root} key={party.id}>
+              <CardContent className={classes.content}>
+                <Grid container>
+                  <Grid item xs={9}>
+                    <p className={classes.feast}>{`${titles[index]}`}</p>
+                  </Grid>
+                  <Grid className={classes.button} item xs={3}>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => this.props.setActiveParty(party.ref.path)}
+                      component={Link}
+                      to='/party'
+                    >
+                      <p className={classes.button}>SWIPE!</p>
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid className={classes.button} item xs={3}>
-                  <Button
-                    variant='contained'
-                    color='primary'
-                    onClick={() => this.props.setActiveParty(party.ref.path)}
-                    component={Link}
-                    to='/party'
-                  >
-                    <p className={classes.button}>SWIPE!</p>
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Container>
-      );
-    });
+              </CardContent>
+            </Card>
+          </Container>
+        );
+      })
+    );
   }
 }
 
