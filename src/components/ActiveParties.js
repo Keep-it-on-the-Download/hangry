@@ -13,6 +13,7 @@ import 'firebase/firestore';
 
 import { getUser, setActiveParty } from '../reducers/user';
 import { getParties } from '../reducers/parties';
+import { clearMatch } from '../reducers/restaurants';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -57,6 +58,7 @@ class ActiveParties extends React.Component {
     const email = firebase.auth().currentUser.email;
     this.props.getUser(email);
     this.props.getParties(email);
+    this.props.clearMatch();
   }
 
   render() {
@@ -111,6 +113,7 @@ const mapDispatch = (dispatch) => ({
   getUser: (id) => dispatch(getUser(id)),
   setActiveParty: (id) => dispatch(setActiveParty(id)),
   getParties: (id) => dispatch(getParties(id)),
+  clearMatch: () => dispatch(clearMatch()),
 });
 
 export default connect(
