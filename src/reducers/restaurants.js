@@ -83,6 +83,7 @@ export function getInitialRestaurants(userId, partyRef) {
     const member = memberSnapshot.data();
 
     LOCAL_POINTER = member.pointer;
+    BATCH_NUM = Math.floor(LOCAL_POINTER / BATCH_SIZE) + 1;
 
     if (LOCAL_POINTER === party.sharedRestaurants.length) {
       const { data } = await axios.get(
