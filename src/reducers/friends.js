@@ -49,6 +49,22 @@ export const getFriends = (id) => {
   };
 };
 
+export const listenForFriends = (id) => {
+  return async (dispatch) => {
+    try {
+      firestore
+        .collection('users')
+        .doc(id)
+        .collection('friends')
+        .onSnapshot(() => {
+          dispatch(getFriends(id));
+        });
+    } catch (err) {
+      console.error('Origin: friendRequests.listenForRequests(): ', err);
+    }
+  };
+};
+
 /**
  * Redux Thunk for adding a new friend to users Firestore collection and local store. In practice this should only be done as the result of accepting a freind request made by another user.
  * @param {string} myId - The email of the user adding a new friend (accepting the request)

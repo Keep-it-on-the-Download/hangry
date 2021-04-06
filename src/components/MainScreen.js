@@ -8,7 +8,11 @@ import Controls from './content/Controls';
 
 import { selectRestaurant } from '../reducers/selected';
 import { unselectRestaurant } from '../reducers/unselected';
-import { getInitialRestaurants, syncPointer } from '../reducers/restaurants';
+import {
+  getInitialRestaurants,
+  syncPointer,
+  listenForMatch,
+} from '../reducers/restaurants';
 
 import Deck from './content/Deck';
 import MatchDialog from './MatchDialog';
@@ -28,6 +32,7 @@ class MainScreen extends React.Component {
     if (!this.props.inventory.length) {
       this.props.getInitialRestaurants(this.props.userId, this.props.partyRef);
     }
+    this.props.listenForMatch(this.props.partyRef);
   }
 
   componentWillUnmount() {
@@ -68,9 +73,10 @@ const mapState = (state) => ({
 const mapDispatch = (dispatch) => ({
   selectRestaurant: () => dispatch(selectRestaurant()),
   unselectRestaurant: () => dispatch(unselectRestaurant()),
-  syncPointer: (userId, partyId) => dispatch(syncPointer(userId, partyId)),
-  getInitialRestaurants: (userId, partyId) =>
-    dispatch(getInitialRestaurants(userId, partyId)),
+  syncPointer: (userId, partyRef) => dispatch(syncPointer(userId, partyRef)),
+  listenForMatch: (partyRef) => dispatch(listenForMatch(partyRef)),
+  getInitialRestaurants: (userId, partyRef) =>
+    dispatch(getInitialRestaurants(userId, partyRef)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(MainScreen));

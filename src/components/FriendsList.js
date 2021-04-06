@@ -17,7 +17,7 @@ import {
 
 import InviteFriends from './InviteFriends';
 
-import { getFriends } from '../reducers/friends';
+import { listenForFriends } from '../reducers/friends';
 
 import LocationForm from './LocationForm';
 
@@ -77,7 +77,7 @@ class FriendsList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getFriends(this.props.id);
+    this.props.listenForFriends(this.props.id);
   }
 
   render() {
@@ -158,7 +158,7 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  getFriends: (id) => dispatch(getFriends(id)),
+  listenForFriends: (id) => dispatch(listenForFriends(id)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(styles)(FriendsList));
