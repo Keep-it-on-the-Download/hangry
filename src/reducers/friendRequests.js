@@ -59,12 +59,13 @@ export const listenForFriendRequests = (id) => {
 };
 
 /**
- * Redux Thunk for accepting friend requests. Mutually adds users to each other's friend list
+ * Handles friend requests. based on boolean value either accepts or rejects request
  * @param {string} myId - email used to identify user accepting request
  * @param {string} friendId - email used to identify user who sent the request
- * @returns Two Asynchronous dispatch calls to addFriend from the friend reducer.
+ * @param {bool} accepted - True if accepted, False is rejected
+ * @returns Asynchronous function that removes the friend request and conditionally makes dispatch calls to addFriend from the friend reducer.
  */
-export const acceptFriendRequest = (myId, friendId) => {
+export const handleFriendRequest = (myId, friendId, accepted) => {
   return async (dispatch) => {
     try {
       const requestReference = firestore
@@ -74,10 +75,12 @@ export const acceptFriendRequest = (myId, friendId) => {
         .doc(friendId);
       await requestReference.delete();
 
-      dispatch(addFriend(myId, friendId));
-      dispatch(addFriend(friendId, myId));
+      if (accepted) {
+        dispatch(addFriend(myId, friendId));
+        dispatch(addFriend(friendId, myId));
+      }
     } catch (err) {
-      console.error('Origin: friendRequests.acceptFriendRequest(): ', err);
+      console.error('Origin: friendRequests.handleFriendRequest(): ', err);
     }
   };
 };
@@ -86,6 +89,7 @@ export const acceptFriendRequest = (myId, friendId) => {
  * Adds a friend request to another user. This updates that users redux store through listenForRequests
  * @param {string} myId - email used to identify user accepting request
  * @param {string} friendId - email used to identify user who sent the request
+ * @returns Asynchronous function that updates the users redux store
  */
 export const sendFriendRequest = (myId, friendId) => {
   return async (dispatch) => {
