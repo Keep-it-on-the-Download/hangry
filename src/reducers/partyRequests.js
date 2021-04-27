@@ -49,21 +49,29 @@ export const listenForPartyRequests = (userId) => {
   };
 };
 
-export const acceptPartyRequest = (partyId, memberId) => {
+/**
+ * Handles party requests. Based on boolean value either accepts or rejects request
+ * @param {string} myId - email used to identify user accepting request
+ * @param {string} partyId - UID assigned to party
+ * @param {bool} accepted - True if accepted, False is rejected
+ * @returns Asynchronous function that removes the party request and conditionally makes dispatch calls to addMember fand createActivePartiesForUsersInFirestore
+ */
+export const handlePartyRequest = (myId, partyId, accepted) => {
   return async (dispatch) => {
     try {
       const requestReference = firestore
         .collection('users')
-        .doc(memberId)
+        .doc(myId)
         .collection('partyRequests')
         .doc(partyId);
-
       requestReference.delete();
-      // user 1 should already be in party so we're adding user2 here?
-      dispatch(addMember(partyId, memberId));
-      createActivePartiesForUsersInFirestore(partyId);
+
+      if (accepted) {
+        dispatch(addMember(partyId, myId));
+        createActivePartiesForUsersInFirestore(partyId);
+      }
     } catch (err) {
-      console.error('ORIGIN: partyRequests.acceptPartyRequest()', err);
+      console.error('Origin: partyRequests.handlePartyRequest(): ', err);
     }
   };
 };

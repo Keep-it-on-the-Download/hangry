@@ -1,24 +1,16 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import List from '@material-ui/core/List';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import Avatar from '@material-ui/core/Avatar';
+import { withStyles } from '@material-ui/core/styles';
+
 import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import { withStyles } from '@material-ui/core/styles';
-import CheckIcon from '@material-ui/icons/Check';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import PropTypes from 'prop-types';
 
-import { acceptFriendRequest } from '../reducers/friendRequests';
-import { acceptPartyRequest } from '../reducers/partyRequests';
+import FriendRequestList from './FriendRequestList';
+import PartyRequestList from './PartyRequestList';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,12 +58,7 @@ class Notifications extends React.Component {
       value: 0,
     };
   }
-  handleFriendRequest = (myId, friendId) => () => {
-    this.props.acceptFriendRequest(myId, friendId);
-  };
-  handlePartyRequest = (partyId, memberId) => () => {
-    this.props.acceptPartyRequest(partyId, memberId);
-  };
+
   handleChange = (event, newValue) => {
     this.setState({ value: newValue });
   };
@@ -79,14 +66,6 @@ class Notifications extends React.Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-
-    const {
-      userId,
-      friendRequests,
-      friendRequestsAreLoading,
-      partyRequestsAreLoading,
-      partyRequests,
-    } = this.props;
 
     return (
       <div className={classes.root}>
@@ -103,89 +82,14 @@ class Notifications extends React.Component {
         </AppBar>
 
         <TabPanel value={value} index={0}>
-          {!partyRequestsAreLoading &&
-            (partyRequests.length
-              ? partyRequests.map((partyRequest) => {
-                  const partyId = partyRequest.id;
-                  console.log('partyID = ', partyId);
-                  console.log('partyReq: ', partyRequest.data());
-                  return (
-                    <List>
-                      <ListItem key={partyId}>
-                        <ListItemAvatar>
-                          <Avatar />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={partyRequest.data().partyName}
-                          secondary={partyId}
-                        />
-                        <ListItemSecondaryAction>
-                          <IconButton
-                            edge='end'
-                            aria-label='accept'
-                            onClick={this.handlePartyRequest(partyId, userId)}
-                          >
-                            <CheckIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    </List>
-                  );
-                })
-              : 'No Party Requests At This Time!')}
+          <PartyRequestList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {!friendRequestsAreLoading &&
-            (friendRequests.length
-              ? friendRequests.map((friendRequest) => {
-                  const friendId = friendRequest.id;
-                  return (
-                    <List>
-                      <ListItem key={friendId}>
-                        <ListItemAvatar>
-                          <Avatar />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={friendId}
-                          secondary='Secondary text'
-                        />
-                        <ListItemSecondaryAction>
-                          <IconButton
-                            edge='end'
-                            aria-label='accept'
-                            onClick={this.handleFriendRequest(userId, friendId)}
-                          >
-                            <CheckIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                    </List>
-                  );
-                })
-              : 'No Friend Requests At This Time!')}
+          <FriendRequestList />
         </TabPanel>
       </div>
     );
   }
 }
 
-const mapState = (state) => ({
-  userId: state.user.data.email,
-  friendRequests: state.friendRequests.data,
-  friendRequestsAreLoading: state.friendRequests.isLoading,
-
-  partyRequests: state.partyRequests.data,
-  partyRequestsAreLoading: state.partyRequests.isLoading,
-});
-
-const mapDispatch = (dispatch) => ({
-  acceptFriendRequest: (myId, friendId) =>
-    dispatch(acceptFriendRequest(myId, friendId)),
-  acceptPartyRequest: (partyId, memberId) =>
-    dispatch(acceptPartyRequest(partyId, memberId)),
-});
-
-export default connect(
-  mapState,
-  mapDispatch
-)(withStyles(styles)(Notifications));
+export default withStyles(styles)(Notifications);
